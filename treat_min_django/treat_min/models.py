@@ -1,5 +1,5 @@
 # list of schedules
-# filter lists in schedules creation
+# rating_total, rating_users
 
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
@@ -63,7 +63,6 @@ class Doctor(models.Model):
     phone = models.CharField(max_length=11, blank=True, null=True)
 
     # photo = models.ImageField(blank=True, null=True)
-    # rating = models.DecimalField(max_digits=2, decimal_places=1, default=4, blank=True, null=True)
 
     class Meta:
         ordering = ['name']
