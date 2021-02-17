@@ -2,9 +2,9 @@ from django.contrib import admin
 from .models import *
 
 SCHEDULE_FIELDS = ('price', 'sat_from', 'sat_to', 'sun_from', 'sun_to', 'mon_from', 'mon_to',
-                   'tue_from', 'tue_to', 'wed_from', 'wed_to', 'thu_from', 'thu_to', 'fri_from', 'fri_to',)
+                   'tue_from', 'tue_to', 'wed_from', 'wed_to', 'thu_from', 'thu_to', 'fri_from', 'fri_to')
 
-APPOINTMENT_FIELDS = ('schedule', 'user', 'appointment_date', 'status', 'booking_date',)
+APPOINTMENT_FIELDS = ('schedule', 'user', 'appointment_date', 'status', 'booking_date')
 
 
 class ClinicScheduleInline(admin.TabularInline):
@@ -41,15 +41,15 @@ class DoctorAdmin(admin.ModelAdmin):
 
 
 class HospitalAdmin(admin.ModelAdmin):
-    inlines = (ClinicScheduleInline, RoomScheduleInline, ServiceScheduleInline,)
+    inlines = (ClinicScheduleInline, RoomScheduleInline, ServiceScheduleInline)
 
 
 class RoomScheduleAdmin(admin.ModelAdmin):
-    fields = ('hospital', 'room',) + SCHEDULE_FIELDS
+    fields = ('hospital', 'room') + SCHEDULE_FIELDS
 
 
 class ServiceScheduleAdmin(admin.ModelAdmin):
-    fields = ('hospital', 'service',) + SCHEDULE_FIELDS
+    fields = ('hospital', 'service') + SCHEDULE_FIELDS
 
 
 class AppointmentAdmin(admin.ModelAdmin):
