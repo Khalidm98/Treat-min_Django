@@ -1,11 +1,7 @@
 from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
-# from treat_min_django.treat_min.models import *
 from treat_min_django.treat_min.api.serializers import *
-
-
-# from rest_framework import status
 
 
 class ClinicList(APIView):
@@ -22,6 +18,9 @@ class ClinicScheduleList(APIView):
         except ClinicSchedule.DoesNotExist:
             raise Http404
         serializer = ClinicScheduleSerializer(schedules, many=True)
+        print()
+        print(serializer.data[0])
+        print()
         return Response({'schedules': serializer.data})
 
 

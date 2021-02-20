@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'knox',
     'rest_framework',
+    'treat_min_django.accounts.apps.AccountsConfig',
     'treat_min_django.treat_min.apps.TreatMinConfig',
 ]
 
@@ -94,6 +95,8 @@ DATABASES = {
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
+
+AUTH_USER_MODEL = 'accounts.AbstractUser'
 
 AUTH_PASSWORD_VALIDATORS = [
     {

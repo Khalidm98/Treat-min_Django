@@ -1,19 +1,24 @@
 from rest_framework import serializers
-from django.contrib.auth.models import User
+from treat_min_django.accounts.models import AbstractUser
 
 
-class UserSerializer(serializers.ModelSerializer):
+class AbstractUserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = User
-        fields = ('id', 'username', 'email')
+        model = AbstractUser
+        fields = ('id', 'email', 'name', 'phone')
 
 
 class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
-        model = User
-        fields = ('id', 'username', 'email', 'password')
+        model = AbstractUser
+        fields = ('id', 'email', 'password', 'name', 'phone')
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
-        user = User.objects.create_user(validated_data['username'], validated_data['email'], validated_data['password'])
+        user = AbstractUser.objects.create_user(
+            email=validated_data['email'],
+            password=validated_data['password'],
+            name=validated_data['name'],
+            phone=validated_data['phone'],
+        )
         return user
