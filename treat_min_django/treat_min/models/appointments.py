@@ -1,19 +1,18 @@
 from treat_min_django.accounts.models import User
 from django.db import models
-from .schedules import ClinicSchedule, RoomSchedule, ServiceSchedule
+from .details import ClinicDetail, RoomDetail, ServiceDetail
 
-
-STATUS = (
-    ('Accepted', 'Accepted'),
-    ('Canceled', 'Canceled'),
-    ('Rejected', 'Rejected'),
-    ('Waiting', 'Waiting'),
-)
+STATUS = [
+    ('A', 'Accepted'),
+    ('C', 'Canceled'),
+    ('R', 'Rejected'),
+    ('W', 'Waiting')
+]
 
 
 class Appointment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    status = models.CharField(max_length=8, choices=STATUS, default='Waiting')
+    status = models.CharField(max_length=1, choices=STATUS, default='W')
     booking_date = models.DateTimeField(blank=True, null=True)
     appointment_date = models.DateTimeField(blank=True, null=True)
 
@@ -25,12 +24,12 @@ class Appointment(models.Model):
 
 
 class ClinicAppointment(Appointment):
-    schedule = models.ForeignKey(ClinicSchedule, on_delete=models.CASCADE)
+    schedule = models.ForeignKey(ClinicDetail, on_delete=models.CASCADE)
 
 
 class RoomAppointment(Appointment):
-    schedule = models.ForeignKey(RoomSchedule, on_delete=models.CASCADE)
+    schedule = models.ForeignKey(RoomDetail, on_delete=models.CASCADE)
 
 
 class ServiceAppointment(Appointment):
-    schedule = models.ForeignKey(ServiceSchedule, on_delete=models.CASCADE)
+    schedule = models.ForeignKey(ServiceDetail, on_delete=models.CASCADE)

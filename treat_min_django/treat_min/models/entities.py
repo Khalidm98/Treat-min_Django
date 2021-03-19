@@ -1,7 +1,6 @@
 from django.db import models
 
-
-GENDER = (('M', 'Male'), ('F', 'Female'),)
+GENDER = [('M', 'Male'), ('F', 'Female')]
 
 
 class Clinic(models.Model):
@@ -56,10 +55,10 @@ class Hospital(models.Model):
     latitude = models.DecimalField(max_digits=9, decimal_places=6, blank=True, null=True)
     longitude = models.DecimalField(max_digits=9, decimal_places=6, blank=True, null=True)
     photo = models.ImageField(upload_to='photos/hospitals/', blank=True, null=True)
-    doctors = models.ManyToManyField(Doctor, through='ClinicSchedule')
-    clinics = models.ManyToManyField(Clinic, through='ClinicSchedule')
-    rooms = models.ManyToManyField(Room, through='RoomSchedule')
-    services = models.ManyToManyField(Service, through='ServiceSchedule')
+    doctors = models.ManyToManyField(Doctor, through='ClinicDetail')
+    clinics = models.ManyToManyField(Clinic, through='ClinicDetail')
+    rooms = models.ManyToManyField(Room, through='RoomDetail')
+    services = models.ManyToManyField(Service, through='ServiceDetail')
 
     class Meta:
         ordering = ['name']

@@ -14,8 +14,8 @@ class ClinicList(APIView):
 class ClinicScheduleList(APIView):
     def get(self, request, clinic_id):
         try:
-            schedules = ClinicSchedule.objects.filter(clinic=clinic_id)
-        except ClinicSchedule.DoesNotExist:
+            schedules = ClinicDetail.objects.filter(clinic=clinic_id)
+        except ClinicDetail.DoesNotExist:
             raise Http404
         serializer = ClinicScheduleSerializer(schedules, many=True)
         print()
@@ -27,8 +27,8 @@ class ClinicScheduleList(APIView):
 class ClinicBooking(APIView):
     def get(self, request, clinic_id, schedule_id):
         try:
-            schedule = ClinicSchedule.objects.get(id=schedule_id)
-        except ClinicSchedule.DoesNotExist:
+            schedule = ClinicDetail.objects.get(id=schedule_id)
+        except ClinicDetail.DoesNotExist:
             raise Http404
         if schedule.clinic.id != clinic_id:
             raise Http404

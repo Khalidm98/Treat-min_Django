@@ -34,7 +34,7 @@ class ClinicScheduleSerializer(serializers.ModelSerializer):
     sun_from = serializers.TimeField(required=False)
 
     class Meta:
-        model = ClinicSchedule
+        model = ClinicDetail
         fields = ['id', 'doctor'] + SCHEDULE_FIELDS
 
     def to_representation(self, instance):
@@ -47,7 +47,7 @@ class ClinicBookingSerializer(serializers.ModelSerializer):
     hospital = HospitalSerializer()
 
     class Meta:
-        model = ClinicSchedule
+        model = ClinicDetail
         fields = ['id', 'doctor'] + SCHEDULE_FIELDS
 
     def to_representation(self, instance):
