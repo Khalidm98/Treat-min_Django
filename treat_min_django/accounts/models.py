@@ -7,7 +7,7 @@ from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.utils.translation import gettext_lazy as _
 
-# from treat_min_django.treat_min.models import Hospital
+from treat_min_django.treat_min.models import Hospital
 from .managers import UserManager
 
 
@@ -73,7 +73,7 @@ class Admin(models.Model):
 
 class HospitalAdmin(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    # hospital = models.ForeignKey(Hospital, on_delete=models.CASCADE)
+    hospital = models.ForeignKey(Hospital, on_delete=models.CASCADE, default=Hospital.objects.all().first().id)
 
     class Meta:
         ordering = ['user__email']

@@ -1,7 +1,6 @@
 from django.contrib import admin
 from .models import *
 
-APPOINTMENT_FIELDS = ['schedule', 'user', 'appointment_date', 'status', 'booking_date']
 SCHEDULE_FIELDS = ['day', 'start', 'end']
 
 
@@ -73,10 +72,6 @@ class ServiceDetailAdmin(admin.ModelAdmin):
     inlines = [ServiceScheduleInline]
 
 
-class AppointmentAdmin(admin.ModelAdmin):
-    fields = APPOINTMENT_FIELDS
-
-
 admin.site.register(Clinic, ClinicAdmin)
 admin.site.register(Room, RoomAdmin)
 admin.site.register(Service, ServiceAdmin)
@@ -87,7 +82,3 @@ admin.site.register(Hospital, HospitalAdmin)
 admin.site.register(ClinicDetail, ClinicDetailAdmin)
 admin.site.register(RoomDetail, RoomDetailAdmin)
 admin.site.register(ServiceDetail, ServiceDetailAdmin)
-
-admin.site.register(ClinicAppointment, AppointmentAdmin)
-admin.site.register(RoomAppointment, AppointmentAdmin)
-admin.site.register(ServiceAppointment, AppointmentAdmin)

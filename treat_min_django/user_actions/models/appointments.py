@@ -1,6 +1,6 @@
 from treat_min_django.accounts.models import User
 from django.db import models
-from .details import ClinicDetail, RoomDetail, ServiceDetail
+from ...treat_min.models import ClinicSchedule, RoomSchedule, ServiceSchedule
 
 STATUS = [
     ('A', 'Accepted'),
@@ -13,23 +13,24 @@ STATUS = [
 class Appointment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     status = models.CharField(max_length=1, choices=STATUS, default='W')
-    booking_date = models.DateTimeField(blank=True, null=True)
-    appointment_date = models.DateTimeField(blank=True, null=True)
+    booking_date = models.DateTimeField(auto_now_add=True)
+    appointment_date = models.DateField()
 
     class Meta:
         abstract = True
+        ordering = ['booking_date']
 
     def __str__(self):
-        return self.user.email + " - " + str(self.booking_date)
+        return self.user.user.email + " - " + str(self.booking_date)[0:19]
 
 
 class ClinicAppointment(Appointment):
-    schedule = models.ForeignKey(ClinicDetail, on_delete=models.CASCADE)
+    schedule = models.ForeignKey(ClinicSchedule, on_delete=models.CASCADE)
 
 
 class RoomAppointment(Appointment):
-    schedule = models.ForeignKey(RoomDetail, on_delete=models.CASCADE)
+    schedule = models.ForeignKey(RoomSchedule, on_delete=models.CASCADE)
 
 
 class ServiceAppointment(Appointment):
-    schedule = models.ForeignKey(ServiceDetail, on_delete=models.CASCADE)
+    schedule = models.ForeignKey(ServiceSchedule, on_delete=models.CASCADE)
