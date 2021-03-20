@@ -25,16 +25,19 @@ class ServiceScheduleInline(admin.TabularInline):
 class ClinicDetailInline(admin.TabularInline):
     model = ClinicDetail
     fields = ['hospital', 'clinic', 'doctor', 'price']
+    extra = 1
 
 
 class RoomDetailInline(admin.TabularInline):
     model = RoomDetail
     fields = ['hospital', 'room', 'price']
+    extra = 1
 
 
 class ServiceDetailInline(admin.TabularInline):
     model = ServiceDetail
     fields = ['hospital', 'service', 'price']
+    extra = 1
 
 
 class ClinicAdmin(admin.ModelAdmin):

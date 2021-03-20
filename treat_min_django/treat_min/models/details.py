@@ -31,11 +31,6 @@ class RoomDetail(Detail):
     def __str__(self):
         return self.hospital.name + " - " + self.room.name
 
-    # def clean(self):
-    #     if not self.roomschedule_set.all():
-    #         raise ValidationError('Rooms must have at least one schedule!')
-    #     super(RoomDetail, self).clean()
-
 
 class ServiceDetail(Detail):
     service = models.ForeignKey(Service, on_delete=models.CASCADE)
