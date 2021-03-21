@@ -59,20 +59,44 @@ class DoctorAdmin(admin.ModelAdmin):
 class HospitalAdmin(admin.ModelAdmin):
     inlines = [ClinicDetailInline, RoomDetailInline, ServiceDetailInline]
 
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        if hasattr(request.user, 'hospitaladmin'):
+            return qs.filter(id=request.user.hospitaladmin.hospital.id)
+        return qs
+
 
 class ClinicDetailAdmin(admin.ModelAdmin):
     fields = ['hospital', 'clinic', 'doctor', 'price']
     inlines = [ClinicScheduleInline]
+
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        if hasattr(request.user, 'hospitaladmin'):
+            return qs.filter(hospital=request.user.hospitaladmin.hospital)
+        return qs
 
 
 class RoomDetailAdmin(admin.ModelAdmin):
     fields = ['hospital', 'room', 'price']
     inlines = [RoomScheduleInline]
 
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        if hasattr(request.user, 'hospitaladmin'):
+            return qs.filter(hospital=request.user.hospitaladmin.hospital)
+        return qs
+
 
 class ServiceDetailAdmin(admin.ModelAdmin):
     fields = ['hospital', 'service', 'price']
     inlines = [ServiceScheduleInline]
+
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        if hasattr(request.user, 'hospitaladmin'):
+            return qs.filter(hospital=request.user.hospitaladmin.hospital)
+        return qs
 
 
 admin.site.register(Clinic, ClinicAdmin)
