@@ -16,6 +16,9 @@ class ClinicDetail(Detail):
     clinic = models.ForeignKey(Clinic, on_delete=models.CASCADE)
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
 
+    class Meta:
+        verbose_name_plural = 'Clinics Details'
+
     def __str__(self):
         return self.hospital.name + " - " + self.clinic.name + " - " + self.doctor.name
 
@@ -28,12 +31,18 @@ class ClinicDetail(Detail):
 class RoomDetail(Detail):
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
 
+    class Meta:
+        verbose_name_plural = 'Rooms Details'
+
     def __str__(self):
         return self.hospital.name + " - " + self.room.name
 
 
 class ServiceDetail(Detail):
     service = models.ForeignKey(Service, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name_plural = 'Services Details'
 
     def __str__(self):
         return self.hospital.name + " - " + self.service.name

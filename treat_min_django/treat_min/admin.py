@@ -42,22 +42,27 @@ class ServiceDetailInline(admin.TabularInline):
 
 class ClinicAdmin(admin.ModelAdmin):
     inlines = [ClinicDetailInline]
+    list_display = ['name']
 
 
 class RoomAdmin(admin.ModelAdmin):
     inlines = [RoomDetailInline]
+    list_display = ['name']
 
 
 class ServiceAdmin(admin.ModelAdmin):
     inlines = [ServiceDetailInline]
+    list_display = ['name']
 
 
 class DoctorAdmin(admin.ModelAdmin):
     inlines = [ClinicDetailInline]
+    list_display = ['name', 'speciality']
 
 
 class HospitalAdmin(admin.ModelAdmin):
     inlines = [ClinicDetailInline, RoomDetailInline, ServiceDetailInline]
+    list_display = ['name']
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)
@@ -69,6 +74,7 @@ class HospitalAdmin(admin.ModelAdmin):
 class ClinicDetailAdmin(admin.ModelAdmin):
     fields = ['hospital', 'clinic', 'doctor', 'price']
     inlines = [ClinicScheduleInline]
+    list_display = ['hospital', 'clinic', 'doctor', 'price']
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)
@@ -80,6 +86,7 @@ class ClinicDetailAdmin(admin.ModelAdmin):
 class RoomDetailAdmin(admin.ModelAdmin):
     fields = ['hospital', 'room', 'price']
     inlines = [RoomScheduleInline]
+    list_display = ['hospital', 'room', 'price']
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)
@@ -91,6 +98,7 @@ class RoomDetailAdmin(admin.ModelAdmin):
 class ServiceDetailAdmin(admin.ModelAdmin):
     fields = ['hospital', 'service', 'price']
     inlines = [ServiceScheduleInline]
+    list_display = ['hospital', 'service', 'price']
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)

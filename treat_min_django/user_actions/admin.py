@@ -8,6 +8,7 @@ REVIEW_FIELDS = ['user', 'date', 'rating', 'review']
 class AppointmentAdmin(admin.ModelAdmin):
     fields = APPOINTMENT_FIELDS
     readonly_fields = ['booking_date']
+    list_display = ['appointment_date', 'schedule', 'user', 'status', 'booking_date']
 
 
 class ClinicAppointmentAdmin(AppointmentAdmin):
@@ -37,16 +38,19 @@ class ServiceAppointmentAdmin(AppointmentAdmin):
 class ClinicReviewAdmin(admin.ModelAdmin):
     fields = ['clinic'] + REVIEW_FIELDS
     readonly_fields = ['date']
+    list_display = ['date', 'clinic', 'user', 'rating']
 
 
 class RoomReviewAdmin(admin.ModelAdmin):
     fields = ['room'] + REVIEW_FIELDS
     readonly_fields = ['date']
+    list_display = ['date', 'room', 'user', 'rating']
 
 
 class ServiceReviewAdmin(admin.ModelAdmin):
     fields = ['service'] + REVIEW_FIELDS
     readonly_fields = ['date']
+    list_display = ['date', 'service', 'user', 'rating']
 
 
 admin.site.register(ClinicAppointment, ClinicAppointmentAdmin)

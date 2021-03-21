@@ -18,7 +18,6 @@ class Appointment(models.Model):
 
     class Meta:
         abstract = True
-        ordering = ['booking_date']
 
     def __str__(self):
         return self.user.user.email + " - " + str(self.booking_date)[0:19]
@@ -27,10 +26,19 @@ class Appointment(models.Model):
 class ClinicAppointment(Appointment):
     schedule = models.ForeignKey(ClinicSchedule, on_delete=models.CASCADE)
 
+    class Meta:
+        verbose_name_plural = 'Clinics Appointments'
+
 
 class RoomAppointment(Appointment):
     schedule = models.ForeignKey(RoomSchedule, on_delete=models.CASCADE)
 
+    class Meta:
+        verbose_name_plural = 'Rooms Appointments'
+
 
 class ServiceAppointment(Appointment):
     schedule = models.ForeignKey(ServiceSchedule, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name_plural = 'Services Appointments'

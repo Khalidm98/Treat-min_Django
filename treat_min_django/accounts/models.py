@@ -100,6 +100,7 @@ class HospitalAdmin(models.Model):
 
     class Meta:
         ordering = ['user__email']
+        verbose_name_plural = 'Hospitals Admins'
 
     def __str__(self):
         return self.user.email + ' - ' + self.user.name

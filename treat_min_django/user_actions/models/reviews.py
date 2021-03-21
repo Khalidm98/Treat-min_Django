@@ -23,6 +23,9 @@ class Review(models.Model):
 class ClinicReview(Review):
     clinic = models.ForeignKey(ClinicDetail, on_delete=models.CASCADE)
 
+    class Meta:
+        verbose_name_plural = 'Clinics Reviews'
+
     def __str__(self):
         return str(self.clinic) + " - " + self.user.user.email
 
@@ -30,12 +33,18 @@ class ClinicReview(Review):
 class RoomReview(Review):
     room = models.ForeignKey(RoomDetail, on_delete=models.CASCADE)
 
+    class Meta:
+        verbose_name_plural = 'Rooms Reviews'
+
     def __str__(self):
         return str(self.room) + " - " + self.user.user.email
 
 
 class ServiceReview(Review):
     service = models.ForeignKey(ServiceDetail, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name_plural = 'Services Reviews'
 
     def __str__(self):
         return str(self.service) + " - " + self.user.user.email
