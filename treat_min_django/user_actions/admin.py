@@ -10,6 +10,30 @@ class AppointmentAdmin(admin.ModelAdmin):
     readonly_fields = ['booking_date']
 
 
+class ClinicAppointmentAdmin(AppointmentAdmin):
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        if hasattr(request.user, 'hospitaladmin'):
+            return qs.filter(schedule__clinic__hospital=request.user.hospitaladmin.hospital)
+        return qs
+
+
+class RoomAppointmentAdmin(AppointmentAdmin):
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        if hasattr(request.user, 'hospitaladmin'):
+            return qs.filter(schedule__room__hospital=request.user.hospitaladmin.hospital)
+        return qs
+
+
+class ServiceAppointmentAdmin(AppointmentAdmin):
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        if hasattr(request.user, 'hospitaladmin'):
+            return qs.filter(schedule__service__hospital=request.user.hospitaladmin.hospital)
+        return qs
+
+
 class ClinicReviewAdmin(admin.ModelAdmin):
     fields = ['clinic'] + REVIEW_FIELDS
     readonly_fields = ['date']
@@ -25,9 +49,9 @@ class ServiceReviewAdmin(admin.ModelAdmin):
     readonly_fields = ['date']
 
 
-admin.site.register(ClinicAppointment, AppointmentAdmin)
-admin.site.register(RoomAppointment, AppointmentAdmin)
-admin.site.register(ServiceAppointment, AppointmentAdmin)
+admin.site.register(ClinicAppointment, ClinicAppointmentAdmin)
+admin.site.register(RoomAppointment, RoomAppointmentAdmin)
+admin.site.register(ServiceAppointment, ServiceAppointmentAdmin)
 
 admin.site.register(ClinicReview, ClinicReviewAdmin)
 admin.site.register(RoomReview, RoomReviewAdmin)
