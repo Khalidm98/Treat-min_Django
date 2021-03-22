@@ -39,6 +39,6 @@ urlpatterns = [
     #     auth_views.PasswordResetCompleteView.as_view(),
     #     name='password_reset_complete',
     # ),
-    path('api/', include('treat_min_django.treat_min.api.urls')),
+    path('api/', include('treat_min_django.entities.api.urls')),
     path('api/accounts/', include('treat_min_django.accounts.api.urls')),
 ]

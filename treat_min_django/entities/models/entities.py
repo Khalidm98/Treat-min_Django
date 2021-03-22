@@ -4,7 +4,7 @@ GENDER = [('M', 'Male'), ('F', 'Female')]
 
 
 class Clinic(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, unique=True)
 
     class Meta:
         ordering = ['name']
@@ -14,7 +14,7 @@ class Clinic(models.Model):
 
 
 class Room(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, unique=True)
 
     class Meta:
         ordering = ['name']
@@ -24,7 +24,7 @@ class Room(models.Model):
 
 
 class Service(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, unique=True)
 
     class Meta:
         ordering = ['name']
@@ -49,7 +49,7 @@ class Doctor(models.Model):
 
 
 class Hospital(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, unique=True)
     phone = models.CharField(max_length=11)
     address = models.CharField(max_length=100)
     latitude = models.DecimalField(max_digits=9, decimal_places=6, blank=True, null=True)

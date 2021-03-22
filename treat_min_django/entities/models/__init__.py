@@ -11,4 +11,3 @@ from .details import ServiceDetail
 from .schedules import ClinicSchedule
 from .schedules import RoomSchedule
 from .schedules import ServiceSchedule
-

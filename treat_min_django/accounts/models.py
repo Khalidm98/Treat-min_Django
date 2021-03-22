@@ -1,6 +1,4 @@
 from __future__ import unicode_literals
-from datetime import datetime
-from random import random, seed
 
 from django.db import models
 from django.conf import settings
@@ -10,14 +8,14 @@ from django.contrib.auth.models import Group, PermissionsMixin
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.utils.translation import gettext_lazy as _
 
-from treat_min_django.treat_min.models.entities import GENDER, Hospital
+from treat_min_django.entities.models.entities import GENDER, Hospital
 from .managers import UserManager
 
 
 class AbstractUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(_('email address'), unique=True)
     name = models.CharField(_('name'), max_length=50)
-    phone = models.CharField(_('phone'), max_length=11, default='')
+    phone = models.CharField(_('phone'), max_length=11)
     date_joined = models.DateTimeField(_('date joined'), auto_now_add=True)
 
     is_active = models.BooleanField(
@@ -30,12 +28,12 @@ class AbstractUser(AbstractBaseUser, PermissionsMixin):
     )
     is_staff = models.BooleanField(
         _('staff status'),
-        default=True,
+        default=False,
         help_text=_('Designates whether the user can log into this admin site.'),
     )
     groups = models.ForeignKey(
         Group,
-        on_delete=models.SET_NULL,
+        on_delete=models.RESTRICT,
         verbose_name=_('groups'),
         blank=True,
         null=True,
@@ -52,17 +50,8 @@ class AbstractUser(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []    # fields that will be prompted for when creating a user via the createsuperuser
 
-    class Meta:
-        ordering = ['email']
-
     def __str__(self):
         return self.email + ' - ' + self.name
-
-    def clean(self):
-        if not self.password:
-            seed(datetime.now())
-            self.password = random()
-        super(AbstractUser, self).clean()
 
     def get_full_name(self):
         name = str(self.name)
@@ -78,9 +67,6 @@ class AbstractUser(AbstractBaseUser, PermissionsMixin):
 
 class Admin(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-
-    class Meta:
-        ordering = ['user__email']
 
     def __str__(self):
         return self.user.email + ' - ' + self.user.name
@@ -99,7 +85,6 @@ class HospitalAdmin(models.Model):
     hospital = models.ForeignKey(Hospital, on_delete=models.RESTRICT)
 
     class Meta:
-        ordering = ['user__email']
         verbose_name_plural = 'Hospitals Admins'
 
     def __str__(self):
@@ -120,13 +105,5 @@ class User(models.Model):
     gender = models.CharField(max_length=1, choices=GENDER)
     photo = models.ImageField(upload_to='photos/users/', blank=True, null=True)
 
-    class Meta:
-        ordering = ['user__email']
-
     def __str__(self):
         return self.user.email + ' - ' + self.user.name
-
-    def clean(self):
-        if self.user.is_staff or self.user.is_superuser:
-            raise ValidationError('User cannot be marked as a staff member or a superuser!')
-        super(User, self).clean()

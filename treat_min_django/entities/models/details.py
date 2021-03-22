@@ -3,7 +3,7 @@ from .entities import *
 
 
 class Detail(models.Model):
-    hospital = models.ForeignKey(Hospital, on_delete=models.CASCADE)
+    hospital = models.ForeignKey(Hospital, on_delete=models.RESTRICT)
     price = models.PositiveSmallIntegerField(default=50)
     rating_total = models.PositiveIntegerField(default=0)
     rating_users = models.PositiveSmallIntegerField(default=0)
@@ -13,7 +13,7 @@ class Detail(models.Model):
 
 
 class ClinicDetail(Detail):
-    clinic = models.ForeignKey(Clinic, on_delete=models.CASCADE)
+    clinic = models.ForeignKey(Clinic, on_delete=models.RESTRICT)
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
 
     class Meta:
@@ -25,11 +25,11 @@ class ClinicDetail(Detail):
     def clean(self):
         if self.doctor.speciality != self.clinic:
             raise ValidationError('Doctor\'s speciality and clinic speciality must match!')
-        super(ClinicDetail, self).clean()
+        super().clean()
 
 
 class RoomDetail(Detail):
-    room = models.ForeignKey(Room, on_delete=models.CASCADE)
+    room = models.ForeignKey(Room, on_delete=models.RESTRICT)
 
     class Meta:
         verbose_name_plural = 'Rooms Details'
@@ -39,7 +39,7 @@ class RoomDetail(Detail):
 
 
 class ServiceDetail(Detail):
-    service = models.ForeignKey(Service, on_delete=models.CASCADE)
+    service = models.ForeignKey(Service, on_delete=models.RESTRICT)
 
     class Meta:
         verbose_name_plural = 'Services Details'

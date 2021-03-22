@@ -1,5 +1,5 @@
 from django.urls import path
-from treat_min_django.treat_min.api import views
+from treat_min_django.entities.api import views
 
 urlpatterns = [
     path('clinics/', views.ClinicList.as_view()),

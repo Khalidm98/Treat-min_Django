@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'knox',
     'rest_framework',
     'treat_min_django.accounts.apps.AccountsConfig',
-    'treat_min_django.treat_min.apps.TreatMinConfig',
+    'treat_min_django.entities.apps.EntitiesConfig',
     'treat_min_django.user_actions.apps.UserActionsConfig',
 ]
 

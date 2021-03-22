@@ -1,9 +1,9 @@
 from collections import OrderedDict
 from rest_framework import serializers
-from treat_min_django.treat_min.models import *
+from treat_min_django.entities.models import *
 
 
-SCHEDULE_FIELDS = [
+DETAIL_FIELDS = [
     'hospital', 'price', 'rating_total', 'rating_users',
     'sat_from', 'sat_to', 'sun_from', 'sun_to', 'mon_from', 'mon_to',
     'tue_from', 'tue_to', 'wed_from', 'wed_to', 'thu_from', 'thu_to', 'fri_from', 'fri_to'
@@ -28,17 +28,17 @@ class HospitalSerializer(serializers.ModelSerializer):
         fields = ['name', 'address']
 
 
-class ClinicScheduleSerializer(serializers.ModelSerializer):
+class ClinicDetailSerializer(serializers.ModelSerializer):
     doctor = DoctorSerializer()
     hospital = serializers.SlugRelatedField(read_only=True, slug_field='name')
     sun_from = serializers.TimeField(required=False)
 
     class Meta:
         model = ClinicDetail
-        fields = ['id', 'doctor'] + SCHEDULE_FIELDS
+        fields = ['id', 'doctor'] + DETAIL_FIELDS
 
     def to_representation(self, instance):
-        result = super(ClinicScheduleSerializer, self).to_representation(instance)
+        result = super(ClinicDetailSerializer, self).to_representation(instance)
         return OrderedDict([(key, result[key]) for key in result if result[key] is not None])
 
 
@@ -48,7 +48,7 @@ class ClinicBookingSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ClinicDetail
-        fields = ['id', 'doctor'] + SCHEDULE_FIELDS
+        fields = ['id', 'doctor'] + DETAIL_FIELDS
 
     def to_representation(self, instance):
         result = super(ClinicBookingSerializer, self).to_representation(instance)
