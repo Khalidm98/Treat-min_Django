@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from treat_min_django.accounts.models import AbstractUser
+from ..models import AbstractUser
 
 
 class AbstractUserSerializer(serializers.ModelSerializer):

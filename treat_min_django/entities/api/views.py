@@ -1,7 +1,7 @@
 from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from treat_min_django.entities.api.serializers import *
+from .serializers import *
 
 
 class ClinicList(APIView):
@@ -11,26 +11,43 @@ class ClinicList(APIView):
         return Response({'clinics': serializer.data})
 
 
-class ClinicScheduleList(APIView):
+class ClinicDetailList(APIView):
     def get(self, request, clinic_id):
         try:
-            schedules = ClinicDetail.objects.filter(clinic=clinic_id)
+            details = ClinicDetail.objects.filter(clinic=clinic_id)
         except ClinicDetail.DoesNotExist:
             raise Http404
-        serializer = ClinicDetailSerializer(schedules, many=True)
-        print()
-        print(serializer.data[0])
-        print()
-        return Response({'schedules': serializer.data})
+        serializer = ClinicDetailSerializer(details, many=True)
+        return Response({'details': serializer.data})
 
 
-class ClinicBooking(APIView):
-    def get(self, request, clinic_id, schedule_id):
+class ClinicDetailSchedules(APIView):
+    def get(self, request, clinic_id, detail_id):
         try:
-            schedule = ClinicDetail.objects.get(id=schedule_id)
+            detail = ClinicDetail.objects.get(id=detail_id)
         except ClinicDetail.DoesNotExist:
             raise Http404
-        if schedule.clinic.id != clinic_id:
+        if detail.clinic.id != clinic_id:
             raise Http404
-        serializer = ClinicBookingSerializer(schedule)
-        return Response({'schedule': serializer.data})
+        schedules = ClinicSchedule.objects.filter(clinic=detail_id)
+        serializer = ClinicScheduleSerializer(schedules, many=True)
+        return Response({
+            'doctor': detail.doctor.name,
+            'title': detail.doctor.title,
+            'hospital': detail.hospital.name,
+            'address': detail.hospital.address,
+            'schedules': serializer.data
+        })
+
+
+class ClinicReviewsList(APIView):
+    def get(self, request, clinic_id, detail_id):
+        try:
+            detail = ClinicDetail.objects.get(id=detail_id)
+        except ClinicDetail.DoesNotExist:
+            raise Http404
+        if detail.clinic.id != clinic_id:
+            raise Http404
+        reviews = ClinicReview.objects.filter(clinic=detail_id)
+        serializer = ClinicReviewSerializer(reviews, many=True)
+        return Response({'reviews': serializer.data})

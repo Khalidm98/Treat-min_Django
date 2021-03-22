@@ -1,13 +1,13 @@
-from collections import OrderedDict
+# from collections import OrderedDict
 from rest_framework import serializers
-from treat_min_django.entities.models import *
+from ..models import *
+# from ...accounts.models import *
+from ...user_actions.models import *
 
 
-DETAIL_FIELDS = [
-    'hospital', 'price', 'rating_total', 'rating_users',
-    'sat_from', 'sat_to', 'sun_from', 'sun_to', 'mon_from', 'mon_to',
-    'tue_from', 'tue_to', 'wed_from', 'wed_to', 'thu_from', 'thu_to', 'fri_from', 'fri_to'
-]
+DETAIL_FIELDS = ['id', 'hospital', 'price', 'rating_total', 'rating_users']
+SCHEDULE_FIELDS = ['id', 'day', 'start', 'end']
+REVIEW_FIELDS = ['date', 'rating', 'review']
 
 
 class ClinicSerializer(serializers.ModelSerializer):
@@ -31,25 +31,26 @@ class HospitalSerializer(serializers.ModelSerializer):
 class ClinicDetailSerializer(serializers.ModelSerializer):
     doctor = DoctorSerializer()
     hospital = serializers.SlugRelatedField(read_only=True, slug_field='name')
-    sun_from = serializers.TimeField(required=False)
 
     class Meta:
         model = ClinicDetail
-        fields = ['id', 'doctor'] + DETAIL_FIELDS
+        fields = DETAIL_FIELDS + ['doctor']
 
-    def to_representation(self, instance):
-        result = super(ClinicDetailSerializer, self).to_representation(instance)
-        return OrderedDict([(key, result[key]) for key in result if result[key] is not None])
+    # def to_representation(self, instance):
+    #     result = super().to_representation(instance)
+    #     print(result)
+    #     return OrderedDict([(key, result[key]) for key in result if not result[key].schedule_set])
 
 
-class ClinicBookingSerializer(serializers.ModelSerializer):
-    doctor = DoctorSerializer()
-    hospital = HospitalSerializer()
+class ClinicScheduleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ClinicSchedule
+        fields = SCHEDULE_FIELDS
+
+
+class ClinicReviewSerializer(serializers.ModelSerializer):
+    # add user.user.name
 
     class Meta:
-        model = ClinicDetail
-        fields = ['id', 'doctor'] + DETAIL_FIELDS
-
-    def to_representation(self, instance):
-        result = super(ClinicBookingSerializer, self).to_representation(instance)
-        return OrderedDict([(key, result[key]) for key in result if result[key] is not None])
+        model = ClinicReview
+        fields = REVIEW_FIELDS

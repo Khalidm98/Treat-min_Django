@@ -1,8 +1,9 @@
 from django.urls import path
-from treat_min_django.entities.api import views
+from . import views
 
 urlpatterns = [
     path('clinics/', views.ClinicList.as_view()),
-    path('clinics/<int:clinic_id>/schedules/', views.ClinicScheduleList.as_view()),
-    path('clinics/<int:clinic_id>/schedules/<int:schedule_id>/', views.ClinicBooking.as_view()),
+    path('clinics/<int:clinic_id>/details/', views.ClinicDetailList.as_view()),
+    path('clinics/<int:clinic_id>/details/<int:detail_id>/', views.ClinicDetailSchedules.as_view()),
+    path('clinics/<int:clinic_id>/details/<int:detail_id>/reviews/', views.ClinicReviewsList.as_view()),
 ]
