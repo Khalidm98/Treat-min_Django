@@ -7,8 +7,8 @@ from django.contrib.auth.models import Group, PermissionsMixin
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.utils.translation import gettext_lazy as _
 
-from ..entities.models.entities import GENDER, Hospital
 from .managers import UserManager
+from ..entities.models.entities import GENDER, Hospital
 
 
 class AbstractUser(AbstractBaseUser, PermissionsMixin):
@@ -47,7 +47,7 @@ class AbstractUser(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []    # fields that will be prompted for when creating a user via the createsuperuser
+    REQUIRED_FIELDS = []    # fields that will be prompted for when creating a superuser
 
     def __str__(self):
         return self.email + ' - ' + self.name

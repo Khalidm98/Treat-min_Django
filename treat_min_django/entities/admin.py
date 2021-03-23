@@ -1,25 +1,23 @@
 from django.contrib import admin
 from .models import *
 
-SCHEDULE_FIELDS = ['day', 'start', 'end']
+
+class ScheduleInline(admin.TabularInline):
+    fields = ['day', 'start', 'end']
+    min_num = 1
+    extra = 0
 
 
-class ClinicScheduleInline(admin.TabularInline):
+class ClinicScheduleInline(ScheduleInline):
     model = ClinicSchedule
-    fields = SCHEDULE_FIELDS
-    extra = 1
 
 
-class RoomScheduleInline(admin.TabularInline):
+class RoomScheduleInline(ScheduleInline):
     model = RoomSchedule
-    fields = SCHEDULE_FIELDS
-    extra = 1
 
 
-class ServiceScheduleInline(admin.TabularInline):
+class ServiceScheduleInline(ScheduleInline):
     model = ServiceSchedule
-    fields = SCHEDULE_FIELDS
-    extra = 1
 
 
 class ClinicDetailInline(admin.TabularInline):

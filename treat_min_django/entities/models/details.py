@@ -18,11 +18,15 @@ class ClinicDetail(Detail):
 
     class Meta:
         verbose_name_plural = 'Clinics Details'
+        constraints = [
+            models.UniqueConstraint(fields=['hospital', 'doctor', 'price'], name='unique_clinic_detail')
+        ]
 
     def __str__(self):
         return self.hospital.name + " - " + self.clinic.name + " - " + self.doctor.name
 
     def clean(self):
+        super().clean_fields()
         if self.doctor.speciality != self.clinic:
             raise ValidationError('Doctor\'s speciality and clinic speciality must match!')
         super().clean()
@@ -33,6 +37,9 @@ class RoomDetail(Detail):
 
     class Meta:
         verbose_name_plural = 'Rooms Details'
+        constraints = [
+            models.UniqueConstraint(fields=['hospital', 'room', 'price'], name='unique_room_detail')
+        ]
 
     def __str__(self):
         return self.hospital.name + " - " + self.room.name
@@ -43,6 +50,9 @@ class ServiceDetail(Detail):
 
     class Meta:
         verbose_name_plural = 'Services Details'
+        constraints = [
+            models.UniqueConstraint(fields=['hospital', 'service', 'price'], name='unique_service_detail')
+        ]
 
     def __str__(self):
         return self.hospital.name + " - " + self.service.name

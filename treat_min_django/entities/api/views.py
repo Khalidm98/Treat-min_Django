@@ -41,13 +41,21 @@ class ClinicDetailSchedules(APIView):
 
 
 class ClinicReviewsList(APIView):
-    def get(self, request, clinic_id, detail_id):
+    def check_detail(self, clinic_id, detail_id):
         try:
             detail = ClinicDetail.objects.get(id=detail_id)
         except ClinicDetail.DoesNotExist:
             raise Http404
         if detail.clinic.id != clinic_id:
             raise Http404
+        return detail
+
+    def get(self, request, clinic_id, detail_id):
+        self.check_detail(clinic_id, detail_id)
         reviews = ClinicReview.objects.filter(clinic=detail_id)
         serializer = ClinicReviewSerializer(reviews, many=True)
         return Response({'reviews': serializer.data})
+
+    # def post(self, request, clinic_id, detail_id):
+    #     detail = self.get_detail(clinic_id, detail_id)
+    #     # add using token auth

@@ -28,6 +28,11 @@ class ClinicAppointment(Appointment):
 
     class Meta:
         verbose_name_plural = 'Clinics Appointments'
+        constraints = [
+            models.UniqueConstraint(
+                fields=['user', 'schedule', 'appointment_date'], name='unique_clinic_appointment'
+            )
+        ]
 
 
 class RoomAppointment(Appointment):
@@ -35,6 +40,11 @@ class RoomAppointment(Appointment):
 
     class Meta:
         verbose_name_plural = 'Rooms Appointments'
+        constraints = [
+            models.UniqueConstraint(
+                fields=['user', 'schedule', 'appointment_date'], name='unique_room_appointment'
+            )
+        ]
 
 
 class ServiceAppointment(Appointment):
@@ -42,3 +52,8 @@ class ServiceAppointment(Appointment):
 
     class Meta:
         verbose_name_plural = 'Services Appointments'
+        constraints = [
+            models.UniqueConstraint(
+                fields=['user', 'schedule', 'appointment_date'], name='unique_service_appointment'
+            )
+        ]

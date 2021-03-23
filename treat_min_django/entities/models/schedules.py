@@ -27,6 +27,11 @@ class Schedule(models.Model):
 class ClinicSchedule(Schedule):
     clinic = models.ForeignKey(ClinicDetail, on_delete=models.CASCADE)
 
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['clinic', 'day', 'start', 'end'], name='unique_clinic_schedule')
+        ]
+
     def __str__(self):
         return str(self.clinic) + " - " + super(ClinicSchedule, self).__str__()
 
@@ -34,12 +39,22 @@ class ClinicSchedule(Schedule):
 class RoomSchedule(Schedule):
     room = models.ForeignKey(RoomDetail, on_delete=models.CASCADE)
 
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['room', 'day', 'start', 'end'], name='unique_room_schedule')
+        ]
+
     def __str__(self):
         return str(self.room) + " - " + super(RoomSchedule, self).__str__()
 
 
 class ServiceSchedule(Schedule):
     service = models.ForeignKey(ServiceDetail, on_delete=models.CASCADE)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['service', 'day', 'start', 'end'], name='unique_service_schedule')
+        ]
 
     def __str__(self):
         return str(self.service) + " - " + super(ServiceSchedule, self).__str__()

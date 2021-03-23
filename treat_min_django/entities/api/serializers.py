@@ -1,13 +1,11 @@
-# from collections import OrderedDict
 from rest_framework import serializers
 from ..models import *
-# from ...accounts.models import *
 from ...user_actions.models import *
 
 
 DETAIL_FIELDS = ['id', 'hospital', 'price', 'rating_total', 'rating_users']
 SCHEDULE_FIELDS = ['id', 'day', 'start', 'end']
-REVIEW_FIELDS = ['date', 'rating', 'review']
+REVIEW_FIELDS = ['name', 'date', 'rating', 'review']
 
 
 class ClinicSerializer(serializers.ModelSerializer):
@@ -17,12 +15,14 @@ class ClinicSerializer(serializers.ModelSerializer):
 
 
 class DoctorSerializer(serializers.ModelSerializer):
+    # add photo
     class Meta:
         model = Doctor
         fields = ['name', 'title']
 
 
 class HospitalSerializer(serializers.ModelSerializer):
+    # add photo
     class Meta:
         model = Hospital
         fields = ['name', 'address']
@@ -36,11 +36,6 @@ class ClinicDetailSerializer(serializers.ModelSerializer):
         model = ClinicDetail
         fields = DETAIL_FIELDS + ['doctor']
 
-    # def to_representation(self, instance):
-    #     result = super().to_representation(instance)
-    #     print(result)
-    #     return OrderedDict([(key, result[key]) for key in result if not result[key].schedule_set])
-
 
 class ClinicScheduleSerializer(serializers.ModelSerializer):
     class Meta:
@@ -49,7 +44,10 @@ class ClinicScheduleSerializer(serializers.ModelSerializer):
 
 
 class ClinicReviewSerializer(serializers.ModelSerializer):
-    # add user.user.name
+    name = serializers.SerializerMethodField('get_name')
+
+    def get_name(self, obj):
+        return obj.user.user.name
 
     class Meta:
         model = ClinicReview

@@ -8,7 +8,7 @@ class Review(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     date = models.DateField(auto_now_add=True)
     rating = models.PositiveSmallIntegerField()
-    review = models.TextField(max_length=250)
+    review = models.TextField(max_length=250, null=True)
 
     class Meta:
         abstract = True
