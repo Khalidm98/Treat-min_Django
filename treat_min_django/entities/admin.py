@@ -64,8 +64,8 @@ class HospitalAdmin(admin.ModelAdmin):
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)
-        if hasattr(request.user, 'hospitaladmin'):
-            return qs.filter(id=request.user.hospitaladmin.hospital.id)
+        if hasattr(request.user, 'hospital_admin'):
+            return qs.filter(id=request.user.hospital_admin.hospital.id)
         return qs
 
 
@@ -76,8 +76,8 @@ class ClinicDetailAdmin(admin.ModelAdmin):
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)
-        if hasattr(request.user, 'hospitaladmin'):
-            return qs.filter(hospital=request.user.hospitaladmin.hospital)
+        if hasattr(request.user, 'hospital_admin'):
+            return qs.filter(hospital=request.user.hospital_admin.hospital)
         return qs
 
 
@@ -88,8 +88,8 @@ class RoomDetailAdmin(admin.ModelAdmin):
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)
-        if hasattr(request.user, 'hospitaladmin'):
-            return qs.filter(hospital=request.user.hospitaladmin.hospital)
+        if hasattr(request.user, 'hospital_admin'):
+            return qs.filter(hospital=request.user.hospital_admin.hospital)
         return qs
 
 
@@ -100,8 +100,8 @@ class ServiceDetailAdmin(admin.ModelAdmin):
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)
-        if hasattr(request.user, 'hospitaladmin'):
-            return qs.filter(hospital=request.user.hospitaladmin.hospital)
+        if hasattr(request.user, 'hospital_admin'):
+            return qs.filter(hospital=request.user.hospital_admin.hospital)
         return qs
 
 

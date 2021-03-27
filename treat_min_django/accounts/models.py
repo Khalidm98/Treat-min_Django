@@ -80,7 +80,7 @@ class Admin(models.Model):
 
 
 class HospitalAdmin(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='hospital_admin')
     hospital = models.ForeignKey(Hospital, on_delete=models.RESTRICT)
 
     class Meta:
@@ -106,3 +106,12 @@ class User(models.Model):
 
     def __str__(self):
         return self.user.email + ' - ' + self.user.name
+
+
+class UnverifiedUser(models.Model):
+    email = models.EmailField(unique=True)
+    code = models.PositiveSmallIntegerField()
+    is_verified = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.email

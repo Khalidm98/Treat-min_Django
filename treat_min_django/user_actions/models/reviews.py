@@ -5,10 +5,9 @@ from ...entities.models import ClinicDetail, RoomDetail, ServiceDetail
 
 
 class Review(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
     date = models.DateField(auto_now_add=True)
     rating = models.PositiveSmallIntegerField()
-    review = models.TextField(max_length=250, null=True)
+    review = models.TextField(max_length=250, blank=True, null=True)
 
     class Meta:
         abstract = True
@@ -21,7 +20,8 @@ class Review(models.Model):
 
 
 class ClinicReview(Review):
-    clinic = models.ForeignKey(ClinicDetail, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='clinics_reviews')
+    clinic = models.ForeignKey(ClinicDetail, on_delete=models.CASCADE, related_name='reviews')
 
     class Meta:
         verbose_name_plural = 'Clinics Reviews'
@@ -31,7 +31,8 @@ class ClinicReview(Review):
 
 
 class RoomReview(Review):
-    room = models.ForeignKey(RoomDetail, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='rooms_reviews')
+    room = models.ForeignKey(RoomDetail, on_delete=models.CASCADE, related_name='reviews')
 
     class Meta:
         verbose_name_plural = 'Rooms Reviews'
@@ -41,7 +42,8 @@ class RoomReview(Review):
 
 
 class ServiceReview(Review):
-    service = models.ForeignKey(ServiceDetail, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='services_reviews')
+    service = models.ForeignKey(ServiceDetail, on_delete=models.CASCADE, related_name='reviews')
 
     class Meta:
         verbose_name_plural = 'Services Reviews'

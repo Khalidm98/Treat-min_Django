@@ -25,7 +25,7 @@ class Schedule(models.Model):
 
 
 class ClinicSchedule(Schedule):
-    clinic = models.ForeignKey(ClinicDetail, on_delete=models.CASCADE)
+    clinic = models.ForeignKey(ClinicDetail, on_delete=models.CASCADE, related_name='schedules')
 
     class Meta:
         constraints = [
@@ -37,7 +37,7 @@ class ClinicSchedule(Schedule):
 
 
 class RoomSchedule(Schedule):
-    room = models.ForeignKey(RoomDetail, on_delete=models.CASCADE)
+    room = models.ForeignKey(RoomDetail, on_delete=models.CASCADE, related_name='schedules')
 
     class Meta:
         constraints = [
@@ -49,7 +49,7 @@ class RoomSchedule(Schedule):
 
 
 class ServiceSchedule(Schedule):
-    service = models.ForeignKey(ServiceDetail, on_delete=models.CASCADE)
+    service = models.ForeignKey(ServiceDetail, on_delete=models.CASCADE, related_name='schedules')
 
     class Meta:
         constraints = [

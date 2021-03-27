@@ -1392,29 +1392,29 @@
       <DataType>varchar(50)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="527" parent="170" name="phone">
+    <column id="527" parent="170" name="date_joined">
       <Position>7</Position>
-      <DataType>varchar(11)|0s</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="528" parent="170" name="date_joined">
-      <Position>8</Position>
       <DataType>datetime|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="529" parent="170" name="is_active">
+    <column id="528" parent="170" name="is_active">
+      <Position>8</Position>
+      <DataType>bool|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="529" parent="170" name="is_staff">
       <Position>9</Position>
       <DataType>bool|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="530" parent="170" name="is_staff">
+    <column id="530" parent="170" name="groups_id">
       <Position>10</Position>
-      <DataType>bool|0s</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="531" parent="170" name="groups_id">
-      <Position>11</Position>
       <DataType>integer|0s</DataType>
+    </column>
+    <column id="531" parent="170" name="phone">
+      <Position>11</Position>
+      <DataType>varchar(11)|0s</DataType>
+      <NotNull>1</NotNull>
     </column>
     <index id="532" parent="170" name="sqlite_autoindex_accounts_abstractuser_1">
       <NameSurrogate>1</NameSurrogate>
@@ -1890,903 +1890,1069 @@ model</ColNames>
       <DataType>varchar(50)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <key id="624" parent="182">
+    <index id="624" parent="182" name="sqlite_autoindex_entities_clinic_1">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>name</ColNames>
+      <ColumnCollations></ColumnCollations>
+      <Unique>1</Unique>
+    </index>
+    <key id="625" parent="182">
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="625" parent="183" name="id">
+    <key id="626" parent="182">
+      <ColNames>name</ColNames>
+      <UnderlyingIndexName>sqlite_autoindex_entities_clinic_1</UnderlyingIndexName>
+    </key>
+    <column id="627" parent="183" name="id">
       <Position>1</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="626" parent="183" name="price">
+    <column id="628" parent="183" name="price">
       <Position>2</Position>
       <DataType>smallint unsigned|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="627" parent="183" name="rating_total">
+    <column id="629" parent="183" name="rating_total">
       <Position>3</Position>
       <DataType>integer unsigned|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="628" parent="183" name="rating_users">
+    <column id="630" parent="183" name="rating_users">
       <Position>4</Position>
       <DataType>smallint unsigned|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="629" parent="183" name="clinic_id">
+    <column id="631" parent="183" name="clinic_id">
       <Position>5</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="630" parent="183" name="doctor_id">
+    <column id="632" parent="183" name="doctor_id">
       <Position>6</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="631" parent="183" name="hospital_id">
+    <column id="633" parent="183" name="hospital_id">
       <Position>7</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="632" parent="183" name="entities_clinicdetail_clinic_id_4776be64">
+    <index id="634" parent="183" name="sqlite_autoindex_entities_clinicdetail_1">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>hospital_id
+doctor_id
+price</ColNames>
+      <ColumnCollations></ColumnCollations>
+      <Unique>1</Unique>
+    </index>
+    <index id="635" parent="183" name="entities_clinicdetail_clinic_id_4776be64">
       <ColNames>clinic_id</ColNames>
       <ColumnCollations></ColumnCollations>
     </index>
-    <index id="633" parent="183" name="entities_clinicdetail_doctor_id_0ff301bb">
+    <index id="636" parent="183" name="entities_clinicdetail_doctor_id_0ff301bb">
       <ColNames>doctor_id</ColNames>
       <ColumnCollations></ColumnCollations>
     </index>
-    <index id="634" parent="183" name="entities_clinicdetail_hospital_id_098d1cb1">
+    <index id="637" parent="183" name="entities_clinicdetail_hospital_id_098d1cb1">
       <ColNames>hospital_id</ColNames>
       <ColumnCollations></ColumnCollations>
     </index>
-    <key id="635" parent="183">
+    <key id="638" parent="183">
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="636" parent="183">
+    <key id="639" parent="183" name="unique_clinic_detail">
+      <ColNames>hospital_id
+doctor_id
+price</ColNames>
+      <UnderlyingIndexName>sqlite_autoindex_entities_clinicdetail_1</UnderlyingIndexName>
+    </key>
+    <foreign-key id="640" parent="183">
       <ColNames>clinic_id</ColNames>
       <RefTableName>entities_clinic</RefTableName>
       <RefColNames>id</RefColNames>
       <Deferrable>1</Deferrable>
       <InitiallyDeferred>1</InitiallyDeferred>
     </foreign-key>
-    <foreign-key id="637" parent="183">
+    <foreign-key id="641" parent="183">
       <ColNames>doctor_id</ColNames>
       <RefTableName>entities_doctor</RefTableName>
       <RefColNames>id</RefColNames>
       <Deferrable>1</Deferrable>
       <InitiallyDeferred>1</InitiallyDeferred>
     </foreign-key>
-    <foreign-key id="638" parent="183">
+    <foreign-key id="642" parent="183">
       <ColNames>hospital_id</ColNames>
       <RefTableName>entities_hospital</RefTableName>
       <RefColNames>id</RefColNames>
       <Deferrable>1</Deferrable>
       <InitiallyDeferred>1</InitiallyDeferred>
     </foreign-key>
-    <check id="639" parent="183">
+    <check id="643" parent="183">
       <Predicate>&quot;price&quot; &gt;= 0</Predicate>
     </check>
-    <check id="640" parent="183">
+    <check id="644" parent="183">
       <Predicate>&quot;rating_total&quot; &gt;= 0</Predicate>
     </check>
-    <check id="641" parent="183">
+    <check id="645" parent="183">
       <Predicate>&quot;rating_users&quot; &gt;= 0</Predicate>
     </check>
-    <column id="642" parent="184" name="id">
+    <column id="646" parent="184" name="id">
       <Position>1</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="643" parent="184" name="day">
+    <column id="647" parent="184" name="day">
       <Position>2</Position>
       <DataType>varchar(3)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="644" parent="184" name="start">
+    <column id="648" parent="184" name="start">
       <Position>3</Position>
       <DataType>time|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="645" parent="184" name="end">
+    <column id="649" parent="184" name="end">
       <Position>4</Position>
       <DataType>time|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="646" parent="184" name="clinic_id">
+    <column id="650" parent="184" name="clinic_id">
       <Position>5</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="647" parent="184" name="entities_clinicschedule_clinic_id_32a265ba">
+    <index id="651" parent="184" name="sqlite_autoindex_entities_clinicschedule_1">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>clinic_id
+day
+start
+end</ColNames>
+      <ColumnCollations></ColumnCollations>
+      <Unique>1</Unique>
+    </index>
+    <index id="652" parent="184" name="entities_clinicschedule_clinic_id_32a265ba">
       <ColNames>clinic_id</ColNames>
       <ColumnCollations></ColumnCollations>
     </index>
-    <key id="648" parent="184">
+    <key id="653" parent="184">
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="649" parent="184">
+    <key id="654" parent="184" name="unique_clinic_schedule">
+      <ColNames>clinic_id
+day
+start
+end</ColNames>
+      <UnderlyingIndexName>sqlite_autoindex_entities_clinicschedule_1</UnderlyingIndexName>
+    </key>
+    <foreign-key id="655" parent="184">
       <ColNames>clinic_id</ColNames>
       <RefTableName>entities_clinicdetail</RefTableName>
       <RefColNames>id</RefColNames>
       <Deferrable>1</Deferrable>
       <InitiallyDeferred>1</InitiallyDeferred>
     </foreign-key>
-    <column id="650" parent="185" name="id">
+    <column id="656" parent="185" name="id">
       <Position>1</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="651" parent="185" name="name">
+    <column id="657" parent="185" name="name">
       <Position>2</Position>
       <DataType>varchar(50)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="652" parent="185" name="title">
+    <column id="658" parent="185" name="title">
       <Position>3</Position>
       <DataType>varchar(50)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="653" parent="185" name="gender">
+    <column id="659" parent="185" name="gender">
       <Position>4</Position>
       <DataType>varchar(1)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="654" parent="185" name="phone">
+    <column id="660" parent="185" name="phone">
       <Position>5</Position>
       <DataType>varchar(11)|0s</DataType>
     </column>
-    <column id="655" parent="185" name="photo">
+    <column id="661" parent="185" name="photo">
       <Position>6</Position>
       <DataType>varchar(100)|0s</DataType>
     </column>
-    <column id="656" parent="185" name="speciality_id">
+    <column id="662" parent="185" name="speciality_id">
       <Position>7</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="657" parent="185" name="entities_doctor_speciality_id_cb152efd">
+    <index id="663" parent="185" name="entities_doctor_speciality_id_cb152efd">
       <ColNames>speciality_id</ColNames>
       <ColumnCollations></ColumnCollations>
     </index>
-    <key id="658" parent="185">
+    <key id="664" parent="185">
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="659" parent="185">
+    <foreign-key id="665" parent="185">
       <ColNames>speciality_id</ColNames>
       <RefTableName>entities_clinic</RefTableName>
       <RefColNames>id</RefColNames>
       <Deferrable>1</Deferrable>
       <InitiallyDeferred>1</InitiallyDeferred>
     </foreign-key>
-    <column id="660" parent="186" name="id">
+    <column id="666" parent="186" name="id">
       <Position>1</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="661" parent="186" name="name">
+    <column id="667" parent="186" name="phone">
       <Position>2</Position>
-      <DataType>varchar(50)|0s</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="662" parent="186" name="phone">
-      <Position>3</Position>
       <DataType>varchar(11)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="663" parent="186" name="address">
-      <Position>4</Position>
+    <column id="668" parent="186" name="address">
+      <Position>3</Position>
       <DataType>varchar(100)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="664" parent="186" name="latitude">
+    <column id="669" parent="186" name="latitude">
+      <Position>4</Position>
+      <DataType>decimal|0s</DataType>
+    </column>
+    <column id="670" parent="186" name="longitude">
       <Position>5</Position>
       <DataType>decimal|0s</DataType>
     </column>
-    <column id="665" parent="186" name="longitude">
+    <column id="671" parent="186" name="photo">
       <Position>6</Position>
-      <DataType>decimal|0s</DataType>
-    </column>
-    <column id="666" parent="186" name="photo">
-      <Position>7</Position>
       <DataType>varchar(100)|0s</DataType>
     </column>
-    <key id="667" parent="186">
+    <column id="672" parent="186" name="name">
+      <Position>7</Position>
+      <DataType>varchar(50)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="673" parent="186" name="sqlite_autoindex_entities_hospital_1">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>name</ColNames>
+      <ColumnCollations></ColumnCollations>
+      <Unique>1</Unique>
+    </index>
+    <key id="674" parent="186">
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="668" parent="187" name="id">
+    <key id="675" parent="186">
+      <ColNames>name</ColNames>
+      <UnderlyingIndexName>sqlite_autoindex_entities_hospital_1</UnderlyingIndexName>
+    </key>
+    <column id="676" parent="187" name="id">
       <Position>1</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="669" parent="187" name="name">
+    <column id="677" parent="187" name="name">
       <Position>2</Position>
       <DataType>varchar(50)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <key id="670" parent="187">
+    <index id="678" parent="187" name="sqlite_autoindex_entities_room_1">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>name</ColNames>
+      <ColumnCollations></ColumnCollations>
+      <Unique>1</Unique>
+    </index>
+    <key id="679" parent="187">
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="671" parent="188" name="id">
+    <key id="680" parent="187">
+      <ColNames>name</ColNames>
+      <UnderlyingIndexName>sqlite_autoindex_entities_room_1</UnderlyingIndexName>
+    </key>
+    <column id="681" parent="188" name="id">
       <Position>1</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="672" parent="188" name="price">
+    <column id="682" parent="188" name="price">
       <Position>2</Position>
       <DataType>smallint unsigned|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="673" parent="188" name="rating_total">
+    <column id="683" parent="188" name="rating_total">
       <Position>3</Position>
       <DataType>integer unsigned|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="674" parent="188" name="rating_users">
+    <column id="684" parent="188" name="rating_users">
       <Position>4</Position>
       <DataType>smallint unsigned|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="675" parent="188" name="hospital_id">
+    <column id="685" parent="188" name="hospital_id">
       <Position>5</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="676" parent="188" name="room_id">
+    <column id="686" parent="188" name="room_id">
       <Position>6</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="677" parent="188" name="entities_roomdetail_hospital_id_29bdccfa">
+    <index id="687" parent="188" name="sqlite_autoindex_entities_roomdetail_1">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>hospital_id
+room_id
+price</ColNames>
+      <ColumnCollations></ColumnCollations>
+      <Unique>1</Unique>
+    </index>
+    <index id="688" parent="188" name="entities_roomdetail_hospital_id_29bdccfa">
       <ColNames>hospital_id</ColNames>
       <ColumnCollations></ColumnCollations>
     </index>
-    <index id="678" parent="188" name="entities_roomdetail_room_id_0bc77312">
+    <index id="689" parent="188" name="entities_roomdetail_room_id_0bc77312">
       <ColNames>room_id</ColNames>
       <ColumnCollations></ColumnCollations>
     </index>
-    <key id="679" parent="188">
+    <key id="690" parent="188">
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="680" parent="188">
+    <key id="691" parent="188" name="unique_room_detail">
+      <ColNames>hospital_id
+room_id
+price</ColNames>
+      <UnderlyingIndexName>sqlite_autoindex_entities_roomdetail_1</UnderlyingIndexName>
+    </key>
+    <foreign-key id="692" parent="188">
       <ColNames>hospital_id</ColNames>
       <RefTableName>entities_hospital</RefTableName>
       <RefColNames>id</RefColNames>
       <Deferrable>1</Deferrable>
       <InitiallyDeferred>1</InitiallyDeferred>
     </foreign-key>
-    <foreign-key id="681" parent="188">
+    <foreign-key id="693" parent="188">
       <ColNames>room_id</ColNames>
       <RefTableName>entities_room</RefTableName>
       <RefColNames>id</RefColNames>
       <Deferrable>1</Deferrable>
       <InitiallyDeferred>1</InitiallyDeferred>
     </foreign-key>
-    <check id="682" parent="188">
+    <check id="694" parent="188">
       <Predicate>&quot;price&quot; &gt;= 0</Predicate>
     </check>
-    <check id="683" parent="188">
+    <check id="695" parent="188">
       <Predicate>&quot;rating_total&quot; &gt;= 0</Predicate>
     </check>
-    <check id="684" parent="188">
+    <check id="696" parent="188">
       <Predicate>&quot;rating_users&quot; &gt;= 0</Predicate>
     </check>
-    <column id="685" parent="189" name="id">
+    <column id="697" parent="189" name="id">
       <Position>1</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="686" parent="189" name="day">
+    <column id="698" parent="189" name="day">
       <Position>2</Position>
       <DataType>varchar(3)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="687" parent="189" name="start">
+    <column id="699" parent="189" name="start">
       <Position>3</Position>
       <DataType>time|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="688" parent="189" name="end">
+    <column id="700" parent="189" name="end">
       <Position>4</Position>
       <DataType>time|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="689" parent="189" name="room_id">
+    <column id="701" parent="189" name="room_id">
       <Position>5</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="690" parent="189" name="entities_roomschedule_room_id_8129fa31">
+    <index id="702" parent="189" name="sqlite_autoindex_entities_roomschedule_1">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>room_id
+day
+start
+end</ColNames>
+      <ColumnCollations></ColumnCollations>
+      <Unique>1</Unique>
+    </index>
+    <index id="703" parent="189" name="entities_roomschedule_room_id_8129fa31">
       <ColNames>room_id</ColNames>
       <ColumnCollations></ColumnCollations>
     </index>
-    <key id="691" parent="189">
+    <key id="704" parent="189">
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="692" parent="189">
+    <key id="705" parent="189" name="unique_room_schedule">
+      <ColNames>room_id
+day
+start
+end</ColNames>
+      <UnderlyingIndexName>sqlite_autoindex_entities_roomschedule_1</UnderlyingIndexName>
+    </key>
+    <foreign-key id="706" parent="189">
       <ColNames>room_id</ColNames>
       <RefTableName>entities_roomdetail</RefTableName>
       <RefColNames>id</RefColNames>
       <Deferrable>1</Deferrable>
       <InitiallyDeferred>1</InitiallyDeferred>
     </foreign-key>
-    <column id="693" parent="190" name="id">
+    <column id="707" parent="190" name="id">
       <Position>1</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="694" parent="190" name="name">
+    <column id="708" parent="190" name="name">
       <Position>2</Position>
       <DataType>varchar(50)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <key id="695" parent="190">
+    <index id="709" parent="190" name="sqlite_autoindex_entities_service_1">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>name</ColNames>
+      <ColumnCollations></ColumnCollations>
+      <Unique>1</Unique>
+    </index>
+    <key id="710" parent="190">
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="696" parent="191" name="id">
+    <key id="711" parent="190">
+      <ColNames>name</ColNames>
+      <UnderlyingIndexName>sqlite_autoindex_entities_service_1</UnderlyingIndexName>
+    </key>
+    <column id="712" parent="191" name="id">
       <Position>1</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="697" parent="191" name="price">
+    <column id="713" parent="191" name="price">
       <Position>2</Position>
       <DataType>smallint unsigned|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="698" parent="191" name="rating_total">
+    <column id="714" parent="191" name="rating_total">
       <Position>3</Position>
       <DataType>integer unsigned|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="699" parent="191" name="rating_users">
+    <column id="715" parent="191" name="rating_users">
       <Position>4</Position>
       <DataType>smallint unsigned|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="700" parent="191" name="hospital_id">
+    <column id="716" parent="191" name="hospital_id">
       <Position>5</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="701" parent="191" name="service_id">
+    <column id="717" parent="191" name="service_id">
       <Position>6</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="702" parent="191" name="entities_servicedetail_hospital_id_56399f03">
+    <index id="718" parent="191" name="sqlite_autoindex_entities_servicedetail_1">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>hospital_id
+service_id
+price</ColNames>
+      <ColumnCollations></ColumnCollations>
+      <Unique>1</Unique>
+    </index>
+    <index id="719" parent="191" name="entities_servicedetail_hospital_id_56399f03">
       <ColNames>hospital_id</ColNames>
       <ColumnCollations></ColumnCollations>
     </index>
-    <index id="703" parent="191" name="entities_servicedetail_service_id_13f65318">
+    <index id="720" parent="191" name="entities_servicedetail_service_id_13f65318">
       <ColNames>service_id</ColNames>
       <ColumnCollations></ColumnCollations>
     </index>
-    <key id="704" parent="191">
+    <key id="721" parent="191">
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="705" parent="191">
+    <key id="722" parent="191" name="unique_service_detail">
+      <ColNames>hospital_id
+service_id
+price</ColNames>
+      <UnderlyingIndexName>sqlite_autoindex_entities_servicedetail_1</UnderlyingIndexName>
+    </key>
+    <foreign-key id="723" parent="191">
       <ColNames>hospital_id</ColNames>
       <RefTableName>entities_hospital</RefTableName>
       <RefColNames>id</RefColNames>
       <Deferrable>1</Deferrable>
       <InitiallyDeferred>1</InitiallyDeferred>
     </foreign-key>
-    <foreign-key id="706" parent="191">
+    <foreign-key id="724" parent="191">
       <ColNames>service_id</ColNames>
       <RefTableName>entities_service</RefTableName>
       <RefColNames>id</RefColNames>
       <Deferrable>1</Deferrable>
       <InitiallyDeferred>1</InitiallyDeferred>
     </foreign-key>
-    <check id="707" parent="191">
+    <check id="725" parent="191">
       <Predicate>&quot;price&quot; &gt;= 0</Predicate>
     </check>
-    <check id="708" parent="191">
+    <check id="726" parent="191">
       <Predicate>&quot;rating_total&quot; &gt;= 0</Predicate>
     </check>
-    <check id="709" parent="191">
+    <check id="727" parent="191">
       <Predicate>&quot;rating_users&quot; &gt;= 0</Predicate>
     </check>
-    <column id="710" parent="192" name="id">
+    <column id="728" parent="192" name="id">
       <Position>1</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="711" parent="192" name="day">
+    <column id="729" parent="192" name="day">
       <Position>2</Position>
       <DataType>varchar(3)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="712" parent="192" name="start">
+    <column id="730" parent="192" name="start">
       <Position>3</Position>
       <DataType>time|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="713" parent="192" name="end">
+    <column id="731" parent="192" name="end">
       <Position>4</Position>
       <DataType>time|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="714" parent="192" name="service_id">
+    <column id="732" parent="192" name="service_id">
       <Position>5</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="715" parent="192" name="entities_serviceschedule_service_id_2a9e8aa8">
+    <index id="733" parent="192" name="sqlite_autoindex_entities_serviceschedule_1">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>service_id
+day
+start
+end</ColNames>
+      <ColumnCollations></ColumnCollations>
+      <Unique>1</Unique>
+    </index>
+    <index id="734" parent="192" name="entities_serviceschedule_service_id_2a9e8aa8">
       <ColNames>service_id</ColNames>
       <ColumnCollations></ColumnCollations>
     </index>
-    <key id="716" parent="192">
+    <key id="735" parent="192">
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="717" parent="192">
+    <key id="736" parent="192" name="unique_service_schedule">
+      <ColNames>service_id
+day
+start
+end</ColNames>
+      <UnderlyingIndexName>sqlite_autoindex_entities_serviceschedule_1</UnderlyingIndexName>
+    </key>
+    <foreign-key id="737" parent="192">
       <ColNames>service_id</ColNames>
       <RefTableName>entities_servicedetail</RefTableName>
       <RefColNames>id</RefColNames>
       <Deferrable>1</Deferrable>
       <InitiallyDeferred>1</InitiallyDeferred>
     </foreign-key>
-    <column id="718" parent="193" name="digest">
+    <column id="738" parent="193" name="digest">
       <Position>1</Position>
       <DataType>varchar(128)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="719" parent="193" name="salt">
+    <column id="739" parent="193" name="salt">
       <Position>2</Position>
       <DataType>varchar(16)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="720" parent="193" name="created">
+    <column id="740" parent="193" name="created">
       <Position>3</Position>
       <DataType>datetime|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="721" parent="193" name="user_id">
+    <column id="741" parent="193" name="user_id">
       <Position>4</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="722" parent="193" name="expiry">
+    <column id="742" parent="193" name="expiry">
       <Position>5</Position>
       <DataType>datetime|0s</DataType>
     </column>
-    <column id="723" parent="193" name="token_key">
+    <column id="743" parent="193" name="token_key">
       <Position>6</Position>
       <DataType>varchar(8)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="724" parent="193" name="sqlite_autoindex_knox_authtoken_1">
+    <index id="744" parent="193" name="sqlite_autoindex_knox_authtoken_1">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>digest</ColNames>
       <ColumnCollations></ColumnCollations>
       <Unique>1</Unique>
     </index>
-    <index id="725" parent="193" name="sqlite_autoindex_knox_authtoken_2">
+    <index id="745" parent="193" name="sqlite_autoindex_knox_authtoken_2">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>salt</ColNames>
       <ColumnCollations></ColumnCollations>
       <Unique>1</Unique>
     </index>
-    <index id="726" parent="193" name="knox_authtoken_user_id_e5a5d899">
+    <index id="746" parent="193" name="knox_authtoken_user_id_e5a5d899">
       <ColNames>user_id</ColNames>
       <ColumnCollations></ColumnCollations>
     </index>
-    <index id="727" parent="193" name="knox_authtoken_token_key_8f4f7d47">
+    <index id="747" parent="193" name="knox_authtoken_token_key_8f4f7d47">
       <ColNames>token_key</ColNames>
       <ColumnCollations></ColumnCollations>
     </index>
-    <key id="728" parent="193">
+    <key id="748" parent="193">
       <ColNames>digest</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>sqlite_autoindex_knox_authtoken_1</UnderlyingIndexName>
     </key>
-    <key id="729" parent="193">
+    <key id="749" parent="193">
       <ColNames>salt</ColNames>
       <UnderlyingIndexName>sqlite_autoindex_knox_authtoken_2</UnderlyingIndexName>
     </key>
-    <foreign-key id="730" parent="193">
+    <foreign-key id="750" parent="193">
       <ColNames>user_id</ColNames>
       <RefTableName>accounts_abstractuser</RefTableName>
       <RefColNames>id</RefColNames>
       <Deferrable>1</Deferrable>
       <InitiallyDeferred>1</InitiallyDeferred>
     </foreign-key>
-    <column id="731" parent="194" name="type">
+    <column id="751" parent="194" name="type">
       <Position>1</Position>
       <DataType>text|0s</DataType>
     </column>
-    <column id="732" parent="194" name="name">
+    <column id="752" parent="194" name="name">
       <Position>2</Position>
       <DataType>text|0s</DataType>
     </column>
-    <column id="733" parent="194" name="tbl_name">
+    <column id="753" parent="194" name="tbl_name">
       <Position>3</Position>
       <DataType>text|0s</DataType>
     </column>
-    <column id="734" parent="194" name="rootpage">
+    <column id="754" parent="194" name="rootpage">
       <Position>4</Position>
       <DataType>int|0s</DataType>
     </column>
-    <column id="735" parent="194" name="sql">
+    <column id="755" parent="194" name="sql">
       <Position>5</Position>
       <DataType>text|0s</DataType>
     </column>
-    <column id="736" parent="195" name="name">
+    <column id="756" parent="195" name="name">
       <Position>1</Position>
     </column>
-    <column id="737" parent="195" name="seq">
+    <column id="757" parent="195" name="seq">
       <Position>2</Position>
     </column>
-    <column id="738" parent="196" name="id">
+    <column id="758" parent="196" name="id">
       <Position>1</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="739" parent="196" name="status">
+    <column id="759" parent="196" name="status">
       <Position>2</Position>
       <DataType>varchar(1)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="740" parent="196" name="booking_date">
+    <column id="760" parent="196" name="booking_date">
       <Position>3</Position>
       <DataType>datetime|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="741" parent="196" name="appointment_date">
+    <column id="761" parent="196" name="appointment_date">
       <Position>4</Position>
       <DataType>date|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="742" parent="196" name="schedule_id">
+    <column id="762" parent="196" name="schedule_id">
       <Position>5</Position>
       <DataType>integer|0s</DataType>
-      <NotNull>1</NotNull>
     </column>
-    <column id="743" parent="196" name="user_id">
+    <column id="763" parent="196" name="user_id">
       <Position>6</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="744" parent="196" name="user_actions_clinicappointment_schedule_id_2b8608f4">
+    <index id="764" parent="196" name="sqlite_autoindex_user_actions_clinicappointment_1">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>user_id
+schedule_id
+appointment_date</ColNames>
+      <ColumnCollations></ColumnCollations>
+      <Unique>1</Unique>
+    </index>
+    <index id="765" parent="196" name="user_actions_clinicappointment_schedule_id_2b8608f4">
       <ColNames>schedule_id</ColNames>
       <ColumnCollations></ColumnCollations>
     </index>
-    <index id="745" parent="196" name="user_actions_clinicappointment_user_id_bc46cc24">
+    <index id="766" parent="196" name="user_actions_clinicappointment_user_id_bc46cc24">
       <ColNames>user_id</ColNames>
       <ColumnCollations></ColumnCollations>
     </index>
-    <key id="746" parent="196">
+    <key id="767" parent="196">
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="747" parent="196">
+    <key id="768" parent="196" name="unique_clinic_appointment">
+      <ColNames>user_id
+schedule_id
+appointment_date</ColNames>
+      <UnderlyingIndexName>sqlite_autoindex_user_actions_clinicappointment_1</UnderlyingIndexName>
+    </key>
+    <foreign-key id="769" parent="196">
       <ColNames>schedule_id</ColNames>
       <RefTableName>entities_clinicschedule</RefTableName>
       <RefColNames>id</RefColNames>
       <Deferrable>1</Deferrable>
       <InitiallyDeferred>1</InitiallyDeferred>
     </foreign-key>
-    <foreign-key id="748" parent="196">
+    <foreign-key id="770" parent="196">
       <ColNames>user_id</ColNames>
       <RefTableName>accounts_user</RefTableName>
       <RefColNames>id</RefColNames>
       <Deferrable>1</Deferrable>
       <InitiallyDeferred>1</InitiallyDeferred>
     </foreign-key>
-    <column id="749" parent="197" name="id">
+    <column id="771" parent="197" name="id">
       <Position>1</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="750" parent="197" name="date">
+    <column id="772" parent="197" name="date">
       <Position>2</Position>
       <DataType>date|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="751" parent="197" name="rating">
+    <column id="773" parent="197" name="rating">
       <Position>3</Position>
       <DataType>smallint unsigned|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="752" parent="197" name="review">
+    <column id="774" parent="197" name="clinic_id">
       <Position>4</Position>
-      <DataType>text|0s</DataType>
+      <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="753" parent="197" name="clinic_id">
+    <column id="775" parent="197" name="user_id">
       <Position>5</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="754" parent="197" name="user_id">
+    <column id="776" parent="197" name="review">
       <Position>6</Position>
-      <DataType>integer|0s</DataType>
-      <NotNull>1</NotNull>
+      <DataType>text|0s</DataType>
     </column>
-    <index id="755" parent="197" name="user_actions_clinicreview_clinic_id_95572b6e">
+    <index id="777" parent="197" name="user_actions_clinicreview_clinic_id_95572b6e">
       <ColNames>clinic_id</ColNames>
       <ColumnCollations></ColumnCollations>
     </index>
-    <index id="756" parent="197" name="user_actions_clinicreview_user_id_eff23909">
+    <index id="778" parent="197" name="user_actions_clinicreview_user_id_eff23909">
       <ColNames>user_id</ColNames>
       <ColumnCollations></ColumnCollations>
     </index>
-    <key id="757" parent="197">
+    <key id="779" parent="197">
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="758" parent="197">
+    <foreign-key id="780" parent="197">
       <ColNames>clinic_id</ColNames>
       <RefTableName>entities_clinicdetail</RefTableName>
       <RefColNames>id</RefColNames>
       <Deferrable>1</Deferrable>
       <InitiallyDeferred>1</InitiallyDeferred>
     </foreign-key>
-    <foreign-key id="759" parent="197">
+    <foreign-key id="781" parent="197">
       <ColNames>user_id</ColNames>
       <RefTableName>accounts_user</RefTableName>
       <RefColNames>id</RefColNames>
       <Deferrable>1</Deferrable>
       <InitiallyDeferred>1</InitiallyDeferred>
     </foreign-key>
-    <check id="760" parent="197">
+    <check id="782" parent="197">
       <Predicate>&quot;rating&quot; &gt;= 0</Predicate>
     </check>
-    <column id="761" parent="198" name="id">
+    <column id="783" parent="198" name="id">
       <Position>1</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="762" parent="198" name="status">
+    <column id="784" parent="198" name="status">
       <Position>2</Position>
       <DataType>varchar(1)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="763" parent="198" name="booking_date">
+    <column id="785" parent="198" name="booking_date">
       <Position>3</Position>
       <DataType>datetime|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="764" parent="198" name="appointment_date">
+    <column id="786" parent="198" name="appointment_date">
       <Position>4</Position>
       <DataType>date|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="765" parent="198" name="schedule_id">
+    <column id="787" parent="198" name="schedule_id">
       <Position>5</Position>
       <DataType>integer|0s</DataType>
-      <NotNull>1</NotNull>
     </column>
-    <column id="766" parent="198" name="user_id">
+    <column id="788" parent="198" name="user_id">
       <Position>6</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="767" parent="198" name="user_actions_roomappointment_schedule_id_ae42877d">
+    <index id="789" parent="198" name="sqlite_autoindex_user_actions_roomappointment_1">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>user_id
+schedule_id
+appointment_date</ColNames>
+      <ColumnCollations></ColumnCollations>
+      <Unique>1</Unique>
+    </index>
+    <index id="790" parent="198" name="user_actions_roomappointment_schedule_id_ae42877d">
       <ColNames>schedule_id</ColNames>
       <ColumnCollations></ColumnCollations>
     </index>
-    <index id="768" parent="198" name="user_actions_roomappointment_user_id_4dac3565">
+    <index id="791" parent="198" name="user_actions_roomappointment_user_id_4dac3565">
       <ColNames>user_id</ColNames>
       <ColumnCollations></ColumnCollations>
     </index>
-    <key id="769" parent="198">
+    <key id="792" parent="198">
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="770" parent="198">
+    <key id="793" parent="198" name="unique_room_appointment">
+      <ColNames>user_id
+schedule_id
+appointment_date</ColNames>
+      <UnderlyingIndexName>sqlite_autoindex_user_actions_roomappointment_1</UnderlyingIndexName>
+    </key>
+    <foreign-key id="794" parent="198">
       <ColNames>schedule_id</ColNames>
       <RefTableName>entities_roomschedule</RefTableName>
       <RefColNames>id</RefColNames>
       <Deferrable>1</Deferrable>
       <InitiallyDeferred>1</InitiallyDeferred>
     </foreign-key>
-    <foreign-key id="771" parent="198">
+    <foreign-key id="795" parent="198">
       <ColNames>user_id</ColNames>
       <RefTableName>accounts_user</RefTableName>
       <RefColNames>id</RefColNames>
       <Deferrable>1</Deferrable>
       <InitiallyDeferred>1</InitiallyDeferred>
     </foreign-key>
-    <column id="772" parent="199" name="id">
+    <column id="796" parent="199" name="id">
       <Position>1</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="773" parent="199" name="date">
+    <column id="797" parent="199" name="date">
       <Position>2</Position>
       <DataType>date|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="774" parent="199" name="rating">
+    <column id="798" parent="199" name="rating">
       <Position>3</Position>
       <DataType>smallint unsigned|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="775" parent="199" name="review">
+    <column id="799" parent="199" name="room_id">
       <Position>4</Position>
-      <DataType>text|0s</DataType>
+      <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="776" parent="199" name="room_id">
+    <column id="800" parent="199" name="user_id">
       <Position>5</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="777" parent="199" name="user_id">
+    <column id="801" parent="199" name="review">
       <Position>6</Position>
-      <DataType>integer|0s</DataType>
-      <NotNull>1</NotNull>
+      <DataType>text|0s</DataType>
     </column>
-    <index id="778" parent="199" name="user_actions_roomreview_room_id_13f9accc">
+    <index id="802" parent="199" name="user_actions_roomreview_room_id_13f9accc">
       <ColNames>room_id</ColNames>
       <ColumnCollations></ColumnCollations>
     </index>
-    <index id="779" parent="199" name="user_actions_roomreview_user_id_4bcf603d">
+    <index id="803" parent="199" name="user_actions_roomreview_user_id_4bcf603d">
       <ColNames>user_id</ColNames>
       <ColumnCollations></ColumnCollations>
     </index>
-    <key id="780" parent="199">
+    <key id="804" parent="199">
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="781" parent="199">
+    <foreign-key id="805" parent="199">
       <ColNames>room_id</ColNames>
       <RefTableName>entities_roomdetail</RefTableName>
       <RefColNames>id</RefColNames>
       <Deferrable>1</Deferrable>
       <InitiallyDeferred>1</InitiallyDeferred>
     </foreign-key>
-    <foreign-key id="782" parent="199">
+    <foreign-key id="806" parent="199">
       <ColNames>user_id</ColNames>
       <RefTableName>accounts_user</RefTableName>
       <RefColNames>id</RefColNames>
       <Deferrable>1</Deferrable>
       <InitiallyDeferred>1</InitiallyDeferred>
     </foreign-key>
-    <check id="783" parent="199">
+    <check id="807" parent="199">
       <Predicate>&quot;rating&quot; &gt;= 0</Predicate>
     </check>
-    <column id="784" parent="200" name="id">
+    <column id="808" parent="200" name="id">
       <Position>1</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="785" parent="200" name="status">
+    <column id="809" parent="200" name="status">
       <Position>2</Position>
       <DataType>varchar(1)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="786" parent="200" name="booking_date">
+    <column id="810" parent="200" name="booking_date">
       <Position>3</Position>
       <DataType>datetime|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="787" parent="200" name="appointment_date">
+    <column id="811" parent="200" name="appointment_date">
       <Position>4</Position>
       <DataType>date|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="788" parent="200" name="schedule_id">
+    <column id="812" parent="200" name="schedule_id">
       <Position>5</Position>
       <DataType>integer|0s</DataType>
-      <NotNull>1</NotNull>
     </column>
-    <column id="789" parent="200" name="user_id">
+    <column id="813" parent="200" name="user_id">
       <Position>6</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="790" parent="200" name="user_actions_serviceappointment_schedule_id_c5bfb7bd">
+    <index id="814" parent="200" name="sqlite_autoindex_user_actions_serviceappointment_1">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>user_id
+schedule_id
+appointment_date</ColNames>
+      <ColumnCollations></ColumnCollations>
+      <Unique>1</Unique>
+    </index>
+    <index id="815" parent="200" name="user_actions_serviceappointment_schedule_id_c5bfb7bd">
       <ColNames>schedule_id</ColNames>
       <ColumnCollations></ColumnCollations>
     </index>
-    <index id="791" parent="200" name="user_actions_serviceappointment_user_id_d6463b78">
+    <index id="816" parent="200" name="user_actions_serviceappointment_user_id_d6463b78">
       <ColNames>user_id</ColNames>
       <ColumnCollations></ColumnCollations>
     </index>
-    <key id="792" parent="200">
+    <key id="817" parent="200">
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="793" parent="200">
+    <key id="818" parent="200" name="unique_service_appointment">
+      <ColNames>user_id
+schedule_id
+appointment_date</ColNames>
+      <UnderlyingIndexName>sqlite_autoindex_user_actions_serviceappointment_1</UnderlyingIndexName>
+    </key>
+    <foreign-key id="819" parent="200">
       <ColNames>schedule_id</ColNames>
       <RefTableName>entities_serviceschedule</RefTableName>
       <RefColNames>id</RefColNames>
       <Deferrable>1</Deferrable>
       <InitiallyDeferred>1</InitiallyDeferred>
     </foreign-key>
-    <foreign-key id="794" parent="200">
+    <foreign-key id="820" parent="200">
       <ColNames>user_id</ColNames>
       <RefTableName>accounts_user</RefTableName>
       <RefColNames>id</RefColNames>
       <Deferrable>1</Deferrable>
       <InitiallyDeferred>1</InitiallyDeferred>
     </foreign-key>
-    <column id="795" parent="201" name="id">
+    <column id="821" parent="201" name="id">
       <Position>1</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="796" parent="201" name="date">
+    <column id="822" parent="201" name="date">
       <Position>2</Position>
       <DataType>date|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="797" parent="201" name="rating">
+    <column id="823" parent="201" name="rating">
       <Position>3</Position>
       <DataType>smallint unsigned|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="798" parent="201" name="review">
+    <column id="824" parent="201" name="service_id">
       <Position>4</Position>
-      <DataType>text|0s</DataType>
+      <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="799" parent="201" name="service_id">
+    <column id="825" parent="201" name="user_id">
       <Position>5</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="800" parent="201" name="user_id">
+    <column id="826" parent="201" name="review">
       <Position>6</Position>
-      <DataType>integer|0s</DataType>
-      <NotNull>1</NotNull>
+      <DataType>text|0s</DataType>
     </column>
-    <index id="801" parent="201" name="user_actions_servicereview_service_id_10ef4095">
+    <index id="827" parent="201" name="user_actions_servicereview_service_id_10ef4095">
       <ColNames>service_id</ColNames>
       <ColumnCollations></ColumnCollations>
     </index>
-    <index id="802" parent="201" name="user_actions_servicereview_user_id_d4984711">
+    <index id="828" parent="201" name="user_actions_servicereview_user_id_d4984711">
       <ColNames>user_id</ColNames>
       <ColumnCollations></ColumnCollations>
     </index>
-    <key id="803" parent="201">
+    <key id="829" parent="201">
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="804" parent="201">
+    <foreign-key id="830" parent="201">
       <ColNames>service_id</ColNames>
       <RefTableName>entities_servicedetail</RefTableName>
       <RefColNames>id</RefColNames>
       <Deferrable>1</Deferrable>
       <InitiallyDeferred>1</InitiallyDeferred>
     </foreign-key>
-    <foreign-key id="805" parent="201">
+    <foreign-key id="831" parent="201">
       <ColNames>user_id</ColNames>
       <RefTableName>accounts_user</RefTableName>
       <RefColNames>id</RefColNames>
       <Deferrable>1</Deferrable>
       <InitiallyDeferred>1</InitiallyDeferred>
     </foreign-key>
-    <check id="806" parent="201">
+    <check id="832" parent="201">
       <Predicate>&quot;rating&quot; &gt;= 0</Predicate>
     </check>
   </database-model>

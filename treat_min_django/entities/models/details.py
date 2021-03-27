@@ -3,7 +3,6 @@ from .entities import *
 
 
 class Detail(models.Model):
-    hospital = models.ForeignKey(Hospital, on_delete=models.RESTRICT)
     price = models.PositiveSmallIntegerField(default=50)
     rating_total = models.PositiveIntegerField(default=0)
     rating_users = models.PositiveSmallIntegerField(default=0)
@@ -13,8 +12,9 @@ class Detail(models.Model):
 
 
 class ClinicDetail(Detail):
-    clinic = models.ForeignKey(Clinic, on_delete=models.RESTRICT)
-    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
+    hospital = models.ForeignKey(Hospital, on_delete=models.RESTRICT, related_name='clinics_details')
+    clinic = models.ForeignKey(Clinic, on_delete=models.RESTRICT, related_name='details')
+    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE, related_name='clinics_details')
 
     class Meta:
         verbose_name_plural = 'Clinics Details'
@@ -33,7 +33,8 @@ class ClinicDetail(Detail):
 
 
 class RoomDetail(Detail):
-    room = models.ForeignKey(Room, on_delete=models.RESTRICT)
+    hospital = models.ForeignKey(Hospital, on_delete=models.RESTRICT, related_name='rooms_details')
+    room = models.ForeignKey(Room, on_delete=models.RESTRICT, related_name='details')
 
     class Meta:
         verbose_name_plural = 'Rooms Details'
@@ -46,7 +47,8 @@ class RoomDetail(Detail):
 
 
 class ServiceDetail(Detail):
-    service = models.ForeignKey(Service, on_delete=models.RESTRICT)
+    hospital = models.ForeignKey(Hospital, on_delete=models.RESTRICT, related_name='services_details')
+    service = models.ForeignKey(Service, on_delete=models.RESTRICT, related_name='details')
 
     class Meta:
         verbose_name_plural = 'Services Details'

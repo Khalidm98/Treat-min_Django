@@ -1,5 +1,17 @@
 from rest_framework import serializers
-from ..models import AbstractUser
+from ..models import AbstractUser, UnverifiedUser
+
+
+class EmailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UnverifiedUser
+        fields = ['email']
+
+
+class UnverifiedUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UnverifiedUser
+        fields = ['email', 'code']
 
 
 class AbstractUserSerializer(serializers.ModelSerializer):

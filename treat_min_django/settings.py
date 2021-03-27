@@ -133,3 +133,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+EMAIL_HOST = 'smtp.office365.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'noreply@treat-min.com'
+EMAIL_HOST_PASSWORD = 'careClose2021'
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = False
+SERVER_EMAIL = EMAIL_HOST_USER

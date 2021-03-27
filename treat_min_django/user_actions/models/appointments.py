@@ -11,7 +11,6 @@ STATUS = [
 
 
 class Appointment(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
     status = models.CharField(max_length=1, choices=STATUS, default='W')
     booking_date = models.DateTimeField(auto_now_add=True)
     appointment_date = models.DateField()
@@ -19,12 +18,10 @@ class Appointment(models.Model):
     class Meta:
         abstract = True
 
-    def __str__(self):
-        return self.user.user.email + " - " + str(self.booking_date)[0:19]
-
 
 class ClinicAppointment(Appointment):
-    schedule = models.ForeignKey(ClinicSchedule, null=True, on_delete=models.SET_NULL)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='clinics_appointments')
+    schedule = models.ForeignKey(ClinicSchedule, null=True, on_delete=models.SET_NULL, related_name='appointments')
 
     class Meta:
         verbose_name_plural = 'Clinics Appointments'
@@ -34,9 +31,13 @@ class ClinicAppointment(Appointment):
             )
         ]
 
+    def __str__(self):
+        return self.user.user.email + " - " + str(self.booking_date)[0:19]
+
 
 class RoomAppointment(Appointment):
-    schedule = models.ForeignKey(RoomSchedule, null=True, on_delete=models.SET_NULL)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='rooms_appointments')
+    schedule = models.ForeignKey(RoomSchedule, null=True, on_delete=models.SET_NULL, related_name='appointments')
 
     class Meta:
         verbose_name_plural = 'Rooms Appointments'
@@ -46,9 +47,13 @@ class RoomAppointment(Appointment):
             )
         ]
 
+    def __str__(self):
+        return self.user.user.email + " - " + str(self.booking_date)[0:19]
+
 
 class ServiceAppointment(Appointment):
-    schedule = models.ForeignKey(ServiceSchedule, null=True, on_delete=models.SET_NULL)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='services_appointments')
+    schedule = models.ForeignKey(ServiceSchedule, null=True, on_delete=models.SET_NULL, related_name='appointments')
 
     class Meta:
         verbose_name_plural = 'Services Appointments'
@@ -57,3 +62,6 @@ class ServiceAppointment(Appointment):
                 fields=['user', 'schedule', 'appointment_date'], name='unique_service_appointment'
             )
         ]
+
+    def __str__(self):
+        return self.user.user.email + " - " + str(self.booking_date)[0:19]

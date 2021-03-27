@@ -14,24 +14,24 @@ class AppointmentAdmin(admin.ModelAdmin):
 class ClinicAppointmentAdmin(AppointmentAdmin):
     def get_queryset(self, request):
         qs = super().get_queryset(request)
-        if hasattr(request.user, 'hospitaladmin'):
-            return qs.filter(schedule__clinic__hospital=request.user.hospitaladmin.hospital)
+        if hasattr(request.user, 'hospital_admin'):
+            return qs.filter(schedule__clinic__hospital=request.user.hospital_admin.hospital)
         return qs
 
 
 class RoomAppointmentAdmin(AppointmentAdmin):
     def get_queryset(self, request):
         qs = super().get_queryset(request)
-        if hasattr(request.user, 'hospitaladmin'):
-            return qs.filter(schedule__room__hospital=request.user.hospitaladmin.hospital)
+        if hasattr(request.user, 'hospital_admin'):
+            return qs.filter(schedule__room__hospital=request.user.hospital_admin.hospital)
         return qs
 
 
 class ServiceAppointmentAdmin(AppointmentAdmin):
     def get_queryset(self, request):
         qs = super().get_queryset(request)
-        if hasattr(request.user, 'hospitaladmin'):
-            return qs.filter(schedule__service__hospital=request.user.hospitaladmin.hospital)
+        if hasattr(request.user, 'hospital_admin'):
+            return qs.filter(schedule__service__hospital=request.user.hospital_admin.hospital)
         return qs
 
 
