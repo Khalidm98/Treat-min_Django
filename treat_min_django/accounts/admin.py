@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import AbstractUser, Admin, HospitalAdmin, User, UnverifiedUser
+from .models import AbstractUser, Admin, HospitalAdmin, User, PendingUser
 
 readonly = ['email', 'name', 'phone', 'date_joined', 'last_login']
 
@@ -54,4 +54,4 @@ admin.site.register(AbstractUser, AbstractUserAdmin)
 admin.site.register(Admin, AdminAdmin)
 admin.site.register(HospitalAdmin, HospitalAdminAdmin)
 admin.site.register(User, UserAdmin)
-admin.site.register(UnverifiedUser)
+admin.site.register(PendingUser)

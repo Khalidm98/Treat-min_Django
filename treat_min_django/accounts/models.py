@@ -108,7 +108,7 @@ class User(models.Model):
         return self.user.email + ' - ' + self.user.name
 
 
-class UnverifiedUser(models.Model):
+class PendingUser(models.Model):
     email = models.EmailField(unique=True)
     code = models.PositiveSmallIntegerField()
     is_verified = models.BooleanField(default=False)

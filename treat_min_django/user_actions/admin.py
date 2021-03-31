@@ -1,14 +1,18 @@
 from django.contrib import admin
 from .models import *
 
-APPOINTMENT_FIELDS = ['schedule', 'appointment_date', 'user', 'status', 'booking_date']
 REVIEW_FIELDS = ['user', 'date', 'rating', 'review']
 
 
 class AppointmentAdmin(admin.ModelAdmin):
-    fields = APPOINTMENT_FIELDS
     readonly_fields = ['booking_date']
     list_display = ['appointment_date', 'schedule', 'user', 'status', 'booking_date']
+
+    def get_readonly_fields(self, request, obj=None):
+        if hasattr(request.user, 'hospital_admin'):
+            return ['schedule', 'appointment_date', 'user', 'booking_date']
+        else:
+            return super().get_readonly_fields(request, obj=None)
 
 
 class ClinicAppointmentAdmin(AppointmentAdmin):
