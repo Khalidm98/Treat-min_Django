@@ -41,7 +41,9 @@ INSTALLED_APPS = [
     'rest_framework',
     'treat_min_django.accounts.apps.AccountsConfig',
     'treat_min_django.entities.apps.EntitiesConfig',
-    'treat_min_django.user_actions.apps.UserActionsConfig',
+    'treat_min_django.entities_details.apps.EntitiesDetailsConfig',
+    'treat_min_django.user_appointments.apps.UserAppointmentsConfig',
+    'treat_min_django.user_reviews.apps.UserReviewsConfig',
 ]
 
 REST_FRAMEWORK = {

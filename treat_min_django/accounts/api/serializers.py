@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from ..models import AbstractUser, PendingUser, User
-from ...entities.models.entities import GENDER
+from ...entities.models import GENDER
 
 
 class EmailSerializer(serializers.ModelSerializer):

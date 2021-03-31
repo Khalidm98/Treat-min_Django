@@ -1,6 +1,6 @@
 from django.db import models
-from ...accounts.models import User
-from ...entities.models import ClinicSchedule, RoomSchedule, ServiceSchedule
+from treat_min_django.accounts.models import User
+from treat_min_django.entities_details.models import ClinicSchedule, RoomSchedule, ServiceSchedule
 
 STATUS = [
     ('A', 'Accepted'),

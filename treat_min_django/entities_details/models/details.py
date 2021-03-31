@@ -1,5 +1,5 @@
 from django.core.exceptions import ValidationError
-from .entities import *
+from ...entities.models import *
 
 
 class Detail(models.Model):

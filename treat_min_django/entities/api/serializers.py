@@ -1,6 +1,7 @@
 from rest_framework import serializers
-from ..models import *
-from ...user_actions.models import *
+from ...entities.models import *
+from ...user_appointments.models import *
+from ...user_reviews.models import *
 
 
 DETAIL_FIELDS = ['id', 'hospital', 'price', 'rating_total', 'rating_users']

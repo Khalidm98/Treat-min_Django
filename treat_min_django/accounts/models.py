@@ -8,7 +8,7 @@ from django.contrib.auth.base_user import AbstractBaseUser
 from django.utils.translation import gettext_lazy as _
 
 from .managers import UserManager
-from ..entities.models.entities import GENDER, Hospital
+from ..entities.models import GENDER, Hospital
 
 
 class AbstractUser(AbstractBaseUser, PermissionsMixin):
@@ -48,6 +48,9 @@ class AbstractUser(AbstractBaseUser, PermissionsMixin):
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []    # fields that will be prompted for when creating a superuser
+
+    class Meta:
+        verbose_name_plural = 'Abstract Users'
 
     def __str__(self):
         return self.email + ' - ' + self.name
@@ -112,6 +115,9 @@ class PendingUser(models.Model):
     email = models.EmailField(unique=True)
     code = models.PositiveSmallIntegerField()
     is_verified = models.BooleanField(default=False)
+
+    class Meta:
+        verbose_name_plural = 'Pending Users'
 
     def __str__(self):
         return self.email
