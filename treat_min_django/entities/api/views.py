@@ -4,24 +4,24 @@ from rest_framework.response import Response
 from .serializers import *
 
 
-class ClinicList(APIView):
+class ClinicAPI(APIView):
     def get(self, request):
         clinics = Clinic.objects.all()
         serializer = ClinicSerializer(clinics, many=True)
-        return Response({'clinics': serializer.data})
+        return Response({"clinics": serializer.data})
 
 
-class ClinicDetailList(APIView):
+class ClinicDetailAPI(APIView):
     def get(self, request, clinic_id):
         try:
             details = ClinicDetail.objects.filter(clinic=clinic_id)
         except ClinicDetail.DoesNotExist:
             raise Http404
         serializer = ClinicDetailSerializer(details, many=True)
-        return Response({'details': serializer.data})
+        return Response({"details": serializer.data})
 
 
-class ClinicDetailSchedules(APIView):
+class ClinicScheduleAPI(APIView):
     def get(self, request, clinic_id, detail_id):
         try:
             detail = ClinicDetail.objects.get(id=detail_id)
@@ -32,15 +32,23 @@ class ClinicDetailSchedules(APIView):
         schedules = ClinicSchedule.objects.filter(clinic=detail_id)
         serializer = ClinicScheduleSerializer(schedules, many=True)
         return Response({
-            'doctor': detail.doctor.name,
-            'title': detail.doctor.title,
-            'hospital': detail.hospital.name,
-            'address': detail.hospital.address,
-            'schedules': serializer.data
+            "doctor": detail.doctor.name,
+            "title": detail.doctor.title,
+            "hospital": detail.hospital.name,
+            "address": detail.hospital.address,
+            "schedules": serializer.data
         })
 
 
-class ClinicReviewsList(APIView):
+class ClinicAppointmentAPI(APIView):
+    def get(self, request, clinic_id, detail_id):
+        pass
+
+    def post(self, request, clinic_id, detail_id):
+        pass
+
+
+class ClinicReviewAPI(APIView):
     def check_detail(self, clinic_id, detail_id):
         try:
             detail = ClinicDetail.objects.get(id=detail_id)
@@ -54,8 +62,8 @@ class ClinicReviewsList(APIView):
         self.check_detail(clinic_id, detail_id)
         reviews = ClinicReview.objects.filter(clinic=detail_id)
         serializer = ClinicReviewSerializer(reviews, many=True)
-        return Response({'reviews': serializer.data})
+        return Response({"reviews": serializer.data})
 
     # def post(self, request, clinic_id, detail_id):
-    #     detail = self.get_detail(clinic_id, detail_id)
+    #     detail = self.check_detail(clinic_id, detail_id)
     #     # add using token auth

@@ -3,8 +3,8 @@ from __future__ import unicode_literals
 from django.db import models
 from django.conf import settings
 from django.core.mail import send_mail
-from django.contrib.auth.models import Group, PermissionsMixin
 from django.contrib.auth.base_user import AbstractBaseUser
+from django.contrib.auth.models import Group, PermissionsMixin
 from django.utils.translation import gettext_lazy as _
 
 from .managers import UserManager
@@ -63,7 +63,7 @@ class AbstractUser(AbstractBaseUser, PermissionsMixin):
         name = str(self.name)
         return name.strip()
 
-    def email_user(self, subject, message, from_email=None, **kwargs):
+    def email_user(self, subject, message, from_email=settings.EMAIL_HOST_USER, **kwargs):
         send_mail(subject, message, from_email, [self.email], **kwargs)
 
 

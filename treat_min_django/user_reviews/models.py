@@ -1,7 +1,7 @@
 from django.db import models
 from django.core.exceptions import ValidationError
-from treat_min_django.accounts.models import User
-from treat_min_django.entities_details.models import ClinicDetail, RoomDetail, ServiceDetail
+from ..accounts.models import User
+from ..entities_details.models import ClinicDetail, RoomDetail, ServiceDetail
 
 
 class Review(models.Model):

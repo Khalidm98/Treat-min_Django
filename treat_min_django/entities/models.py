@@ -37,7 +37,7 @@ class Doctor(models.Model):
     name = models.CharField(max_length=50)
     title = models.CharField(max_length=50)
     gender = models.CharField(max_length=1, choices=GENDER)
-    speciality = models.ForeignKey(Clinic, on_delete=models.CASCADE, related_name='doctors')
+    speciality = models.ForeignKey(Clinic, on_delete=models.RESTRICT, related_name='doctors')
     phone = models.CharField(max_length=11, blank=True, null=True)
     photo = models.ImageField(upload_to='photos/doctors/', blank=True, null=True)
 

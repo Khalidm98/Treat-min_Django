@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -54,6 +55,17 @@ REST_FRAMEWORK = {
     ]
 }
 
+REST_KNOX = {
+    # 'SECURE_HASH_ALGORITHM': 'cryptography.hazmat.primitives.hashes.SHA512',
+    # 'AUTH_TOKEN_CHARACTER_LENGTH': 64,
+    'TOKEN_TTL': timedelta(weeks=26),
+    # 'USER_SERIALIZER': 'knox.serializers.UserSerializer',
+    # 'TOKEN_LIMIT_PER_USER': None,
+    'AUTO_REFRESH': True,
+    # 'MIN_REFRESH_INTERVAL': timedelta(hours=1),
+    # 'EXPIRY_DATETIME_FORMAT': api_settings.DATETIME_FORMAT,
+}
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -88,6 +100,8 @@ WSGI_APPLICATION = 'treat_min_django.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
+AUTH_USER_MODEL = 'accounts.AbstractUser'
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -98,8 +112,6 @@ DATABASES = {
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
-
-AUTH_USER_MODEL = 'accounts.AbstractUser'
 
 AUTH_PASSWORD_VALIDATORS = [
     {

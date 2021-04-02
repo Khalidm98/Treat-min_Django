@@ -25,7 +25,7 @@ class SendEmailView(generics.GenericAPIView):
                 {
                     "details": "This email address is already registered"
                 },
-                status=status.HTTP_400_BAD_REQUEST
+                status.HTTP_400_BAD_REQUEST
             )
 
         code = randint(999, 9999)
@@ -48,7 +48,7 @@ class SendEmailView(generics.GenericAPIView):
             {
                 "details": "Verification email was sent successfully"
             },
-            status=status.HTTP_200_OK
+            status.HTTP_200_OK
         )
 
 
@@ -68,14 +68,14 @@ class VerifyEmailView(APIView):
                     {
                         "details": "Email was verified successfully"
                     },
-                    status=status.HTTP_200_OK
+                    status.HTTP_200_OK
                 )
             else:
                 return Response(
                     {
                         "details": "Wrong code"
                     },
-                    status=status.HTTP_400_BAD_REQUEST
+                    status.HTTP_400_BAD_REQUEST
                 )
 
         else:
@@ -83,7 +83,7 @@ class VerifyEmailView(APIView):
                 {
                     "details": "This email address was not registered before"
                 },
-                status=status.HTTP_404_NOT_FOUND
+                status.HTTP_404_NOT_FOUND
             )
 
 
@@ -106,7 +106,7 @@ class RegisterAPI(generics.GenericAPIView):
                         "user": AbstractUserSerializer(user, context=self.get_serializer_context()).data,
                         "token": AuthToken.objects.create(user)[1]
                     },
-                    status=status.HTTP_201_CREATED
+                    status.HTTP_201_CREATED
                 )
 
             else:
@@ -114,14 +114,14 @@ class RegisterAPI(generics.GenericAPIView):
                     {
                         "details": "This email address was not verified"
                     },
-                    status=status.HTTP_400_BAD_REQUEST
+                    status.HTTP_400_BAD_REQUEST
                 )
         else:
             return Response(
                 {
                     "details": "This email address was not verified"
                 },
-                status=status.HTTP_404_NOT_FOUND
+                status.HTTP_404_NOT_FOUND
             )
 
 

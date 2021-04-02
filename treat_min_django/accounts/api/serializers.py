@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from ..models import AbstractUser, PendingUser, User
+from ..models import PendingUser, AbstractUser, User
 from ...entities.models import GENDER
 
 
@@ -28,7 +28,7 @@ class RegisterSerializer(serializers.Serializer):
     phone = serializers.CharField(max_length=11)
     date_of_birth = serializers.DateField()
     gender = serializers.ChoiceField(choices=GENDER)
-    photo = serializers.ImageField()
+    photo = serializers.ImageField(default=None)
 
     def create(self, validated_data):
         user = AbstractUser.objects.create_user(

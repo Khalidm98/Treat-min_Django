@@ -44,6 +44,12 @@ class ClinicScheduleSerializer(serializers.ModelSerializer):
         fields = SCHEDULE_FIELDS
 
 
+class ClinicAppointmentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ClinicAppointment
+        # fields =
+
+
 class ClinicReviewSerializer(serializers.ModelSerializer):
     name = serializers.SerializerMethodField('get_name')
 

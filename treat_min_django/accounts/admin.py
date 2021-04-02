@@ -7,7 +7,7 @@ readonly = ['email', 'name', 'phone', 'date_joined', 'last_login']
 class AbstractUserAdmin(admin.ModelAdmin):
     fields = ['email', 'name', 'phone', 'is_active', 'is_staff', 'date_joined', 'last_login', 'groups']
     readonly_fields = ['is_staff', 'date_joined', 'last_login', 'groups']
-    list_display = ['email', 'name', 'date_joined', 'last_login']
+    list_display = ['email', 'name', 'groups', 'date_joined', 'last_login']
 
 
 class AbstractAdmin(admin.ModelAdmin):
@@ -41,7 +41,7 @@ class AdminAdmin(AbstractAdmin):
 class HospitalAdminAdmin(AbstractAdmin):
     fields = ['hospital', 'user', 'email', 'name', 'phone', 'date_joined', 'last_login']
     readonly_fields = readonly
-    list_display = ['email', 'name', 'date_joined', 'last_login']
+    list_display = ['email', 'name', 'hospital', 'date_joined', 'last_login']
 
 
 class UserAdmin(AbstractAdmin):
