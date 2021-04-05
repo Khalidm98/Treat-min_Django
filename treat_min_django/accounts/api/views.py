@@ -22,9 +22,7 @@ class SendEmailView(generics.GenericAPIView):
         user = AbstractUser.objects.filter(email__iexact=email)
         if user.exists():
             return Response(
-                {
-                    "details": "This email address is already registered"
-                },
+                {"details": "This email address is already registered"},
                 status.HTTP_400_BAD_REQUEST
             )
 
@@ -44,12 +42,7 @@ class SendEmailView(generics.GenericAPIView):
         else:
             PendingUser.objects.create(email=email, code=code)
 
-        return Response(
-            {
-                "details": "Verification email was sent successfully"
-            },
-            status.HTTP_200_OK
-        )
+        return Response({"details": "Verification email was sent successfully"})
 
 
 class VerifyEmailView(APIView):
@@ -64,25 +57,16 @@ class VerifyEmailView(APIView):
             if str(user.code) == code:
                 user.is_verified = True
                 user.save()
-                return Response(
-                    {
-                        "details": "Email was verified successfully"
-                    },
-                    status.HTTP_200_OK
-                )
+                return Response({"details": "Email was verified successfully"})
             else:
                 return Response(
-                    {
-                        "details": "Wrong code"
-                    },
+                    {"details": "Wrong code"},
                     status.HTTP_400_BAD_REQUEST
                 )
 
         else:
             return Response(
-                {
-                    "details": "This email address was not registered before"
-                },
+                {"details": "This email address was not registered before"},
                 status.HTTP_404_NOT_FOUND
             )
 
@@ -111,16 +95,12 @@ class RegisterAPI(generics.GenericAPIView):
 
             else:
                 return Response(
-                    {
-                        "details": "This email address was not verified"
-                    },
+                    {"details": "This email address was not verified"},
                     status.HTTP_400_BAD_REQUEST
                 )
         else:
             return Response(
-                {
-                    "details": "This email address was not verified"
-                },
+                {"details": "This email address was not verified"},
                 status.HTTP_404_NOT_FOUND
             )
 
@@ -133,4 +113,4 @@ class LoginAPI(KnoxLoginView):
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data['user']
         login(request, user)
-        return super(LoginAPI, self).post(request, format=None)
+        return super().post(request, format=None)

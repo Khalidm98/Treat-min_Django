@@ -33,7 +33,7 @@ class ClinicSchedule(Schedule):
         ]
 
     def __str__(self):
-        return str(self.clinic) + " - " + super(ClinicSchedule, self).__str__()
+        return str(self.clinic) + " - " + super().__str__()
 
 
 class RoomSchedule(Schedule):
@@ -45,7 +45,7 @@ class RoomSchedule(Schedule):
         ]
 
     def __str__(self):
-        return str(self.room) + " - " + super(RoomSchedule, self).__str__()
+        return str(self.room) + " - " + super().__str__()
 
 
 class ServiceSchedule(Schedule):
@@ -57,4 +57,4 @@ class ServiceSchedule(Schedule):
         ]
 
     def __str__(self):
-        return str(self.service) + " - " + super(ServiceSchedule, self).__str__()
+        return str(self.service) + " - " + super().__str__()

@@ -2,8 +2,9 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('clinics/', views.ClinicAPI.as_view()),
-    path('clinics/<int:clinic_id>/details/', views.ClinicDetailAPI.as_view()),
-    path('clinics/<int:clinic_id>/details/<int:detail_id>/', views.ClinicScheduleAPI.as_view()),
-    path('clinics/<int:clinic_id>/details/<int:detail_id>/reviews/', views.ClinicReviewAPI.as_view()),
+    path('<str:entities>/', views.EntityAPI.as_view()),
+    path('<str:entities>/<int:entity_id>/details/', views.DetailAPI.as_view()),
+    path('<str:entities>/<int:entity_id>/details/<int:detail_id>/schedules', views.ScheduleAPI.as_view()),
+    path('<str:entities>/<int:entity_id>/details/<int:detail_id>/appointments/', views.AppointmentAPI.as_view()),
+    path('<str:entities>/<int:entity_id>/details/<int:detail_id>/reviews/', views.ReviewAPI.as_view()),
 ]

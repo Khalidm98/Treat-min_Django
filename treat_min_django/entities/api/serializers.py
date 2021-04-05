@@ -1,18 +1,20 @@
 from rest_framework import serializers
-from ...entities.models import *
+from ...entities.models import Doctor
 from ...user_appointments.models import *
 from ...user_reviews.models import *
 
-
 DETAIL_FIELDS = ['id', 'hospital', 'price', 'rating_total', 'rating_users']
-SCHEDULE_FIELDS = ['id', 'day', 'start', 'end']
-REVIEW_FIELDS = ['name', 'date', 'rating', 'review']
 
 
-class ClinicSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Clinic
-        fields = '__all__'
+class EntitySerializer(serializers.Serializer):
+    id = serializers.IntegerField()
+    name = serializers.CharField(max_length=50)
+
+    def create(self, validated_data):
+        super().create(validated_data)
+
+    def update(self, instance, validated_data):
+        super().update(instance, validated_data)
 
 
 class DoctorSerializer(serializers.ModelSerializer):
@@ -20,13 +22,6 @@ class DoctorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Doctor
         fields = ['name', 'title']
-
-
-class HospitalSerializer(serializers.ModelSerializer):
-    # add photo
-    class Meta:
-        model = Hospital
-        fields = ['name', 'address']
 
 
 class ClinicDetailSerializer(serializers.ModelSerializer):
@@ -38,10 +33,26 @@ class ClinicDetailSerializer(serializers.ModelSerializer):
         fields = DETAIL_FIELDS + ['doctor']
 
 
-class ClinicScheduleSerializer(serializers.ModelSerializer):
+class RoomDetailSerializer(serializers.ModelSerializer):
+    hospital = serializers.SlugRelatedField(read_only=True, slug_field='name')
+
+    class Meta:
+        model = RoomDetail
+        fields = DETAIL_FIELDS
+
+
+class ServiceDetailSerializer(serializers.ModelSerializer):
+    hospital = serializers.SlugRelatedField(read_only=True, slug_field='name')
+
+    class Meta:
+        model = ServiceDetail
+        fields = DETAIL_FIELDS
+
+
+class ScheduleSerializer(serializers.ModelSerializer):
     class Meta:
         model = ClinicSchedule
-        fields = SCHEDULE_FIELDS
+        fields = ['id', 'day', 'start', 'end']
 
 
 class ClinicAppointmentSerializer(serializers.ModelSerializer):
@@ -50,7 +61,7 @@ class ClinicAppointmentSerializer(serializers.ModelSerializer):
         # fields =
 
 
-class ClinicReviewSerializer(serializers.ModelSerializer):
+class ReviewSerializer(serializers.ModelSerializer):
     name = serializers.SerializerMethodField('get_name')
 
     def get_name(self, obj):
@@ -58,4 +69,10 @@ class ClinicReviewSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ClinicReview
-        fields = REVIEW_FIELDS
+        fields = ['name', 'date', 'rating', 'review']
+
+
+# class UpdateReviewSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = ClinicReview
+#         fields = ['rating', 'review']

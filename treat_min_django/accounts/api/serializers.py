@@ -46,4 +46,4 @@ class RegisterSerializer(serializers.Serializer):
         return user
 
     def update(self, instance, validated_data):
-        super(RegisterSerializer, self).update(instance, validated_data)
+        super().update(instance, validated_data)

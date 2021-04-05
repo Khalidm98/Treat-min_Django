@@ -40,8 +40,7 @@ class AbstractUser(AbstractBaseUser, PermissionsMixin):
             'The groups this user belongs to. A user will get all permissions '
             'granted to each of their groups.'
         ),
-        related_name="user_set",
-        related_query_name="user",
+        related_name='users',
     )
 
     objects = UserManager()
