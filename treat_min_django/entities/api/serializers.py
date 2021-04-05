@@ -56,9 +56,67 @@ class ScheduleSerializer(serializers.ModelSerializer):
 
 
 class ClinicAppointmentSerializer(serializers.ModelSerializer):
+    schedule = ScheduleSerializer()
+    hospital = serializers.SerializerMethodField('get_hospital')
+    clinic = serializers.SerializerMethodField('get_clinic')
+    doctor = serializers.SerializerMethodField('get_doctor')
+    price = serializers.SerializerMethodField('get_price')
+
+    def get_hospital(self, obj):
+        return obj.schedule.clinic.hospital.name
+
+    def get_clinic(self, obj):
+        return obj.schedule.clinic.clinic.name
+
+    def get_doctor(self, obj):
+        return obj.schedule.clinic.doctor.name
+
+    def get_price(self, obj):
+        return obj.schedule.clinic.price
+
     class Meta:
         model = ClinicAppointment
-        # fields =
+        fields = ['hospital', 'clinic', 'doctor', 'price', 'schedule', 'status', 'appointment_date']
+
+
+class RoomAppointmentSerializer(serializers.ModelSerializer):
+    schedule = ScheduleSerializer()
+    hospital = serializers.SerializerMethodField('get_hospital')
+    room = serializers.SerializerMethodField('get_room')
+    price = serializers.SerializerMethodField('get_price')
+
+    def get_hospital(self, obj):
+        return obj.schedule.room.hospital.name
+
+    def get_room(self, obj):
+        return obj.schedule.room.room.name
+
+    def get_price(self, obj):
+        return obj.schedule.room.price
+
+    class Meta:
+        model = RoomAppointment
+        fields = ['hospital', 'room', 'price', 'schedule', 'status', 'appointment_date']
+
+
+class ServiceAppointmentSerializer(serializers.ModelSerializer):
+    schedule = ScheduleSerializer()
+    hospital = serializers.SerializerMethodField('get_hospital')
+    service = serializers.SerializerMethodField('get_service')
+    price = serializers.SerializerMethodField('get_price')
+
+    def get_hospital(self, obj):
+        return obj.schedule.service.hospital.name
+
+    def get_service(self, obj):
+        return obj.schedule.service.service.name
+
+    def get_price(self, obj):
+        return obj.schedule.service.price
+
+    class Meta:
+        model = ServiceAppointment
+        fields = ['hospital', 'service', 'price', 'schedule', 'status', 'appointment_date']
 
 
 class ReviewSerializer(serializers.ModelSerializer):
@@ -70,9 +128,3 @@ class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = ClinicReview
         fields = ['name', 'date', 'rating', 'review']
-
-
-# class UpdateReviewSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = ClinicReview
-#         fields = ['rating', 'review']
