@@ -130,3 +130,15 @@ class PendingUser(models.Model):
 
     def __str__(self):
         return self.email
+
+class LostPassword(models.Model):
+    email = models.EmailField(unique=True,verbose_name=_('email address'))
+    code = models.PositiveSmallIntegerField(verbose_name=_('code'))
+    is_verified = models.BooleanField(default=False,verbose_name=_('is_verified'))
+
+    class Meta:
+        verbose_name_plural = _('Lost Passwords')
+        verbose_name = _('lost password')
+
+    def __str__(self):
+        return self.email

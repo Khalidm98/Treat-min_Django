@@ -17,13 +17,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 from django.conf.urls.i18n import i18n_patterns
-from .accounts.api.views import SendEmailView
+from .accounts.api.views import SendEmailLostPassword
 
 urlpatterns = [
     path('api/', include('treat_min_django.entities.api.urls')),
     path('api/accounts/', include('treat_min_django.accounts.api.urls')),
 ]+i18n_patterns(
     path('admin/', admin.site.urls),
-    path('admin/password-reset/', SendEmailView.as_view(), name='admin_password_reset'),
+    path('admin/password-reset/', SendEmailLostPassword.as_view(), name='admin_password_reset'),
     prefix_default_language=True
 )

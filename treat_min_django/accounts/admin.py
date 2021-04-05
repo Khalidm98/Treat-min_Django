@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import AbstractUser, Admin, HospitalAdmin, User, PendingUser
+from .models import AbstractUser, Admin, HospitalAdmin, User, PendingUser,LostPassword
 from django.utils.translation import gettext_lazy as _
 
 readonly = ['email', 'name', 'phone', 'date_joined', 'last_login']
@@ -56,3 +56,4 @@ admin.site.register(Admin, AdminAdmin)
 admin.site.register(HospitalAdmin, HospitalAdminAdmin)
 admin.site.register(User, UserAdmin)
 admin.site.register(PendingUser)
+admin.site.register(LostPassword)

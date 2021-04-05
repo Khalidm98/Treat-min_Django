@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-05 03:29+0200\n"
+"POT-Creation-Date: 2021-04-05 08:08+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,6 +22,7 @@ msgstr ""
 #: .\treat_min_django\accounts\admin.py:17
 #: .\treat_min_django\accounts\models.py:15
 #: .\treat_min_django\accounts\models.py:123
+#: .\treat_min_django\accounts\models.py:135
 msgid "email address"
 msgstr "البريد الالكتروني"
 
@@ -100,11 +101,11 @@ msgstr "المستخدم المجرد"
 #: .\treat_min_django\accounts\models.py:109
 #: .\treat_min_django\accounts\models.py:116
 #: .\treat_min_django\user_appointments\models.py:25
-#: .\treat_min_django\user_appointments\models.py:42
-#: .\treat_min_django\user_appointments\models.py:59
-#: .\treat_min_django\user_reviews\models.py:20
-#: .\treat_min_django\user_reviews\models.py:36
-#: .\treat_min_django\user_reviews\models.py:51
+#: .\treat_min_django\user_appointments\models.py:43
+#: .\treat_min_django\user_appointments\models.py:62
+#: .\treat_min_django\user_reviews\models.py:19
+#: .\treat_min_django\user_reviews\models.py:35
+#: .\treat_min_django\user_reviews\models.py:50
 msgid "user"
 msgstr "المستخدم"
 
@@ -151,10 +152,12 @@ msgid "Users"
 msgstr "المستخدمين"
 
 #: .\treat_min_django\accounts\models.py:124
+#: .\treat_min_django\accounts\models.py:136
 msgid "code"
 msgstr "الرمز"
 
 #: .\treat_min_django\accounts\models.py:125
+#: .\treat_min_django\accounts\models.py:137
 msgid "is_verified"
 msgstr "مفعل؟"
 
@@ -165,6 +168,14 @@ msgstr "المستخدمين المعلقين"
 #: .\treat_min_django\accounts\models.py:129
 msgid "pending user"
 msgstr "مستخدم معلق"
+
+#: .\treat_min_django\accounts\models.py:140
+msgid "Lost Passwords"
+msgstr "كلمات السر المفقودة"
+
+#: .\treat_min_django\accounts\models.py:141
+msgid "lost password"
+msgstr "كلمة سر مفقودة"
 
 #: .\treat_min_django\entities\apps.py:6
 msgid "Entities"
@@ -185,7 +196,7 @@ msgstr "العيادات"
 #: .\treat_min_django\entities\models.py:13
 #: .\treat_min_django\entities_details\models\details.py:17
 #: .\treat_min_django\entities_details\models\schedules.py:29
-#: .\treat_min_django\user_reviews\models.py:21
+#: .\treat_min_django\user_reviews\models.py:20
 msgid "clinic"
 msgstr "عيادة"
 
@@ -196,7 +207,7 @@ msgstr "الغرف"
 #: .\treat_min_django\entities\models.py:26
 #: .\treat_min_django\entities_details\models\details.py:39
 #: .\treat_min_django\entities_details\models\schedules.py:42
-#: .\treat_min_django\user_reviews\models.py:37
+#: .\treat_min_django\user_reviews\models.py:36
 msgid "room"
 msgstr "غرفة"
 
@@ -207,7 +218,7 @@ msgstr "الخدمات"
 #: .\treat_min_django\entities\models.py:38
 #: .\treat_min_django\entities_details\models\details.py:54
 #: .\treat_min_django\entities_details\models\schedules.py:55
-#: .\treat_min_django\user_reviews\models.py:52
+#: .\treat_min_django\user_reviews\models.py:51
 msgid "service"
 msgstr "خدمة"
 
@@ -396,33 +407,33 @@ msgstr "تاريخ الحجز"
 msgid "appointment_date"
 msgstr "ميعاد الحجز"
 
-#: .\treat_min_django\user_appointments\models.py:26
-#: .\treat_min_django\user_appointments\models.py:43
-#: .\treat_min_django\user_appointments\models.py:60
+#: .\treat_min_django\user_appointments\models.py:27
+#: .\treat_min_django\user_appointments\models.py:45
+#: .\treat_min_django\user_appointments\models.py:64
 msgid "schedule"
 msgstr "الميعاد"
 
-#: .\treat_min_django\user_appointments\models.py:29
+#: .\treat_min_django\user_appointments\models.py:30
 msgid "Clinics Appointments"
 msgstr "حجوزات العيادات"
 
-#: .\treat_min_django\user_appointments\models.py:30
+#: .\treat_min_django\user_appointments\models.py:31
 msgid "clinic appointment"
 msgstr "حجز عيادة"
 
-#: .\treat_min_django\user_appointments\models.py:46
+#: .\treat_min_django\user_appointments\models.py:48
 msgid "Rooms Appointments"
 msgstr "حجوزات الغرف"
 
-#: .\treat_min_django\user_appointments\models.py:47
+#: .\treat_min_django\user_appointments\models.py:49
 msgid "room appointment"
 msgstr "حجز غرفة"
 
-#: .\treat_min_django\user_appointments\models.py:63
+#: .\treat_min_django\user_appointments\models.py:67
 msgid "Services Appointments"
 msgstr "حجوزات الخدمات"
 
-#: .\treat_min_django\user_appointments\models.py:64
+#: .\treat_min_django\user_appointments\models.py:68
 msgid "service appointment"
 msgstr "حجز خدمة"
 
@@ -430,39 +441,39 @@ msgstr "حجز خدمة"
 msgid "Users Reviews"
 msgstr "مراجعات المستخدمين"
 
-#: .\treat_min_django\user_reviews\models.py:11
+#: .\treat_min_django\user_reviews\models.py:10
 msgid "date"
 msgstr "التاريخ"
 
-#: .\treat_min_django\user_reviews\models.py:12
+#: .\treat_min_django\user_reviews\models.py:11
 msgid "rating"
 msgstr "التقييم"
 
-#: .\treat_min_django\user_reviews\models.py:13
+#: .\treat_min_django\user_reviews\models.py:12
 msgid "review"
 msgstr "المراجعة"
 
-#: .\treat_min_django\user_reviews\models.py:24
+#: .\treat_min_django\user_reviews\models.py:23
 msgid "Clinics Reviews"
 msgstr "مراجعات العيادات"
 
-#: .\treat_min_django\user_reviews\models.py:25
+#: .\treat_min_django\user_reviews\models.py:24
 msgid "clinic review"
 msgstr "مراجعة عيادة"
 
-#: .\treat_min_django\user_reviews\models.py:40
+#: .\treat_min_django\user_reviews\models.py:39
 msgid "Rooms Reviews"
 msgstr "مراجعات الغرف"
 
-#: .\treat_min_django\user_reviews\models.py:41
+#: .\treat_min_django\user_reviews\models.py:40
 msgid "room review"
 msgstr "مراجعة عيادة"
 
-#: .\treat_min_django\user_reviews\models.py:55
+#: .\treat_min_django\user_reviews\models.py:54
 msgid "Services Reviews"
 msgstr "مراجعات الخدمات"
 
-#: .\treat_min_django\user_reviews\models.py:56
+#: .\treat_min_django\user_reviews\models.py:55
 msgid "service review"
 msgstr "مراجعة خدمة"
 
