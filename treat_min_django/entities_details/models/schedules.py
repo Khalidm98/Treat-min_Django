@@ -1,21 +1,22 @@
 from django.db import models
 from .details import ClinicDetail, RoomDetail, ServiceDetail
+from django.utils.translation import gettext_lazy as _
 
 WEEK_DAYS = [
-    ('SAT', 'Saturday'),
-    ('SUN', 'Sunday'),
-    ('MON', 'Monday'),
-    ('TUE', 'Tuesday'),
-    ('WED', 'Wednesday'),
-    ('THU', 'Thursday'),
-    ('FRI', 'Friday')
+    ('SAT', _('Saturday')),
+    ('SUN', _('Sunday')),
+    ('MON', _('Monday')),
+    ('TUE', _('Tuesday')),
+    ('WED', _('Wednesday')),
+    ('THU', _('Thursday')),
+    ('FRI', _('Friday'))
 ]
 
 
 class Schedule(models.Model):
-    day = models.CharField(max_length=3, choices=WEEK_DAYS)
-    start = models.TimeField()
-    end = models.TimeField()
+    day = models.CharField(max_length=3, choices=WEEK_DAYS, verbose_name=_("day"))
+    start = models.TimeField(verbose_name=_("start"))
+    end = models.TimeField(verbose_name=_("end"))
 
     class Meta:
         abstract = True
@@ -25,9 +26,10 @@ class Schedule(models.Model):
 
 
 class ClinicSchedule(Schedule):
-    clinic = models.ForeignKey(ClinicDetail, on_delete=models.CASCADE, related_name='schedules')
+    clinic = models.ForeignKey(ClinicDetail, on_delete=models.CASCADE, related_name='schedules', verbose_name=_("clinic"))
 
     class Meta:
+        verbose_name = _("clinic schedule")
         constraints = [
             models.UniqueConstraint(fields=['clinic', 'day', 'start', 'end'], name='unique_clinic_schedule')
         ]
@@ -37,9 +39,10 @@ class ClinicSchedule(Schedule):
 
 
 class RoomSchedule(Schedule):
-    room = models.ForeignKey(RoomDetail, on_delete=models.CASCADE, related_name='schedules')
+    room = models.ForeignKey(RoomDetail, on_delete=models.CASCADE, related_name='schedules', verbose_name=_("room"))
 
     class Meta:
+        verbose_name = _("room schedule")
         constraints = [
             models.UniqueConstraint(fields=['room', 'day', 'start', 'end'], name='unique_room_schedule')
         ]
@@ -49,9 +52,10 @@ class RoomSchedule(Schedule):
 
 
 class ServiceSchedule(Schedule):
-    service = models.ForeignKey(ServiceDetail, on_delete=models.CASCADE, related_name='schedules')
+    service = models.ForeignKey(ServiceDetail, on_delete=models.CASCADE, related_name='schedules', verbose_name=_("service"))
 
     class Meta:
+        verbose_name = _("service schedule")
         constraints = [
             models.UniqueConstraint(fields=['service', 'day', 'start', 'end'], name='unique_service_schedule')
         ]

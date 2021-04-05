@@ -1,0 +1,473 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-04-05 03:29+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+
+#: .\treat_min_django\accounts\admin.py:17
+#: .\treat_min_django\accounts\models.py:15
+#: .\treat_min_django\accounts\models.py:123
+msgid "email address"
+msgstr "البريد الالكتروني"
+
+#: .\treat_min_django\accounts\admin.py:21
+#: .\treat_min_django\accounts\models.py:16
+#: .\treat_min_django\entities\models.py:8
+#: .\treat_min_django\entities\models.py:21
+#: .\treat_min_django\entities\models.py:33
+#: .\treat_min_django\entities\models.py:45
+#: .\treat_min_django\entities\models.py:62
+msgid "name"
+msgstr "الاسم"
+
+#: .\treat_min_django\accounts\admin.py:25
+#: .\treat_min_django\accounts\models.py:17
+#: .\treat_min_django\entities\models.py:49
+#: .\treat_min_django\entities\models.py:63
+msgid "phone"
+msgstr "رقم الهاتف"
+
+#: .\treat_min_django\accounts\admin.py:29
+#: .\treat_min_django\accounts\models.py:18
+msgid "date_joined"
+msgstr "تاريخ الانضمام"
+
+#: .\treat_min_django\accounts\admin.py:33
+msgid "last_login"
+msgstr "أخر دخول"
+
+#: .\treat_min_django\accounts\apps.py:6
+msgid "Accounts"
+msgstr "الحسابات"
+
+#: .\treat_min_django\accounts\models.py:21
+msgid "active"
+msgstr "مفعل"
+
+#: .\treat_min_django\accounts\models.py:24
+msgid ""
+"Designates whether this user should be treated as active,\n"
+"Unselect this instead of deleting accounts."
+msgstr ""
+".يوضح هذا الاختيار اذا ما كان يجب معاملة المستخدم كمستخدم مفعل ام لا, ازل "
+"التحديد عن هذا الاختيار بدلا من مسح المستخدم"
+
+#: .\treat_min_django\accounts\models.py:28
+msgid "staff status"
+msgstr "حالة الاشراف"
+
+#: .\treat_min_django\accounts\models.py:30
+msgid "Designates whether the user can log into this admin site."
+msgstr ".يحدد هذا الاختيار اذا ما كان يمكن للمستخدم الدخول لصفحة تحكم المشرف"
+
+#: .\treat_min_django\accounts\models.py:35
+msgid "groups"
+msgstr "المجموعات"
+
+#: .\treat_min_django\accounts\models.py:39
+msgid ""
+"The groups this user belongs to. A user will get all permissions granted to "
+"each of their groups."
+msgstr ""
+".المجموعات التي انضم اليها المستخدم , المستخدم سيحصل على الصلاحيات المتاحة "
+"لكل مجموعة انضم اليها"
+
+#: .\treat_min_django\accounts\models.py:51
+msgid "Abstract Users"
+msgstr "المستخدمين المجردين"
+
+#: .\treat_min_django\accounts\models.py:52
+msgid "abstract user"
+msgstr "المستخدم المجرد"
+
+#: .\treat_min_django\accounts\models.py:70
+#: .\treat_min_django\accounts\models.py:89
+#: .\treat_min_django\accounts\models.py:109
+#: .\treat_min_django\accounts\models.py:116
+#: .\treat_min_django\user_appointments\models.py:25
+#: .\treat_min_django\user_appointments\models.py:42
+#: .\treat_min_django\user_appointments\models.py:59
+#: .\treat_min_django\user_reviews\models.py:20
+#: .\treat_min_django\user_reviews\models.py:36
+#: .\treat_min_django\user_reviews\models.py:51
+msgid "user"
+msgstr "المستخدم"
+
+#: .\treat_min_django\accounts\models.py:73
+msgid "Admins"
+msgstr "المشرفين"
+
+#: .\treat_min_django\accounts\models.py:74
+msgid "admin"
+msgstr "مشرف"
+
+#: .\treat_min_django\accounts\models.py:90
+#: .\treat_min_django\entities_details\models\details.py:16
+#: .\treat_min_django\entities_details\models\details.py:38
+#: .\treat_min_django\entities_details\models\details.py:53
+msgid "hospital"
+msgstr "المستشفى"
+
+#: .\treat_min_django\accounts\models.py:93
+msgid "Hospitals Admins"
+msgstr "مشرفين المستشفيات"
+
+#: .\treat_min_django\accounts\models.py:94
+msgid "hospital admin"
+msgstr "مشرف مستشفى"
+
+#: .\treat_min_django\accounts\models.py:110
+msgid "date_of_birth"
+msgstr "تاريخ الميلاد"
+
+#: .\treat_min_django\accounts\models.py:111
+#: .\treat_min_django\entities\models.py:47
+msgid "gender"
+msgstr "الجنس"
+
+#: .\treat_min_django\accounts\models.py:112
+#: .\treat_min_django\entities\models.py:50
+#: .\treat_min_django\entities\models.py:67
+msgid "photo"
+msgstr "الصورة"
+
+#: .\treat_min_django\accounts\models.py:115
+msgid "Users"
+msgstr "المستخدمين"
+
+#: .\treat_min_django\accounts\models.py:124
+msgid "code"
+msgstr "الرمز"
+
+#: .\treat_min_django\accounts\models.py:125
+msgid "is_verified"
+msgstr "مفعل؟"
+
+#: .\treat_min_django\accounts\models.py:128
+msgid "Pending Users"
+msgstr "المستخدمين المعلقين"
+
+#: .\treat_min_django\accounts\models.py:129
+msgid "pending user"
+msgstr "مستخدم معلق"
+
+#: .\treat_min_django\entities\apps.py:6
+msgid "Entities"
+msgstr "الجهات"
+
+#: .\treat_min_django\entities\models.py:4
+msgid "Male"
+msgstr "ذكر"
+
+#: .\treat_min_django\entities\models.py:4
+msgid "Female"
+msgstr "أنثى"
+
+#: .\treat_min_django\entities\models.py:12
+msgid "Clinics"
+msgstr "العيادات"
+
+#: .\treat_min_django\entities\models.py:13
+#: .\treat_min_django\entities_details\models\details.py:17
+#: .\treat_min_django\entities_details\models\schedules.py:29
+#: .\treat_min_django\user_reviews\models.py:21
+msgid "clinic"
+msgstr "عيادة"
+
+#: .\treat_min_django\entities\models.py:25
+msgid "Rooms"
+msgstr "الغرف"
+
+#: .\treat_min_django\entities\models.py:26
+#: .\treat_min_django\entities_details\models\details.py:39
+#: .\treat_min_django\entities_details\models\schedules.py:42
+#: .\treat_min_django\user_reviews\models.py:37
+msgid "room"
+msgstr "غرفة"
+
+#: .\treat_min_django\entities\models.py:37
+msgid "Services"
+msgstr "الخدمات"
+
+#: .\treat_min_django\entities\models.py:38
+#: .\treat_min_django\entities_details\models\details.py:54
+#: .\treat_min_django\entities_details\models\schedules.py:55
+#: .\treat_min_django\user_reviews\models.py:52
+msgid "service"
+msgstr "خدمة"
+
+#: .\treat_min_django\entities\models.py:46
+msgid "title"
+msgstr "لقب"
+
+#: .\treat_min_django\entities\models.py:48
+msgid "speciality"
+msgstr "التخصص"
+
+#: .\treat_min_django\entities\models.py:54
+msgid "Doctors"
+msgstr "الاطباء"
+
+#: .\treat_min_django\entities\models.py:55
+#: .\treat_min_django\entities_details\models\details.py:18
+msgid "doctor"
+msgstr "طبيب"
+
+#: .\treat_min_django\entities\models.py:64
+msgid "address"
+msgstr "العنوان"
+
+#: .\treat_min_django\entities\models.py:65
+msgid "latitude"
+msgstr "خط العرض"
+
+#: .\treat_min_django\entities\models.py:66
+msgid "longitude"
+msgstr "خط الطول"
+
+#: .\treat_min_django\entities\models.py:68
+msgid "doctors"
+msgstr "الاطباء"
+
+#: .\treat_min_django\entities\models.py:69
+msgid "clinics"
+msgstr "العيادات"
+
+#: .\treat_min_django\entities\models.py:70
+msgid "rooms"
+msgstr "الغرف"
+
+#: .\treat_min_django\entities\models.py:71
+msgid "services"
+msgstr "الخدمات"
+
+#: .\treat_min_django\entities\models.py:75
+msgid "Hospitals"
+msgstr "المستشفيات"
+
+#: .\treat_min_django\entities\models.py:76
+msgid "Hospital"
+msgstr "مستشفى"
+
+#: .\treat_min_django\entities_details\apps.py:6
+msgid "Entities Details"
+msgstr "تفاصيل الجهات"
+
+#: .\treat_min_django\entities_details\models\details.py:7
+msgid "price"
+msgstr "السعر"
+
+#: .\treat_min_django\entities_details\models\details.py:8
+msgid "rating_total"
+msgstr "التقييم الكلي"
+
+#: .\treat_min_django\entities_details\models\details.py:9
+msgid "rating_user"
+msgstr "المستخديم المقييمين"
+
+#: .\treat_min_django\entities_details\models\details.py:21
+msgid "Clinics Details"
+msgstr "تفاصيل العيادات"
+
+#: .\treat_min_django\entities_details\models\details.py:22
+msgid "clinic details"
+msgstr "تفاصيل العيادة"
+
+#: .\treat_min_django\entities_details\models\details.py:42
+msgid "Rooms Details"
+msgstr "تفاصيل الغرف"
+
+#: .\treat_min_django\entities_details\models\details.py:43
+msgid "room detail"
+msgstr "تفاصيل الغرفة"
+
+#: .\treat_min_django\entities_details\models\details.py:57
+msgid "Services Details"
+msgstr "تفاصيل الخدمات"
+
+#: .\treat_min_django\entities_details\models\details.py:58
+msgid "service details"
+msgstr "تفاصيل الخدمة"
+
+#: .\treat_min_django\entities_details\models\schedules.py:6
+msgid "Saturday"
+msgstr "السبت"
+
+#: .\treat_min_django\entities_details\models\schedules.py:7
+msgid "Sunday"
+msgstr "الأحد"
+
+#: .\treat_min_django\entities_details\models\schedules.py:8
+msgid "Monday"
+msgstr "الأثنين"
+
+#: .\treat_min_django\entities_details\models\schedules.py:9
+msgid "Tuesday"
+msgstr "الثلاثاء"
+
+#: .\treat_min_django\entities_details\models\schedules.py:10
+msgid "Wednesday"
+msgstr "الأربعاء"
+
+#: .\treat_min_django\entities_details\models\schedules.py:11
+msgid "Thursday"
+msgstr "الخميس"
+
+#: .\treat_min_django\entities_details\models\schedules.py:12
+msgid "Friday"
+msgstr "الجمعة"
+
+#: .\treat_min_django\entities_details\models\schedules.py:17
+msgid "day"
+msgstr "اليوم"
+
+#: .\treat_min_django\entities_details\models\schedules.py:18
+msgid "start"
+msgstr "البداية"
+
+#: .\treat_min_django\entities_details\models\schedules.py:19
+msgid "end"
+msgstr "النهاية"
+
+#: .\treat_min_django\entities_details\models\schedules.py:32
+msgid "clinic schedule"
+msgstr "ميعاد العيادة"
+
+#: .\treat_min_django\entities_details\models\schedules.py:45
+msgid "room schedule"
+msgstr "ميعاد الغرفة"
+
+#: .\treat_min_django\entities_details\models\schedules.py:58
+msgid "service schedule"
+msgstr "ميعاد الخدمة"
+
+#: .\treat_min_django\settings.py:144
+msgid "Arabic"
+msgstr "العربية"
+
+#: .\treat_min_django\settings.py:145
+msgid "English"
+msgstr "الانجليزية"
+
+#: .\treat_min_django\user_appointments\apps.py:6
+msgid "Users Appointments"
+msgstr "حجوزات المستخدمين"
+
+#: .\treat_min_django\user_appointments\models.py:7
+msgid "Accepted"
+msgstr "مقبول"
+
+#: .\treat_min_django\user_appointments\models.py:8
+msgid "Canceled"
+msgstr "ملغي"
+
+#: .\treat_min_django\user_appointments\models.py:9
+msgid "Rejected"
+msgstr "مرفوض"
+
+#: .\treat_min_django\user_appointments\models.py:10
+msgid "Waiting"
+msgstr "منتظر"
+
+#: .\treat_min_django\user_appointments\models.py:15
+msgid "status"
+msgstr "حالة الحجز"
+
+#: .\treat_min_django\user_appointments\models.py:16
+msgid "booking_date"
+msgstr "تاريخ الحجز"
+
+#: .\treat_min_django\user_appointments\models.py:17
+msgid "appointment_date"
+msgstr "ميعاد الحجز"
+
+#: .\treat_min_django\user_appointments\models.py:26
+#: .\treat_min_django\user_appointments\models.py:43
+#: .\treat_min_django\user_appointments\models.py:60
+msgid "schedule"
+msgstr "الميعاد"
+
+#: .\treat_min_django\user_appointments\models.py:29
+msgid "Clinics Appointments"
+msgstr "حجوزات العيادات"
+
+#: .\treat_min_django\user_appointments\models.py:30
+msgid "clinic appointment"
+msgstr "حجز عيادة"
+
+#: .\treat_min_django\user_appointments\models.py:46
+msgid "Rooms Appointments"
+msgstr "حجوزات الغرف"
+
+#: .\treat_min_django\user_appointments\models.py:47
+msgid "room appointment"
+msgstr "حجز غرفة"
+
+#: .\treat_min_django\user_appointments\models.py:63
+msgid "Services Appointments"
+msgstr "حجوزات الخدمات"
+
+#: .\treat_min_django\user_appointments\models.py:64
+msgid "service appointment"
+msgstr "حجز خدمة"
+
+#: .\treat_min_django\user_reviews\apps.py:6
+msgid "Users Reviews"
+msgstr "مراجعات المستخدمين"
+
+#: .\treat_min_django\user_reviews\models.py:11
+msgid "date"
+msgstr "التاريخ"
+
+#: .\treat_min_django\user_reviews\models.py:12
+msgid "rating"
+msgstr "التقييم"
+
+#: .\treat_min_django\user_reviews\models.py:13
+msgid "review"
+msgstr "المراجعة"
+
+#: .\treat_min_django\user_reviews\models.py:24
+msgid "Clinics Reviews"
+msgstr "مراجعات العيادات"
+
+#: .\treat_min_django\user_reviews\models.py:25
+msgid "clinic review"
+msgstr "مراجعة عيادة"
+
+#: .\treat_min_django\user_reviews\models.py:40
+msgid "Rooms Reviews"
+msgstr "مراجعات الغرف"
+
+#: .\treat_min_django\user_reviews\models.py:41
+msgid "room review"
+msgstr "مراجعة عيادة"
+
+#: .\treat_min_django\user_reviews\models.py:55
+msgid "Services Reviews"
+msgstr "مراجعات الخدمات"
+
+#: .\treat_min_django\user_reviews\models.py:56
+msgid "service review"
+msgstr "مراجعة خدمة"
+
+#~ msgid "Reviews cannot contain more than 250 characters!"
+#~ msgstr "!المراجعات لا يمكن ان تحتوي على اكثر من 250 حرف"
+
+#~ msgid "date joined"
+#~ msgstr "تاريخ الانضمام"

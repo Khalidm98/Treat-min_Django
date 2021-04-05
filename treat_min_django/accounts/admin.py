@@ -1,5 +1,6 @@
 from django.contrib import admin
 from .models import AbstractUser, Admin, HospitalAdmin, User, PendingUser
+from django.utils.translation import gettext_lazy as _
 
 readonly = ['email', 'name', 'phone', 'date_joined', 'last_login']
 
@@ -13,23 +14,23 @@ class AbstractUserAdmin(admin.ModelAdmin):
 class AbstractAdmin(admin.ModelAdmin):
     def email(self, obj):
         return obj.user.email
-    email.short_description = 'email'
+    email.short_description = _('email address')
 
     def name(self, obj):
         return obj.user.name
-    name.short_description = 'name'
+    name.short_description = _('name')
 
     def phone(self, obj):
         return obj.user.phone
-    phone.short_description = 'phone'
+    phone.short_description = _('phone')
 
     def date_joined(self, obj):
         return obj.user.date_joined
-    date_joined.short_description = 'date_joined'
+    date_joined.short_description = _('date_joined')
 
     def last_login(self, obj):
         return obj.user.last_login
-    last_login.short_description = 'last_login'
+    last_login.short_description = _('last_login')
 
 
 class AdminAdmin(AbstractAdmin):

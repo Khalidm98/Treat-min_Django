@@ -77,13 +77,13 @@ class RegisterAPI(generics.GenericAPIView):
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-
         email = request.data.get('email')
         user = PendingUser.objects.filter(email__iexact=email)
         if user.exists():
             user = user.first()
             if user.is_verified:
                 user.delete()
+
                 user = serializer.save()
                 return Response(
                     {

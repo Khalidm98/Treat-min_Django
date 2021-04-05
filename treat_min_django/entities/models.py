@@ -1,47 +1,79 @@
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
-GENDER = [('M', 'Male'), ('F', 'Female')]
+GENDER = [('M', _('Male')), ('F', _('Female'))]
 
 
-class Entity(models.Model):
-    name = models.CharField(max_length=50, unique=True)
+class Clinic(models.Model):
+    name = models.CharField(max_length=50, unique=True,verbose_name=_('name'))
 
     class Meta:
-        abstract = True
         ordering = ['name']
+        verbose_name_plural = _('Clinics')
+        verbose_name = _('clinic')
 
     def __str__(self):
         return self.name
 
 
-class Clinic(Entity):
-    pass
+
+class Room(models.Model):
+    name = models.CharField(max_length=50, unique=True,verbose_name=_('name'))
+
+    class Meta:
+        ordering = ['name']
+        verbose_name_plural = _('Rooms')
+        verbose_name = _('room')
+
+    def __str__(self):
+        return self.name
 
 
-class Room(Entity):
-    pass
+class Service(models.Model):
+    name = models.CharField(max_length=50, unique=True,verbose_name=_('name'))
+
+    class Meta:
+        ordering = ['name']
+        verbose_name_plural = _('Services')
+        verbose_name = _('service')
+
+    def __str__(self):
+        return self.name
 
 
-class Service(Entity):
-    pass
+class Doctor(models.Model):
+    name = models.CharField(max_length=50,verbose_name=_('name'))
+    title = models.CharField(max_length=50,verbose_name=_('title'))
+    gender = models.CharField(max_length=1, choices=GENDER,verbose_name=_('gender'))
+    speciality = models.ForeignKey(Clinic, on_delete=models.CASCADE, related_name='doctors',verbose_name=_('speciality'))
+    phone = models.CharField(max_length=11, blank=True, null=True,verbose_name=_('phone'))
+    photo = models.ImageField(upload_to='photos/doctors/', blank=True, null=True,verbose_name=_('photo'))
+
+    class Meta:
+        ordering = ['name']
+        verbose_name_plural = _('Doctors')
+        verbose_name = _('doctor')
+
+    def __str__(self):
+        return self.name
 
 
-class Doctor(Entity):
-    name = models.CharField(max_length=50)
-    title = models.CharField(max_length=50)
-    gender = models.CharField(max_length=1, choices=GENDER)
-    speciality = models.ForeignKey(Clinic, on_delete=models.RESTRICT, related_name='doctors')
-    phone = models.CharField(max_length=11, blank=True, null=True)
-    photo = models.ImageField(upload_to='photos/doctors/', blank=True, null=True)
+class Hospital(models.Model):
+    name = models.CharField(max_length=50, unique=True , verbose_name=_('name'))
+    phone = models.CharField(max_length=11 ,verbose_name=_('phone'))
+    address = models.CharField(max_length=100 ,verbose_name=_('address'))
+    latitude = models.DecimalField(max_digits=9, decimal_places=6, blank=True, null=True ,verbose_name=_('latitude'))
+    longitude = models.DecimalField(max_digits=9, decimal_places=6, blank=True, null=True ,verbose_name=_('longitude'))
+    photo = models.ImageField(upload_to='photos/hospitals/', blank=True, null=True,verbose_name=_('photo'))
+    doctors = models.ManyToManyField(Doctor, through='entities_details.ClinicDetail', related_name='hospitals',verbose_name=_('doctors'))
+    clinics = models.ManyToManyField(Clinic, through='entities_details.ClinicDetail', related_name='hospitals',verbose_name=_('clinics'))
+    rooms = models.ManyToManyField(Room, through='entities_details.RoomDetail', related_name='hospitals',verbose_name=_('rooms'))
+    services = models.ManyToManyField(Service, through='entities_details.ServiceDetail', related_name='hospitals',verbose_name=_('services'))
 
+    class Meta:
+        ordering = ['name']
+        verbose_name_plural = _('Hospitals')
+        verbose_name = _('Hospital')
 
-class Hospital(Entity):
-    phone = models.CharField(max_length=11)
-    address = models.CharField(max_length=100)
-    latitude = models.DecimalField(max_digits=9, decimal_places=6, blank=True, null=True)
-    longitude = models.DecimalField(max_digits=9, decimal_places=6, blank=True, null=True)
-    photo = models.ImageField(upload_to='photos/hospitals/', blank=True, null=True)
-    doctors = models.ManyToManyField(Doctor, through='entities_details.ClinicDetail', related_name='hospitals')
-    clinics = models.ManyToManyField(Clinic, through='entities_details.ClinicDetail', related_name='hospitals')
-    rooms = models.ManyToManyField(Room, through='entities_details.RoomDetail', related_name='hospitals')
-    services = models.ManyToManyField(Service, through='entities_details.ServiceDetail', related_name='hospitals')
+    def __str__(self):
+        return self.name

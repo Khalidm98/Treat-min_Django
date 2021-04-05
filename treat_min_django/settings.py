@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
+import os
+from django.utils.translation import gettext_lazy as _
+
 from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -69,6 +72,7 @@ REST_KNOX = {
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -131,6 +135,20 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
+
+LOCALE_PATHS = (
+   os.path.join(BASE_DIR, 'locale/'),
+)
+
+LANGUAGES = (
+    ('ar', _('Arabic')),
+    ('en', _('English')),
+)
+
+MULTILINGUAL_LANGUAGES = (
+    "en-us",
+    "ar-eg",
+)
 
 LANGUAGE_CODE = 'en-us'
 
