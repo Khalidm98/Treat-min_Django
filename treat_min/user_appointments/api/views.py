@@ -28,9 +28,16 @@ class AppointmentAPI(APIView):
         services_serializer = serializers.ServiceAppointmentSerializer(services, many=True)
         return Response(
             {
-                "clinics": clinics_serializer.data,
-                "rooms": rooms_serializer.data,
-                "services": services_serializer.data
+                "current": {
+                    "clinics": clinics_serializer.data,
+                    "rooms": rooms_serializer.data,
+                    "services": services_serializer.data
+                },
+                "history": {
+                    # "clinics": clinics_serializer.data,
+                    # "rooms": rooms_serializer.data,
+                    # "services": services_serializer.data
+                }
             }
         )
 
@@ -39,7 +46,7 @@ class ReserveAPI(APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
-    WEEk_DAYS = {"MON": 0, "TUE": 1, "WED": 2, "THU": 3, "FRI": 4, "SAT": 5, "SUN": 6}
+    WEEK_DAYS = {"MON": 0, "TUE": 1, "WED": 2, "THU": 3, "FRI": 4, "SAT": 5, "SUN": 6}
 
     def post(self, request, entities, entity_id, detail_id):
         result = check_detail(entities, entity_id, detail_id)
@@ -54,7 +61,7 @@ class ReserveAPI(APIView):
         except ClinicSchedule.DoesNotExist or RoomSchedule.DoesNotExist or ServiceSchedule.DoesNotExist:
             return Response({"details": "Wrong schedule id!"}, status.HTTP_404_NOT_FOUND)
 
-        if self.WEEk_DAYS[schedule.day] != date.fromisoformat(request.data.get('appointment_date')).weekday():
+        if self.WEEK_DAYS[schedule.day] != date.fromisoformat(request.data.get('appointment_date')).weekday():
             return Response(
                 {"details": "Appointment day and schedule day are not consistent!"},
                 status.HTTP_400_BAD_REQUEST
