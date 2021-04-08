@@ -19,24 +19,41 @@ class AppointmentAPI(APIView):
 
     def get(self, request):
         user = get_user(request)
-        clinics = ClinicAppointment.objects.filter(user=user)
-        rooms = RoomAppointment.objects.filter(user=user)
-        services = ServiceAppointment.objects.filter(user=user)
+        current_params = {
+            'user': user,
+            'status__in': ["A", "R", "W"],
+            'appointment_date__gte': date.today()
+        }
+        current_clinics = ClinicAppointment.objects.filter(**current_params)
+        current_rooms = RoomAppointment.objects.filter(**current_params)
+        current_services = ServiceAppointment.objects.filter(**current_params)
+        current_clinics = serializers.ClinicAppointmentSerializer(current_clinics, many=True)
+        current_rooms = serializers.RoomAppointmentSerializer(current_rooms, many=True)
+        current_services = serializers.ServiceAppointmentSerializer(current_services, many=True)
 
-        clinics_serializer = serializers.ClinicAppointmentSerializer(clinics, many=True)
-        rooms_serializer = serializers.RoomAppointmentSerializer(rooms, many=True)
-        services_serializer = serializers.ServiceAppointmentSerializer(services, many=True)
+        history_params = {
+            'user': user,
+            'status__in': ["A", "R"],
+            'appointment_date__lt': date.today()
+        }
+        history_clinics = ClinicAppointment.objects.filter(**history_params)
+        history_rooms = RoomAppointment.objects.filter(**history_params)
+        history_services = ServiceAppointment.objects.filter(**history_params)
+        history_clinics = serializers.ClinicAppointmentSerializer(history_clinics, many=True)
+        history_rooms = serializers.RoomAppointmentSerializer(history_rooms, many=True)
+        history_services = serializers.ServiceAppointmentSerializer(history_services, many=True)
+
         return Response(
             {
                 "current": {
-                    "clinics": clinics_serializer.data,
-                    "rooms": rooms_serializer.data,
-                    "services": services_serializer.data
+                    "clinics": current_clinics.data,
+                    "rooms": current_rooms.data,
+                    "services": current_services.data
                 },
                 "history": {
-                    # "clinics": clinics_serializer.data,
-                    # "rooms": rooms_serializer.data,
-                    # "services": services_serializer.data
+                    "clinics": history_clinics.data,
+                    "rooms": history_rooms.data,
+                    "services": history_services.data
                 }
             }
         )

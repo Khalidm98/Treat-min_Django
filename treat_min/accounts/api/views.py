@@ -10,7 +10,6 @@ from rest_framework.authtoken.serializers import AuthTokenSerializer
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-
 from .serializers import EmailSerializer, AbstractUserSerializer, RegisterSerializer, CodeSerializer
 from ..models import AbstractUser, PendingUser, LostPassword
 
@@ -119,13 +118,14 @@ class LoginAPI(KnoxLoginView):
     def post(self, request, format=None):
         serializer = AuthTokenSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-
         user = serializer.validated_data['user']
         login(request, user)
-        reset_pass_fail_trial = LostPassword.objects.get(email= user.email)
-        if (reset_pass_fail_trial):
+
+        try:
+            reset_pass_fail_trial = LostPassword.objects.get(email=user.email)
             reset_pass_fail_trial.delete()
-        return super().post(request, format=None)
+        except LostPassword.DoesNotExist:
+            return super().post(request, format=None)
 
 
 class SendEmailLostPassword(APIView):
@@ -195,7 +195,7 @@ class ChangePasswordAPI(APIView):
         email = request.data.get('email')
         password = request.data.get('password')
         user = AbstractUser.objects.get(email=email)
-        if LostPassword.objects.get(email=email).is_verified == False :
+        if LostPassword.objects.get(email=email).is_verified == False:
             return Response({
                 "detail": "Please verify your account with the code sent to your email."
             }, status.HTTP_400_BAD_REQUEST)
