@@ -10,7 +10,8 @@ from rest_framework.authtoken.serializers import AuthTokenSerializer
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .serializers import EmailSerializer, PendingUserSerializer, AbstractUserSerializer, RegisterSerializer
+
+from .serializers import EmailSerializer, AbstractUserSerializer, RegisterSerializer, CodeSerializer
 from ..models import AbstractUser, PendingUser, LostPassword
 
 
@@ -52,6 +53,10 @@ class SendEmailView(generics.GenericAPIView):
 
 class VerifyEmailView(APIView):
     def post(self, request, *args, **kwargs):
+
+        serializer = CodeSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
         email = request.data.get('email')
         code = request.data.get('code')
         user = PendingUser.objects.filter(email__iexact=email)
@@ -103,8 +108,8 @@ class RegisterAPI(generics.GenericAPIView):
                 )
         else:
             return Response(
-                {"details": "This email address was not verified"},
-                status.HTTP_404_NOT_FOUND
+                {"details": "This email doesnt belong to an existing account"},
+                status.HTTP_400_BAD_REQUEST
             )
 
 
@@ -114,13 +119,21 @@ class LoginAPI(KnoxLoginView):
     def post(self, request, format=None):
         serializer = AuthTokenSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
+
         user = serializer.validated_data['user']
         login(request, user)
+        reset_pass_fail_trial = LostPassword.objects.get(email= user.email)
+        if (reset_pass_fail_trial):
+            reset_pass_fail_trial.delete()
         return super().post(request, format=None)
 
 
 class SendEmailLostPassword(APIView):
     def post(self, request):
+
+        serializer = EmailSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
         email = request.data.get('email')
         user = AbstractUser.objects.filter(email__iexact=email)
         if not user.exists():
@@ -150,6 +163,10 @@ class SendEmailLostPassword(APIView):
 
 class VerifyEmailLostPassword(APIView):
     def post(self, request):
+
+        serializer = CodeSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
         email = request.data.get('email')
         code = request.data.get('code')
         user = LostPassword.objects.filter(email__iexact=email)
@@ -174,13 +191,18 @@ class VerifyEmailLostPassword(APIView):
 
 class ChangePasswordAPI(APIView):
     def post(self, request):
+
         email = request.data.get('email')
         password = request.data.get('password')
+        user = AbstractUser.objects.get(email=email)
+        if LostPassword.objects.get(email=email).is_verified == False :
+            return Response({
+                "detail": "Please verify your account with the code sent to your email."
+            }, status.HTTP_400_BAD_REQUEST)
         if len(password) <= 8:
             return Response({
                 "detail": "Passwords can't be less than 8 characters"
             }, status.HTTP_400_BAD_REQUEST)
-        user = AbstractUser.objects.get(email=email)
         user.set_password(password)
         user.save()
         deleted_user = LostPassword.objects.get(email=email)
