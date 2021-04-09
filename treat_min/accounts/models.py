@@ -12,34 +12,15 @@ from ..entities.models import GENDER, Hospital
 
 
 class AbstractUser(AbstractBaseUser, PermissionsMixin):
-    email = models.EmailField(verbose_name=_('email address'), unique=True)
-    name = models.CharField(verbose_name=_('name'), max_length=50)
-    phone = models.CharField(verbose_name=_('phone'), max_length=11)
-    date_joined = models.DateTimeField(verbose_name=_('date_joined'), auto_now_add=True)
+    email = models.EmailField(unique=True, verbose_name=_('email address'))
+    name = models.CharField(max_length=50, verbose_name=_('name'))
+    phone = models.CharField(max_length=11, verbose_name=_('phone'))
+    date_joined = models.DateTimeField(auto_now_add=True, verbose_name=_('date_joined'))
 
-    is_active = models.BooleanField(
-        verbose_name=_('active'),
-        default=True,
-        help_text=_(
-            'Designates whether this user should be treated as active,\nUnselect this instead of deleting accounts.'
-        )
-    )
-    is_staff = models.BooleanField(
-        verbose_name=_('staff status'),
-        default=False,
-        help_text=_('Designates whether the user can log into this admin site.')
-    )
+    is_active = models.BooleanField(default=True, verbose_name=_('active'))
+    is_staff = models.BooleanField(default=False, verbose_name=_('staff status'))
     groups = models.ForeignKey(
-        Group,
-        on_delete=models.RESTRICT,
-        verbose_name=_('groups'),
-        blank=True,
-        null=True,
-        help_text=_(
-            'The groups this user belongs to. A user will get all permissions '
-            'granted to each of their groups.'
-        ),
-        related_name='users',
+        Group, on_delete=models.RESTRICT, related_name='users', blank=True, null=True, verbose_name=_('groups')
     )
 
     objects = UserManager()
@@ -48,8 +29,8 @@ class AbstractUser(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = []  # fields that will be prompted for when creating a superuser
 
     class Meta:
-        verbose_name_plural = _('Abstract Users')
         verbose_name = _('abstract user')
+        verbose_name_plural = _('Abstract Users')
 
     def __str__(self):
         return self.email + ' - ' + self.name
@@ -70,8 +51,8 @@ class Admin(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name=_('user'))
 
     class Meta:
-        verbose_name_plural = _('Admins')
         verbose_name = _('admin')
+        verbose_name_plural = _('Admins')
 
     def __str__(self):
         return self.user.email + ' - ' + self.user.name
@@ -86,13 +67,14 @@ class Admin(models.Model):
 
 
 class HospitalAdmin(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='hospital_admin',
-                                verbose_name=_('user'))
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='hospital_admin', verbose_name=_('user')
+    )
     hospital = models.ForeignKey(Hospital, on_delete=models.RESTRICT, verbose_name=_('hospital'))
 
     class Meta:
-        verbose_name_plural = _('Hospitals Admins')
         verbose_name = _('hospital admin')
+        verbose_name_plural = _('Hospitals Admins')
 
     def __str__(self):
         return self.user.email + ' - ' + self.user.name
@@ -113,8 +95,8 @@ class User(models.Model):
     photo = models.ImageField(upload_to='photos/users/', blank=True, null=True, verbose_name=_('photo'))
 
     class Meta:
-        verbose_name_plural = _('Users')
         verbose_name = _('user')
+        verbose_name_plural = _('Users')
 
     def __str__(self):
         return self.user.email + ' - ' + self.user.name
@@ -126,8 +108,8 @@ class PendingUser(models.Model):
     is_verified = models.BooleanField(default=False, verbose_name=_('is_verified'))
 
     class Meta:
-        verbose_name_plural = _('Pending Users')
         verbose_name = _('pending user')
+        verbose_name_plural = _('Pending Users')
 
     def __str__(self):
         return self.email
@@ -139,8 +121,8 @@ class LostPassword(models.Model):
     is_verified = models.BooleanField(default=False, verbose_name=_('is_verified'))
 
     class Meta:
-        verbose_name_plural = _('Lost Passwords')
         verbose_name = _('lost password')
+        verbose_name_plural = _('Lost Passwords')
 
     def __str__(self):
         return self.email

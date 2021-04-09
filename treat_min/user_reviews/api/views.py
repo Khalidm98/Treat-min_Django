@@ -37,24 +37,26 @@ class RateAPI(APIView):
 
         serializer = RateSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
+        rating = request.data.get('rating')
+        user = get_user(request)
 
         try:
-            review = result.reviews.get(user=get_user(request))
-            result.rating_total = result.rating_total - int(review.rating) + int(request.data.get('rating'))
+            review = result.reviews.get(user=user)
+            result.rating_total = result.rating_total - int(review.rating) + int(rating)
             result.save()
-            review.rating = request.data.get('rating')
             review.review = request.data.get('review')
+            review.rating = rating
             review.save()
             return Response({"details": "Your review was updated successfully!"})
 
         except ClinicReview.DoesNotExist or RoomReview.DoesNotExist or ServiceReview.DoesNotExist:
-            result.rating_total = result.rating_total + int(request.data.get('rating'))
+            result.rating_total = result.rating_total + int(rating)
             result.rating_users = result.rating_users + 1
             result.save()
 
             params = {
-                'user': get_user(request),
-                'rating': request.data.get('rating'),
+                'user': user,
+                'rating': rating,
                 'review': request.data.get('review')
             }
             if entities == 'clinics':

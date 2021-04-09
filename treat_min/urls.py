@@ -19,6 +19,10 @@ from django.urls import include, path
 from django.conf.urls.i18n import i18n_patterns
 from .accounts.api.views import SendEmailLostPassword
 
+admin.site.site_header = 'Treat-min administration'
+admin.site.index_title = 'Treat-min'
+admin.site.site_title = 'admin'
+
 urlpatterns = [
     path('api/accounts/', include('treat_min.accounts.api.urls')),
     path('api/', include('treat_min.entities.api.urls')),

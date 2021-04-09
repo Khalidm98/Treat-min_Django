@@ -23,18 +23,21 @@ class ServiceScheduleInline(ScheduleInline):
 class ClinicDetailInline(admin.TabularInline):
     model = ClinicDetail
     fields = ['hospital', 'clinic', 'doctor', 'price']
+    autocomplete_fields = ['hospital', 'clinic', 'doctor']
     extra = 1
 
 
 class RoomDetailInline(admin.TabularInline):
     model = RoomDetail
     fields = ['hospital', 'room', 'price']
+    autocomplete_fields = ['hospital', 'room']
     extra = 1
 
 
 class ServiceDetailInline(admin.TabularInline):
     model = ServiceDetail
     fields = ['hospital', 'service', 'price']
+    autocomplete_fields = ['hospital', 'service']
     extra = 1
 
 
@@ -55,18 +58,21 @@ class DetailAdmin(admin.ModelAdmin):
 
 class ClinicDetailAdmin(DetailAdmin):
     fields = ['hospital', 'clinic', 'doctor', 'price']
+    autocomplete_fields = ['hospital', 'clinic', 'doctor']
     inlines = [ClinicScheduleInline]
     list_display = ['hospital', 'clinic', 'doctor', 'price']
 
 
 class RoomDetailAdmin(DetailAdmin):
     fields = ['hospital', 'room', 'price']
+    autocomplete_fields = ['hospital', 'room']
     inlines = [RoomScheduleInline]
     list_display = ['hospital', 'room', 'price']
 
 
 class ServiceDetailAdmin(DetailAdmin):
     fields = ['hospital', 'service', 'price']
+    autocomplete_fields = ['hospital', 'service']
     inlines = [ServiceScheduleInline]
     list_display = ['hospital', 'service', 'price']
 

@@ -20,8 +20,8 @@ class ClinicReview(Review):
     clinic = models.ForeignKey(ClinicDetail, on_delete=models.CASCADE, related_name='reviews', verbose_name=_('clinic'))
 
     class Meta:
-        verbose_name_plural = _('Clinics Reviews')
         verbose_name = _('clinic review')
+        verbose_name_plural = _('Clinics Reviews')
         constraints = [
             models.UniqueConstraint(fields=['user', 'clinic'], name='unique_clinic_review')
         ]
@@ -35,8 +35,8 @@ class RoomReview(Review):
     room = models.ForeignKey(RoomDetail, on_delete=models.CASCADE, related_name='reviews', verbose_name=_('room'))
 
     class Meta:
-        verbose_name_plural = _('Rooms Reviews')
         verbose_name = _('room review')
+        verbose_name_plural = _('Rooms Reviews')
         constraints = [
             models.UniqueConstraint(fields=['user', 'room'], name='unique_room_review')
         ]
@@ -47,12 +47,13 @@ class RoomReview(Review):
 
 class ServiceReview(Review):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='services_reviews', verbose_name=_('user'))
-    service = models.ForeignKey(ServiceDetail, on_delete=models.CASCADE, related_name='reviews',
-                                verbose_name=_('service'))
+    service = models.ForeignKey(
+        ServiceDetail, on_delete=models.CASCADE, related_name='reviews', verbose_name=_('service')
+    )
 
     class Meta:
-        verbose_name_plural = _('Services Reviews')
         verbose_name = _('service review')
+        verbose_name_plural = _('Services Reviews')
         constraints = [
             models.UniqueConstraint(fields=['user', 'service'], name='unique_service_review')
         ]

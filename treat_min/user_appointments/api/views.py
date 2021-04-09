@@ -21,7 +21,7 @@ class AppointmentAPI(APIView):
         user = get_user(request)
         current_params = {
             'user': user,
-            'status__in': ["A", "R", "W"],
+            'status__in': ['A', 'R', 'W'],
             'appointment_date__gte': date.today()
         }
         current_clinics = ClinicAppointment.objects.filter(**current_params)
@@ -31,17 +31,17 @@ class AppointmentAPI(APIView):
         current_rooms = serializers.RoomAppointmentSerializer(current_rooms, many=True)
         current_services = serializers.ServiceAppointmentSerializer(current_services, many=True)
 
-        history_params = {
+        past_params = {
             'user': user,
             'status__in': ["A", "R"],
             'appointment_date__lt': date.today()
         }
-        history_clinics = ClinicAppointment.objects.filter(**history_params)
-        history_rooms = RoomAppointment.objects.filter(**history_params)
-        history_services = ServiceAppointment.objects.filter(**history_params)
-        history_clinics = serializers.ClinicAppointmentSerializer(history_clinics, many=True)
-        history_rooms = serializers.RoomAppointmentSerializer(history_rooms, many=True)
-        history_services = serializers.ServiceAppointmentSerializer(history_services, many=True)
+        past_clinics = ClinicAppointment.objects.filter(**past_params)
+        past_rooms = RoomAppointment.objects.filter(**past_params)
+        past_services = ServiceAppointment.objects.filter(**past_params)
+        past_clinics = serializers.ClinicAppointmentSerializer(past_clinics, many=True)
+        past_rooms = serializers.RoomAppointmentSerializer(past_rooms, many=True)
+        past_services = serializers.ServiceAppointmentSerializer(past_services, many=True)
 
         return Response(
             {
@@ -50,10 +50,10 @@ class AppointmentAPI(APIView):
                     "rooms": current_rooms.data,
                     "services": current_services.data
                 },
-                "history": {
-                    "clinics": history_clinics.data,
-                    "rooms": history_rooms.data,
-                    "services": history_services.data
+                "past": {
+                    "clinics": past_clinics.data,
+                    "rooms": past_rooms.data,
+                    "services": past_services.data
                 }
             }
         )
@@ -70,22 +70,37 @@ class ReserveAPI(APIView):
         if isinstance(result, Response):
             return result
 
-        serializer = serializers.ReserveSerializer(data=request.data)
+        if entities == 'clinics':
+            serializer = serializers.ClinicReserveSerializer(data=request.data)
+        elif entities == 'rooms':
+            serializer = serializers.RoomReserveSerializer(data=request.data)
+        else:
+            serializer = serializers.ServiceReserveSerializer(data=request.data)
+
         serializer.is_valid(raise_exception=True)
+        user = get_user(request)
+        schedule_id = request.data.get('schedule')
+        appointment_date = request.data.get('appointment_date')
 
         try:
-            schedule = result.schedules.get(id=request.data.get('schedule'))
+            schedule = result.schedules.get(id=schedule_id)
         except ClinicSchedule.DoesNotExist or RoomSchedule.DoesNotExist or ServiceSchedule.DoesNotExist:
             return Response({"details": "Wrong schedule id!"}, status.HTTP_404_NOT_FOUND)
 
-        if self.WEEK_DAYS[schedule.day] != date.fromisoformat(request.data.get('appointment_date')).weekday():
+        if date.fromisoformat(appointment_date) <= date.today():
+            return Response(
+                {"details": "Appointment day must be after today!"},
+                status.HTTP_400_BAD_REQUEST
+            )
+
+        if self.WEEK_DAYS[schedule.day] != date.fromisoformat(appointment_date).weekday():
             return Response(
                 {"details": "Appointment day and schedule day are not consistent!"},
                 status.HTTP_400_BAD_REQUEST
             )
 
         try:
-            schedule.appointments.get(user=get_user(request), appointment_date=request.data.get('appointment_date'))
+            schedule.appointments.get(user=user, appointment_date=appointment_date)
             return Response(
                 {"details": "User cannot reserve the same schedule twice in the same day!"},
                 status.HTTP_400_BAD_REQUEST
@@ -93,9 +108,9 @@ class ReserveAPI(APIView):
 
         except ClinicAppointment.DoesNotExist or RoomAppointment.DoesNotExist or ServiceAppointment.DoesNotExist:
             params = {
-                'user': get_user(request),
-                'appointment_date': request.data.get('appointment_date'),
-                'schedule_id': request.data.get('schedule')
+                'user': user,
+                'schedule_id': schedule_id,
+                'appointment_date': appointment_date
             }
             if entities == 'clinics':
                 ClinicAppointment.objects.create(**params)

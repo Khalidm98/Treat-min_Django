@@ -21,14 +21,16 @@ class Appointment(models.Model):
 
 
 class ClinicAppointment(Appointment):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='clinics_appointments',
-                             verbose_name=_('user'))
-    schedule = models.ForeignKey(ClinicSchedule, null=True, on_delete=models.SET_NULL, related_name='appointments',
-                                 verbose_name=_('schedule'))
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='clinics_appointments', verbose_name=_('user')
+    )
+    schedule = models.ForeignKey(
+        ClinicSchedule, null=True, on_delete=models.SET_NULL, related_name='appointments', verbose_name=_('schedule')
+    )
 
     class Meta:
-        verbose_name_plural = _('Clinics Appointments')
         verbose_name = _('clinic appointment')
+        verbose_name_plural = _('Clinics Appointments')
         constraints = [
             models.UniqueConstraint(
                 fields=['user', 'schedule', 'appointment_date'], name='unique_clinic_appointment'
@@ -41,12 +43,13 @@ class ClinicAppointment(Appointment):
 
 class RoomAppointment(Appointment):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='rooms_appointments', verbose_name=_('user'))
-    schedule = models.ForeignKey(RoomSchedule, null=True, on_delete=models.SET_NULL, related_name='appointments',
-                                 verbose_name=_('schedule'))
+    schedule = models.ForeignKey(
+        RoomSchedule, null=True, on_delete=models.SET_NULL, related_name='appointments', verbose_name=_('schedule')
+    )
 
     class Meta:
-        verbose_name_plural = _('Rooms Appointments')
         verbose_name = _('room appointment')
+        verbose_name_plural = _('Rooms Appointments')
         constraints = [
             models.UniqueConstraint(
                 fields=['user', 'schedule', 'appointment_date'], name='unique_room_appointment'
@@ -58,14 +61,16 @@ class RoomAppointment(Appointment):
 
 
 class ServiceAppointment(Appointment):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='services_appointments',
-                             verbose_name=_('user'))
-    schedule = models.ForeignKey(ServiceSchedule, null=True, on_delete=models.SET_NULL, related_name='appointments',
-                                 verbose_name=_('schedule'))
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='services_appointments', verbose_name=_('user')
+    )
+    schedule = models.ForeignKey(
+        ServiceSchedule, null=True, on_delete=models.SET_NULL, related_name='appointments', verbose_name=_('schedule')
+    )
 
     class Meta:
-        verbose_name_plural = _('Services Appointments')
         verbose_name = _('service appointment')
+        verbose_name_plural = _('Services Appointments')
         constraints = [
             models.UniqueConstraint(
                 fields=['user', 'schedule', 'appointment_date'], name='unique_service_appointment'

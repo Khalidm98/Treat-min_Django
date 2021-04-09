@@ -1,17 +1,25 @@
 from django.contrib import admin
-from .models import AbstractUser, Admin, HospitalAdmin, User, PendingUser, LostPassword
 from django.utils.translation import gettext_lazy as _
-
-readonly = ['email', 'name', 'phone', 'date_joined', 'last_login']
+from .models import AbstractUser, Admin, HospitalAdmin, User, PendingUser, LostPassword
 
 
 class AbstractUserAdmin(admin.ModelAdmin):
-    fields = ['email', 'name', 'phone', 'is_active', 'is_staff', 'date_joined', 'last_login', 'groups']
-    readonly_fields = ['is_staff', 'date_joined', 'last_login', 'groups']
+    fields = ['email', 'password', 'name', 'phone']
     list_display = ['email', 'name', 'groups', 'date_joined', 'last_login']
+    search_fields = ['email', 'name', 'phone']
+
+    def save_model(self, request, obj, form, change):
+        obj.set_password(obj.password)
+        super().save_model(request, obj, form, change)
 
 
 class AbstractAdmin(admin.ModelAdmin):
+    fields = ['user', 'email', 'name', 'phone', 'group', 'date_joined', 'last_login']
+    readonly_fields = ['email', 'name', 'phone', 'group', 'date_joined', 'last_login']
+    autocomplete_fields = ['user']
+    list_display = ['email', 'name', 'date_joined', 'last_login']
+    search_fields = ['user__email', 'user__name', 'user__phone']
+
     def email(self, obj):
         return obj.user.email
     email.short_description = _('email address')
@@ -24,6 +32,10 @@ class AbstractAdmin(admin.ModelAdmin):
         return obj.user.phone
     phone.short_description = _('phone')
 
+    def group(self, obj):
+        return obj.user.groups
+    group.short_description = _('groups')
+
     def date_joined(self, obj):
         return obj.user.date_joined
     date_joined.short_description = _('date_joined')
@@ -34,21 +46,18 @@ class AbstractAdmin(admin.ModelAdmin):
 
 
 class AdminAdmin(AbstractAdmin):
-    fields = ['user', 'email', 'name', 'phone', 'date_joined', 'last_login']
-    readonly_fields = readonly
-    list_display = ['email', 'name', 'date_joined', 'last_login']
+    pass
 
 
 class HospitalAdminAdmin(AbstractAdmin):
-    fields = ['hospital', 'user', 'email', 'name', 'phone', 'date_joined', 'last_login']
-    readonly_fields = readonly
-    list_display = ['email', 'name', 'hospital', 'date_joined', 'last_login']
+    fields = ['hospital'] + AbstractAdmin.fields
+    autocomplete_fields = ['hospital', 'user']
+    list_display = ['hospital'] + AbstractAdmin.list_display
+    search_fields = ['hospital__name'] + AbstractAdmin.search_fields
 
 
 class UserAdmin(AbstractAdmin):
-    fields = ['user', 'email', 'name', 'phone', 'date_of_birth', 'gender', 'photo', 'date_joined', 'last_login']
-    readonly_fields = readonly
-    list_display = ['email', 'name', 'date_joined']
+    fields = AbstractAdmin.fields + ['gender', 'date_of_birth']
 
 
 admin.site.register(AbstractUser, AbstractUserAdmin)
