@@ -59,6 +59,44 @@ class AppointmentAPI(APIView):
         )
 
 
+class CancelAPI(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def delete(self, request, entities, appointment_id):
+        try:
+            if entities == 'clinics':
+                appointment = ClinicAppointment.objects.get(id=appointment_id)
+            elif entities == 'rooms':
+                appointment = RoomAppointment.objects.get(id=appointment_id)
+            elif entities == 'services':
+                appointment = ServiceAppointment.objects.get(id=appointment_id)
+            else:
+                return Response({"details": "Page not found!"}, status.HTTP_404_NOT_FOUND)
+        except ClinicAppointment.DoesNotExist or RoomAppointment.DoesNotExist or ServiceAppointment.DoesNotExist:
+            return Response(
+                {"details": "{0} appointment not found!".format(entities[0:len(entities) - 1])},
+                status.HTTP_404_NOT_FOUND
+            )
+
+        user = get_user(request)
+        if appointment.user != user:
+            return Response(
+                {"details": "This appointment doesn't belong to this user"},
+                status.HTTP_400_BAD_REQUEST
+            )
+
+        if appointment.appointment_date < date.today():
+            return Response(
+                {"details": "You cannot cancel a past appointment"},
+                status.HTTP_400_BAD_REQUEST
+            )
+
+        appointment.status = 'C'
+        appointment.save()
+        return Response({"details": "Your appointment was canceled successfully!"})
+
+
 class ReserveAPI(APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
@@ -123,7 +161,3 @@ class ReserveAPI(APIView):
                 {"details": "Your appointment was reserved successfully!"},
                 status.HTTP_201_CREATED
             )
-
-    def patch(self, request, entities, entity_id, detail_id):
-        # cancel an appointment (status)
-        pass

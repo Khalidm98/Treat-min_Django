@@ -47,8 +47,8 @@ class Doctor(models.Model):
     speciality = models.ForeignKey(
         Clinic, on_delete=models.CASCADE, related_name='doctors', verbose_name=_('speciality')
     )
-    phone = models.CharField(max_length=11, blank=True, null=True, verbose_name=_('phone'))
-    photo = models.ImageField(upload_to='photos/doctors/', blank=True, null=True, verbose_name=_('photo'))
+    phone = models.CharField(max_length=11, unique=True, blank=True, null=True, verbose_name=_('phone'))
+    photo = models.ImageField(upload_to='static/photos/doctors/', blank=True, null=True, verbose_name=_('photo'))
 
     class Meta:
         ordering = ['name']
@@ -65,7 +65,7 @@ class Hospital(models.Model):
     address = models.CharField(max_length=100, verbose_name=_('address'))
     latitude = models.DecimalField(max_digits=9, decimal_places=6, blank=True, null=True, verbose_name=_('latitude'))
     longitude = models.DecimalField(max_digits=9, decimal_places=6, blank=True, null=True, verbose_name=_('longitude'))
-    photo = models.ImageField(upload_to='photos/hospitals/', blank=True, null=True, verbose_name=_('photo'))
+    photo = models.ImageField(upload_to='static/photos/hospitals/', blank=True, null=True, verbose_name=_('photo'))
     doctors = models.ManyToManyField(
         Doctor, through='entities_details.ClinicDetail', related_name='hospitals', verbose_name=_('doctors')
     )

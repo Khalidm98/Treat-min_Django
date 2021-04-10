@@ -5,12 +5,13 @@ from django.core.mail import send_mail
 from django.contrib.auth import login
 from knox.models import AuthToken
 from knox.views import LoginView as KnoxLoginView
-from rest_framework import generics, permissions, status
+from rest_framework import permissions, status
 from rest_framework.authtoken.serializers import AuthTokenSerializer
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .serializers import EmailSerializer, AbstractUserSerializer, RegisterSerializer, CodeSerializer
+from .serializers import EmailSerializer, CodeSerializer, PasswordSerializer, \
+    AbstractUserSerializer, RegisterSerializer
 from ..models import AbstractUser, PendingUser, LostPassword
 
 
@@ -19,11 +20,12 @@ def get_user(request):
     return AuthToken.objects.get(token_key=key).user.user
 
 
-class SendEmailView(generics.GenericAPIView):
-    serializer_class = EmailSerializer
-
-    def post(self, request, *args, **kwargs):
+class SendEmailView(APIView):
+    def post(self, request):
+        serializer = EmailSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
         email = request.data.get('email')
+
         user = AbstractUser.objects.filter(email__iexact=email)
         if user.exists():
             return Response(
@@ -39,6 +41,7 @@ class SendEmailView(generics.GenericAPIView):
             [email],
             fail_silently=False
         )
+
         user = PendingUser.objects.filter(email__iexact=email)
         if user.exists():
             user = user.first()
@@ -51,17 +54,16 @@ class SendEmailView(generics.GenericAPIView):
 
 
 class VerifyEmailView(APIView):
-    def post(self, request, *args, **kwargs):
-
+    def post(self, request):
         serializer = CodeSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-
         email = request.data.get('email')
         code = request.data.get('code')
+
         user = PendingUser.objects.filter(email__iexact=email)
         if user.exists():
             user = user.first()
-            if str(user.code) == code:
+            if user.code == code:
                 user.is_verified = True
                 user.save()
                 return Response({"details": "Email was verified successfully"})
@@ -78,23 +80,21 @@ class VerifyEmailView(APIView):
             )
 
 
-class RegisterAPI(generics.GenericAPIView):
-    serializer_class = RegisterSerializer
-
-    def post(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
+class RegisterAPI(APIView):
+    def post(self, request):
+        serializer = RegisterSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         email = request.data.get('email')
+
         user = PendingUser.objects.filter(email__iexact=email)
         if user.exists():
             user = user.first()
             if user.is_verified:
                 user.delete()
-
                 user = serializer.save()
                 return Response(
                     {
-                        "user": AbstractUserSerializer(user, context=self.get_serializer_context()).data,
+                        "user": AbstractUserSerializer(user, context=serializer.context).data,
                         "token": AuthToken.objects.create(user)[1]
                     },
                     status.HTTP_201_CREATED
@@ -107,13 +107,13 @@ class RegisterAPI(generics.GenericAPIView):
                 )
         else:
             return Response(
-                {"details": "This email doesnt belong to an existing account"},
+                {"details": "This email doesn't belong to an existing account"},
                 status.HTTP_400_BAD_REQUEST
             )
 
 
 class LoginAPI(KnoxLoginView):
-    permission_classes = (permissions.AllowAny,)
+    permission_classes = [permissions.AllowAny]
 
     def post(self, request, format=None):
         serializer = AuthTokenSerializer(data=request.data)
@@ -130,11 +130,10 @@ class LoginAPI(KnoxLoginView):
 
 class SendEmailLostPassword(APIView):
     def post(self, request):
-
         serializer = EmailSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-
         email = request.data.get('email')
+
         user = AbstractUser.objects.filter(email__iexact=email)
         if not user.exists():
             return Response(
@@ -150,6 +149,7 @@ class SendEmailLostPassword(APIView):
             [email],
             fail_silently=False
         )
+
         user = LostPassword.objects.filter(email__iexact=email)
         if user.exists():
             user = user.first()
@@ -163,16 +163,15 @@ class SendEmailLostPassword(APIView):
 
 class VerifyEmailLostPassword(APIView):
     def post(self, request):
-
         serializer = CodeSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-
         email = request.data.get('email')
         code = request.data.get('code')
+
         user = LostPassword.objects.filter(email__iexact=email)
         if user.exists():
             user = user.first()
-            if str(user.code) == code:
+            if user.code == code:
                 user.is_verified = True
                 user.save()
                 return Response({"details": "Email was verified successfully"})
@@ -184,29 +183,33 @@ class VerifyEmailLostPassword(APIView):
 
         else:
             return Response(
-                {"details": "This email user didn't request to reset its password before!"},
+                {"details": "This email user didn't request to reset his password before!"},
                 status.HTTP_404_NOT_FOUND
             )
 
 
 class ChangePasswordAPI(APIView):
     def post(self, request):
-
+        serializer = PasswordSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
         email = request.data.get('email')
         password = request.data.get('password')
+
         user = AbstractUser.objects.get(email=email)
-        if LostPassword.objects.get(email=email).is_verified == False:
-            return Response({
-                "detail": "Please verify your account with the code sent to your email."
-            }, status.HTTP_400_BAD_REQUEST)
-        if len(password) <= 8:
-            return Response({
-                "detail": "Passwords can't be less than 8 characters"
-            }, status.HTTP_400_BAD_REQUEST)
+        if not LostPassword.objects.get(email=email).is_verified:
+            return Response(
+                {"details": "Please verify your account with the code sent to your email."},
+                status.HTTP_400_BAD_REQUEST
+            )
+
+        if len(password) < 8:
+            return Response(
+                {"detail": "Passwords can't be less than 8 characters"},
+                status.HTTP_400_BAD_REQUEST
+            )
+
         user.set_password(password)
         user.save()
-        deleted_user = LostPassword.objects.get(email=email)
-        deleted_user.delete()
-        return Response({
-            "detail": "Password changed successfully!",
-        }, status.HTTP_202_ACCEPTED)
+        user = LostPassword.objects.get(email=email)
+        user.delete()
+        return Response({"detail": "Password changed successfully!"}, status.HTTP_202_ACCEPTED)

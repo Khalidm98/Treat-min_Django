@@ -92,7 +92,7 @@ class User(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name=_('user'))
     date_of_birth = models.DateField(verbose_name=_('date_of_birth'))
     gender = models.CharField(max_length=1, choices=GENDER, verbose_name=_('gender'))
-    photo = models.ImageField(upload_to='photos/users/', blank=True, null=True, verbose_name=_('photo'))
+    photo = models.ImageField(upload_to='static/photos/users/', blank=True, null=True, verbose_name=_('photo'))
 
     class Meta:
         verbose_name = _('user')

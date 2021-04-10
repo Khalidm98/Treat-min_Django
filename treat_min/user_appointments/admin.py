@@ -1,10 +1,30 @@
-from django.contrib import admin
+from django.contrib import admin, messages
+from django.utils.translation import ngettext, gettext_lazy as _
 from .models import ClinicAppointment, RoomAppointment, ServiceAppointment
 
 
 class AppointmentAdmin(admin.ModelAdmin):
     readonly_fields = ['booking_date']
+    actions = ['accept', 'reject']
     list_display = ['appointment_date', 'schedule', 'user', 'status', 'booking_date']
+
+    @admin.action(description=_('Accept selected Appointments'))
+    def accept(self, request, queryset):
+        updated = queryset.update(status='A')
+        self.message_user(request, ngettext(
+            _('%d appointment was successfully accepted.'),
+            _('%d appointments were successfully accepted.'),
+            updated,
+        ) % updated, messages.SUCCESS)
+
+    @admin.action(description=_('Reject selected Appointments'))
+    def reject(self, request, queryset):
+        updated = queryset.update(status='R')
+        self.message_user(request, ngettext(
+            _('%d appointment was successfully rejected.'),
+            _('%d appointments were successfully rejected.'),
+            updated,
+        ) % updated, messages.SUCCESS)
 
     def get_readonly_fields(self, request, obj=None):
         if hasattr(request.user, 'hospital_admin'):

@@ -1,29 +1,24 @@
 from rest_framework import serializers
-from ..models import PendingUser, AbstractUser, User, LostPassword
+from ..models import AbstractUser, User
 from ...entities.models import GENDER
 
 
-class EmailSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = PendingUser
-        fields = ['email']
-
-
-class PendingUserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = PendingUser
-        fields = ['email', 'code']
-
-
-class CodeSerializer(serializers.Serializer):
+class EmailSerializer(serializers.Serializer):
     email = serializers.EmailField()
-    code = serializers.IntegerField()
 
     def create(self, validated_data):
         return super().create(validated_data)
 
     def update(self, instance, validated_data):
         return super().update(instance, validated_data)
+
+
+class CodeSerializer(EmailSerializer):
+    code = serializers.IntegerField()
+
+
+class PasswordSerializer(EmailSerializer):
+    password = serializers.CharField(max_length=128)
 
 
 class AbstractUserSerializer(serializers.ModelSerializer):

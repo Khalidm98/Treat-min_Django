@@ -20,25 +20,30 @@ class ServiceScheduleInline(ScheduleInline):
     model = ServiceSchedule
 
 
-class ClinicDetailInline(admin.TabularInline):
+class DetailInline(admin.TabularInline):
+    exclude = ['rating_total', 'rating_users']
+    extra = 0
+
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        if hasattr(request.user, 'hospital_admin'):
+            return qs.filter(id=request.user.hospital_admin.hospital.id)
+        return qs
+
+
+class ClinicDetailInline(DetailInline):
     model = ClinicDetail
-    fields = ['hospital', 'clinic', 'doctor', 'price']
     autocomplete_fields = ['hospital', 'clinic', 'doctor']
-    extra = 1
 
 
-class RoomDetailInline(admin.TabularInline):
+class RoomDetailInline(DetailInline):
     model = RoomDetail
-    fields = ['hospital', 'room', 'price']
     autocomplete_fields = ['hospital', 'room']
-    extra = 1
 
 
-class ServiceDetailInline(admin.TabularInline):
+class ServiceDetailInline(DetailInline):
     model = ServiceDetail
-    fields = ['hospital', 'service', 'price']
     autocomplete_fields = ['hospital', 'service']
-    extra = 1
 
 
 class DetailAdmin(admin.ModelAdmin):
