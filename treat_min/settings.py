@@ -170,7 +170,6 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'noreply@treat-min.com'
 with open(os.path.join(BASE_DIR, 'email_password.txt')) as f:
     EMAIL_HOST_PASSWORD = f.read().strip()
-
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
 
