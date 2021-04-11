@@ -2,6 +2,7 @@ from treat_min import settings
 from django import template
 from django.template.defaultfilters import stringfilter
 
+
 def switch_lang_code(path, language):
     # Get the supported language codes
     lang_codes = [c for (c, name) in settings.LANGUAGES]
@@ -28,6 +29,7 @@ def switch_lang_code(path, language):
 
 
 register = template.Library()
+
 
 @register.filter
 @stringfilter

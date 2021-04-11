@@ -1,8 +1,7 @@
 from random import randint
 
-from django.conf import settings
-from django.core.mail import send_mail
 from django.contrib.auth import login
+from django.core.mail import send_mail
 from knox.models import AuthToken
 from knox.views import LoginView as KnoxLoginView
 from rest_framework import permissions, status
@@ -35,9 +34,9 @@ class SendEmailView(APIView):
 
         code = randint(999, 9999)
         send_mail(
-            'User Email Verification',
+            'Email Verification',
             'Please type this code to verify your email:\n{0}'.format(code),
-            settings.EMAIL_HOST_USER,
+            'Treat-min <noreply@treat-min.com>',
             [email],
             fail_silently=False
         )
@@ -143,9 +142,10 @@ class SendEmailLostPassword(APIView):
 
         code = randint(999, 9999)
         send_mail(
-            'Password reset email',
-            'Please type this code to change your password:\n{0}'.format(code),
-            settings.EMAIL_HOST_USER,
+            'Password Reset Request',
+            'Please type this code to reset your password:\n{0}\n\n'
+            'If you didn\'t request to reset your password please don\'t share this code with anyone.'.format(code),
+            'Treat-min <noreply@treat-min.com>',
             [email],
             fail_silently=False
         )

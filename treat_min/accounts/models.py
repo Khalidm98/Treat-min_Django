@@ -43,8 +43,8 @@ class AbstractUser(AbstractBaseUser, PermissionsMixin):
         name = str(self.name)
         return name.strip()
 
-    def email_user(self, subject, message, from_email=settings.EMAIL_HOST_USER, **kwargs):
-        send_mail(subject, message, from_email, [self.email], **kwargs)
+    def email_user(self, subject, message, from_email='Treat-min <noreply@treat-min.com>', **kwargs):
+        send_mail(subject, message, from_email, [self.email], fail_silently=False, **kwargs)
 
 
 class Admin(models.Model):
