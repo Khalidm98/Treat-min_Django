@@ -26,11 +26,11 @@ with open(os.path.join(BASE_DIR, 'secret_key.txt')) as f:
     SECRET_KEY = f.read().strip()
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
-# DEBUG = True
+# DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['treat-min.com', 'www.treat-min.com']
-# ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = ['treat-min.com', 'www.treat-min.com']
+ALLOWED_HOSTS = []
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'treat_min.entities_details.apps.EntitiesDetailsConfig',
     'treat_min.user_appointments.apps.UserAppointmentsConfig',
     'treat_min.user_reviews.apps.UserReviewsConfig',
+    'i18n_switcher.apps.I18NSwitcherConfig',
 ]
 
 REST_FRAMEWORK = {
@@ -83,11 +84,14 @@ ROOT_URLCONF = 'treat_min.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            os.path.join(BASE_DIR,'templates')
+                 ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
+                'django.template.context_processors.i18n',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
