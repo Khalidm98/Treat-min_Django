@@ -11,12 +11,13 @@
 {% endblock %}
 
 {% block userlinks %}
+    {% trans 'LANGUAGE'%} [
     <a href="{{ request|switch_i18n:'en' }}">
         <span>{% trans 'English'%}</span>
     </a> /
     <a href="{{ request|switch_i18n:'ar' }}">
         <span>{% trans 'Arabic'%}</span>
-    </a> /
+    </a> ] /
     {% if user.is_active and user.is_staff %}
         {% url 'django-admindocs-docroot' as docsroot %}
         {% if docsroot %}
