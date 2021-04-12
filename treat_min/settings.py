@@ -50,7 +50,7 @@ INSTALLED_APPS = [
     'treat_min.entities_details.apps.EntitiesDetailsConfig',
     'treat_min.user_appointments.apps.UserAppointmentsConfig',
     'treat_min.user_reviews.apps.UserReviewsConfig',
-    'i18n_switcher.apps.I18NSwitcherConfig',
+    'treat_min.accounts.i18n_switcher.apps.I18NSwitcherConfig',
 ]
 
 REST_FRAMEWORK = {

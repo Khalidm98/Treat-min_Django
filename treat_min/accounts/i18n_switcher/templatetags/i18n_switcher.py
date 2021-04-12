@@ -1,4 +1,4 @@
-from treat_min import settings
+from .... import settings
 from django import template
 from django.template.defaultfilters import stringfilter
 
