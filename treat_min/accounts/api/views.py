@@ -91,13 +91,7 @@ class RegisterAPI(APIView):
             if user.is_verified:
                 user.delete()
                 user = serializer.save()
-                user.email_user(
-                    'Welcome to Treat-min',
-                    'We are happy to have you on board with us.\n'
-                    'Take a look at our website:\n'
-                    'https://www.treat-min.com/\n\n'
-                    'Our mobile app will be available very soon.\nStay tuned.'
-                )
+                user.welcome_email()
                 return Response(
                     {
                         "user": AbstractUserSerializer(user, context=serializer.context).data,

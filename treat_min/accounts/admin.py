@@ -45,13 +45,7 @@ class AbstractAdmin(admin.ModelAdmin):
     last_login.short_description = _('last_login')
 
     def save_model(self, request, obj, form, change):
-        obj.user.email_user(
-            'Welcome to Treat-min',
-            'We are happy to have you on board with us.\n'
-            'Take a look at our website:\n'
-            'https://www.treat-min.com/\n\n'
-            'Our mobile app will be available very soon.\nStay tuned.'
-        )
+        obj.user.welcome_email()
         super().save_model(request, obj, form, change)
 
 

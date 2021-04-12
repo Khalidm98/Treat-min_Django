@@ -46,6 +46,15 @@ class AbstractUser(AbstractBaseUser, PermissionsMixin):
     def email_user(self, subject, message, from_email='Treat-min <noreply@treat-min.com>', **kwargs):
         send_mail(subject, message, from_email, [self.email], fail_silently=False, **kwargs)
 
+    def welcome_email(self):
+        self.email_user(
+            'Welcome to Treat-min',
+            'We are happy to have you on board with us.\n'
+            'Take a look at our website:\n'
+            'https://www.treat-min.com/\n\n'
+            'Our mobile app will be available very soon.\nStay tuned.'
+        )
+
 
 class Admin(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name=_('user'))
