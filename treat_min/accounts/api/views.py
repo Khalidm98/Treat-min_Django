@@ -203,12 +203,6 @@ class ChangePasswordAPI(APIView):
                 status.HTTP_400_BAD_REQUEST
             )
 
-        if len(password) < 8:
-            return Response(
-                {"detail": "Passwords can't be less than 8 characters"},
-                status.HTTP_400_BAD_REQUEST
-            )
-
         user.set_password(password)
         user.save()
         user = LostPassword.objects.get(email=email)

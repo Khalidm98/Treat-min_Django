@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from django.contrib.auth.password_validation import validate_password
 from ..models import AbstractUser, User
 from ...entities.models import GENDER
 
@@ -19,6 +20,10 @@ class CodeSerializer(EmailSerializer):
 
 class PasswordSerializer(EmailSerializer):
     password = serializers.CharField(max_length=128)
+
+    def validate_password(self, password):
+        validate_password(password)
+        return password
 
 
 class AbstractUserSerializer(serializers.ModelSerializer):
@@ -53,3 +58,7 @@ class RegisterSerializer(serializers.Serializer):
 
     def update(self, instance, validated_data):
         super().update(instance, validated_data)
+
+    def validate_password(self, password):
+        validate_password(password)
+        return password

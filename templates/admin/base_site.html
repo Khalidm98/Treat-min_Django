@@ -6,10 +6,6 @@
 <!-- custom filter module -->
 {% load i18n_switcher %}
 
-{% block extrahead %}
-    <link rel="stylesheet" type="text/css" href="{% static 'admin/css/custom_admin.css' %}"/>
-{% endblock %}
-
 {% block userlinks %}
     <span> <a href="{{ site_url }}">{% translate 'View site' %}</a> /</span>
     {% trans 'LANGUAGE'%} [

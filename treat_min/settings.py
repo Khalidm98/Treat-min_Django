@@ -32,8 +32,6 @@ DEBUG = True
 # ALLOWED_HOSTS = ['treat-min.com', 'www.treat-min.com']
 ALLOWED_HOSTS = []
 
-DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -50,7 +48,6 @@ INSTALLED_APPS = [
     'treat_min.entities_details.apps.EntitiesDetailsConfig',
     'treat_min.user_appointments.apps.UserAppointmentsConfig',
     'treat_min.user_reviews.apps.UserReviewsConfig',
-    'treat_min.accounts.i18n_switcher.apps.I18NSwitcherConfig',
 ]
 
 REST_FRAMEWORK = {
@@ -85,8 +82,8 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            os.path.join(BASE_DIR,'templates')
-                 ],
+            os.path.join(BASE_DIR, 'templates')
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -107,6 +104,8 @@ WSGI_APPLICATION = 'treat_min.wsgi.application'
 
 AUTH_USER_MODEL = 'accounts.AbstractUser'
 
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -118,15 +117,15 @@ DATABASES = {
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
+    # {
+    #     'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    # },
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
     },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
+    # {
+    #     'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    # },
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
@@ -145,8 +144,8 @@ LANGUAGES = [
 ]
 
 MULTILINGUAL_LANGUAGES = [
-    "en-us",
-    "ar-eg",
+    'en-us',
+    'ar-eg',
 ]
 
 LANGUAGE_CODE = 'en-us'
