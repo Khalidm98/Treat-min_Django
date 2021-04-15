@@ -1,7 +1,27 @@
+import os
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 GENDER = [('M', _('Male')), ('F', _('Female'))]
+
+
+def image_path(instance, filename):
+    if isinstance(instance, Doctor):
+        directory = 'photos/doctors/'
+    elif isinstance(instance, Hospital):
+        directory = 'photos/hospitals/'
+    else:
+        directory = 'photos/users/'
+
+    if not instance.id:
+        return directory + filename
+    else:
+        extension = filename.split('.')[-1]
+        filename = '{}.{}'.format(instance.id, extension)
+        path = directory + filename
+        if os.path.exists('media/' + path):
+            os.remove('media/' + path)
+    return path
 
 
 class Clinic(models.Model):
@@ -48,7 +68,7 @@ class Doctor(models.Model):
         Clinic, on_delete=models.CASCADE, related_name='doctors', verbose_name=_('speciality')
     )
     phone = models.CharField(max_length=11, unique=True, blank=True, null=True, verbose_name=_('phone'))
-    photo = models.ImageField(upload_to='static/photos/doctors/', blank=True, null=True, verbose_name=_('photo'))
+    photo = models.ImageField(upload_to=image_path, default='photos/default.png', verbose_name=_('photo'))
 
     class Meta:
         ordering = ['name']
@@ -65,7 +85,7 @@ class Hospital(models.Model):
     address = models.CharField(max_length=100, verbose_name=_('address'))
     latitude = models.DecimalField(max_digits=9, decimal_places=6, blank=True, null=True, verbose_name=_('latitude'))
     longitude = models.DecimalField(max_digits=9, decimal_places=6, blank=True, null=True, verbose_name=_('longitude'))
-    photo = models.ImageField(upload_to='static/photos/hospitals/', blank=True, null=True, verbose_name=_('photo'))
+    photo = models.ImageField(upload_to=image_path, default='photos/default.png', verbose_name=_('photo'))
     doctors = models.ManyToManyField(
         Doctor, through='entities_details.ClinicDetail', related_name='hospitals', verbose_name=_('doctors')
     )
