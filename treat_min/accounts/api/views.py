@@ -8,10 +8,13 @@ from rest_framework import permissions, status
 from rest_framework.authtoken.serializers import AuthTokenSerializer
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated
+from knox.auth import TokenAuthentication
+
 
 from .serializers import EmailSerializer, CodeSerializer, PasswordSerializer, \
     AbstractUserSerializer, RegisterSerializer
-from ..models import AbstractUser, PendingUser, LostPassword
+from ..models import AbstractUser, PendingUser, LostPassword, User
 
 
 def get_user(request):
@@ -208,3 +211,25 @@ class ChangePasswordAPI(APIView):
         user = LostPassword.objects.get(email=email)
         user.delete()
         return Response({"detail": "Password changed successfully!"}, status.HTTP_202_ACCEPTED)
+
+class GetUserData(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        user = get_user(request)
+        email = user.user.email
+        name = user.user.name
+        phone = user.user.phone
+        date_of_birth = user.date_of_birth
+        gender = user.gender
+        photo = user.photo
+        return Response({
+            'email': email,
+            'name': name,
+            'phone':phone,
+            'date_of_birth': date_of_birth,
+            'gender': gender
+           # 'photo': photo
+        }, status.HTTP_200_OK
+        )

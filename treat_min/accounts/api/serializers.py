@@ -32,6 +32,7 @@ class AbstractUserSerializer(serializers.ModelSerializer):
         fields = ['id', 'email', 'name', 'phone']
 
 
+
 class RegisterSerializer(serializers.Serializer):
     email = serializers.EmailField()
     password = serializers.CharField(max_length=128)
