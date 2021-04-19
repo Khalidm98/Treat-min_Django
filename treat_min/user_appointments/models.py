@@ -14,8 +14,8 @@ STATUS = [
 
 class Appointment(models.Model):
     status = models.CharField(max_length=1, choices=STATUS, default='W', verbose_name=_('status'))
-    booking_date = models.DateTimeField(auto_now_add=True, verbose_name=_('booking_date'))
-    appointment_date = models.DateField(verbose_name=_('appointment_date'))
+    booking_date = models.DateTimeField(auto_now_add=True, verbose_name=_('booking date'))
+    appointment_date = models.DateField(verbose_name=_('appointment date'))
 
     class Meta:
         abstract = True

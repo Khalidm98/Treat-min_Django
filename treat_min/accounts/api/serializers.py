@@ -37,7 +37,7 @@ class RegisterSerializer(serializers.Serializer):
     password = serializers.CharField(max_length=128)
     name = serializers.CharField(max_length=50)
     phone = serializers.CharField(max_length=11)
-    date_of_birth = serializers.DateField()
+    birth = serializers.DateField()
     gender = serializers.ChoiceField(choices=GENDER)
     photo = serializers.ImageField(default='photos/default.png')
 
@@ -50,7 +50,7 @@ class RegisterSerializer(serializers.Serializer):
         )
         User.objects.create(
             user=user,
-            date_of_birth=validated_data['date_of_birth'],
+            birth=validated_data['birth'],
             gender=validated_data['gender'],
             photo=validated_data['photo'],
         )

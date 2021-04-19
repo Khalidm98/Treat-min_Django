@@ -38,11 +38,11 @@ class AbstractAdmin(admin.ModelAdmin):
 
     def date_joined(self, obj):
         return obj.user.date_joined
-    date_joined.short_description = _('date_joined')
+    date_joined.short_description = _('date joined')
 
     def last_login(self, obj):
         return obj.user.last_login
-    last_login.short_description = _('last_login')
+    last_login.short_description = _('last login')
 
     def save_model(self, request, obj, form, change):
         obj.user.welcome_email()
@@ -61,7 +61,7 @@ class HospitalAdminAdmin(AbstractAdmin):
 
 
 class UserAdmin(AbstractAdmin):
-    fields = AbstractAdmin.fields + ['gender', 'date_of_birth']
+    fields = AbstractAdmin.fields + ['gender', 'birth']
 
 
 admin.site.register(AbstractUser, AbstractUserAdmin)
