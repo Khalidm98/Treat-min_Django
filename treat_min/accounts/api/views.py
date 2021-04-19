@@ -11,7 +11,6 @@ from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from knox.auth import TokenAuthentication
 
-
 from .serializers import EmailSerializer, CodeSerializer, PasswordSerializer, \
     AbstractUserSerializer, RegisterSerializer
 from ..models import AbstractUser, PendingUser, LostPassword, User
@@ -212,6 +211,7 @@ class ChangePasswordAPI(APIView):
         user.delete()
         return Response({"detail": "Password changed successfully!"}, status.HTTP_202_ACCEPTED)
 
+
 class GetUserData(APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
@@ -224,12 +224,14 @@ class GetUserData(APIView):
         date_of_birth = user.date_of_birth
         gender = user.gender
         photo = user.photo
-        return Response({
-            'email': email,
-            'name': name,
-            'phone':phone,
-            'date_of_birth': date_of_birth,
-            'gender': gender
-           # 'photo': photo
-        }, status.HTTP_200_OK
+        return Response(
+            {
+                'email': email,
+                'name': name,
+                'phone': phone,
+                'date_of_birth': date_of_birth,
+                'gender': gender
+                # 'photo': photo
+            },
+            status.HTTP_200_OK
         )

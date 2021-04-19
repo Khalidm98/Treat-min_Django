@@ -17,7 +17,7 @@ def image_rename(instance, created, **kwargs):
             extension = old_path[old_path.rfind('.'):]
             new_path = directory + '\\' + str(instance.id) + extension
             os.rename(old_path, new_path)
-            instance.image = new_path
+            instance.photo = new_path
             instance.save()
 
 
