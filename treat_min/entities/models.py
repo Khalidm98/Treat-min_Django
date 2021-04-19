@@ -15,12 +15,12 @@ def image_path(instance, filename):
 
     if not instance.id:
         return directory + filename
-    else:
-        extension = filename.split('.')[-1]
-        filename = '{}.{}'.format(instance.id, extension)
-        path = directory + filename
-        if os.path.exists('media/' + path):
-            os.remove('media/' + path)
+
+    extension = filename.split('.')[-1]
+    filename = '{}.{}'.format(instance.id, extension)
+    path = directory + filename
+    if os.path.exists('media/' + path):
+        os.remove('media/' + path)
     return path
 
 

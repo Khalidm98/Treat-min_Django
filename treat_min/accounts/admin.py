@@ -4,12 +4,12 @@ from .models import AbstractUser, Admin, HospitalAdmin, User, PendingUser, LostP
 
 
 class AbstractUserAdmin(admin.ModelAdmin):
-    fields = ['email', 'password', 'name', 'phone']
+    fields = ['email', 'name', 'phone']
     list_display = ['email', 'name', 'groups', 'date_joined', 'last_login']
     search_fields = ['email', 'name', 'phone']
 
     def save_model(self, request, obj, form, change):
-        obj.set_password(obj.password)
+        obj.set_password('admin')
         super().save_model(request, obj, form, change)
 
 
