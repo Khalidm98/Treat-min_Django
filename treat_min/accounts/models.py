@@ -8,14 +8,14 @@ from django.contrib.auth.models import Group, PermissionsMixin
 from django.utils.translation import gettext_lazy as _
 
 from .managers import UserManager
-from ..entities.models import GENDER, Hospital
+from ..entities.models import GENDER, Hospital, image_path
 
 
 class AbstractUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True, verbose_name=_('email address'))
     name = models.CharField(max_length=50, verbose_name=_('name'))
     phone = models.CharField(max_length=11, verbose_name=_('phone'))
-    date_joined = models.DateTimeField(auto_now_add=True, verbose_name=_('date_joined'))
+    date_joined = models.DateTimeField(auto_now_add=True, verbose_name=_('date joined'))
 
     is_active = models.BooleanField(default=True, verbose_name=_('active'))
     is_staff = models.BooleanField(default=False, verbose_name=_('staff status'))
@@ -99,9 +99,9 @@ class HospitalAdmin(models.Model):
 
 class User(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name=_('user'))
-    date_of_birth = models.DateField(verbose_name=_('date_of_birth'))
+    birth = models.DateField(verbose_name=_('date of birth'))
     gender = models.CharField(max_length=1, choices=GENDER, verbose_name=_('gender'))
-    photo = models.ImageField(upload_to='static/photos/users/', blank=True, null=True, verbose_name=_('photo'))
+    photo = models.ImageField(upload_to=image_path, default='photos/default.png', verbose_name=_('photo'))
 
     class Meta:
         verbose_name = _('user')
@@ -114,7 +114,7 @@ class User(models.Model):
 class PendingUser(models.Model):
     email = models.EmailField(unique=True, verbose_name=_('email address'))
     code = models.PositiveSmallIntegerField(verbose_name=_('code'))
-    is_verified = models.BooleanField(default=False, verbose_name=_('is_verified'))
+    is_verified = models.BooleanField(default=False, verbose_name=_('is verified'))
 
     class Meta:
         verbose_name = _('pending user')
@@ -127,7 +127,7 @@ class PendingUser(models.Model):
 class LostPassword(models.Model):
     email = models.EmailField(unique=True, verbose_name=_('email address'))
     code = models.PositiveSmallIntegerField(verbose_name=_('code'))
-    is_verified = models.BooleanField(default=False, verbose_name=_('is_verified'))
+    is_verified = models.BooleanField(default=False, verbose_name=_('is verified'))
 
     class Meta:
         verbose_name = _('lost password')

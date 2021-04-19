@@ -52,7 +52,12 @@ class DetailAPI(APIView):
         else:
             qs = ServiceDetail.objects.filter(service=entity_id)
             serializer = ServiceDetailSerializer(qs, many=True)
-        return Response({"details": serializer.data})
+        return Response(
+            {
+                "entity": result.name,
+                "details": serializer.data
+            }
+        )
 
 
 class ScheduleAPI(APIView):
@@ -64,9 +69,9 @@ class ScheduleAPI(APIView):
         if entities == 'clinics':
             qs = ClinicSchedule.objects.filter(clinic=detail_id)
         elif entities == 'rooms':
-            qs = ServiceSchedule.objects.filter(service=detail_id)
-        else:
             qs = RoomSchedule.objects.filter(room=detail_id)
+        else:
+            qs = ServiceSchedule.objects.filter(service=detail_id)
         serializer = ScheduleSerializer(qs, many=True)
 
         if entities == 'clinics':
