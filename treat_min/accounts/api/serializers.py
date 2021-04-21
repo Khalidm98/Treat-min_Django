@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from django.contrib.auth import authenticate
 from django.contrib.auth.password_validation import validate_password
 from ..models import AbstractUser, User
 from ...entities.models import GENDER
@@ -26,11 +27,46 @@ class PasswordSerializer(EmailSerializer):
         return password
 
 
-class AbstractUserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = AbstractUser
-        fields = ['id', 'email', 'name', 'phone']
+class LoginSerializer(EmailSerializer):
+    password = serializers.CharField(max_length=128)
 
+    def validate(self, attrs):
+        email = attrs.get('email')
+        password = attrs.get('password')
+
+        if email and password:
+            # The authenticate call simply returns None for is_active=False users
+            user = authenticate(
+                request=self.context.get('request'), username=email, password=password
+            )
+            if not user:
+                msg = 'Unable to log in with provided credentials.'
+                raise serializers.ValidationError(msg, code='authorization')
+        else:
+            msg = 'Must include "username" and "password".'
+            raise serializers.ValidationError(msg, code='authorization')
+
+        attrs['user'] = user
+        return attrs
+
+
+class UserSerializer(serializers.ModelSerializer):
+    name = serializers.SerializerMethodField('get_name')
+    email = serializers.SerializerMethodField('get_email')
+    phone = serializers.SerializerMethodField('get_phone')
+
+    def get_name(self, obj):
+        return obj.user.name
+
+    def get_email(self, obj):
+        return obj.user.email
+
+    def get_phone(self, obj):
+        return obj.user.phone
+
+    class Meta:
+        model = User
+        fields = ['id', 'name', 'email', 'phone', 'gender', 'birth']
 
 
 class RegisterSerializer(serializers.Serializer):

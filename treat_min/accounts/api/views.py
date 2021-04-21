@@ -1,19 +1,17 @@
 from random import randint
-
 from django.contrib.auth import login
+from django.contrib.auth.signals import user_logged_in
 from django.core.mail import send_mail
+from knox.auth import TokenAuthentication
 from knox.models import AuthToken
-from knox.views import LoginView as KnoxLoginView
-from rest_framework import permissions, status
-from rest_framework.authtoken.serializers import AuthTokenSerializer
+from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.permissions import IsAuthenticated
-from knox.auth import TokenAuthentication
 
 from .serializers import EmailSerializer, CodeSerializer, PasswordSerializer, \
-    AbstractUserSerializer, RegisterSerializer
-from ..models import AbstractUser, PendingUser, LostPassword, User
+    UserSerializer, RegisterSerializer, LoginSerializer
+from ..models import AbstractUser, PendingUser, LostPassword
 
 
 def get_user(request):
@@ -96,7 +94,7 @@ class RegisterAPI(APIView):
                 user.welcome_email()
                 return Response(
                     {
-                        "user": AbstractUserSerializer(user, context=serializer.context).data,
+                        "user": UserSerializer(user.user, context=serializer.context).data,
                         "token": AuthToken.objects.create(user)[1]
                     },
                     status.HTTP_201_CREATED
@@ -114,20 +112,26 @@ class RegisterAPI(APIView):
             )
 
 
-class LoginAPI(KnoxLoginView):
-    permission_classes = [permissions.AllowAny]
-
-    def post(self, request, format=None):
-        serializer = AuthTokenSerializer(data=request.data)
+class LoginAPI(APIView):
+    def post(self, request):
+        serializer = LoginSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data['user']
         login(request, user)
+        user_logged_in.send(sender=request.user.__class__, request=request, user=request.user)
 
         try:
             reset_pass_fail_trial = LostPassword.objects.get(email=user.email)
             reset_pass_fail_trial.delete()
         except LostPassword.DoesNotExist:
-            return super().post(request, format=None)
+            pass
+
+        return Response(
+            {
+                "user": UserSerializer(user.user, context=serializer.context).data,
+                "token": AuthToken.objects.create(request.user)[1]
+            },
+        )
 
 
 class SendEmailLostPassword(APIView):
