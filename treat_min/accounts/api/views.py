@@ -127,7 +127,8 @@ class LoginAPI(KnoxLoginView):
             reset_pass_fail_trial = LostPassword.objects.get(email=user.email)
             reset_pass_fail_trial.delete()
         except LostPassword.DoesNotExist:
-            return super().post(request, format=None)
+            pass
+        return super().post(request, format=None)
 
 
 class SendEmailLostPassword(APIView):
