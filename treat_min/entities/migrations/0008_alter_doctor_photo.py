@@ -14,6 +14,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='doctor',
             name='photo',
-            field=models.ImageField(default='photos/default.png', upload_to=treat_min.entities.models.image_path, verbose_name='photo'),
+            field=models.ImageField(default='photos/default.png', upload_to=treat_min.entities.models.image_update, verbose_name='photo'),
         ),
     ]

@@ -5,8 +5,14 @@ from django.utils.translation import gettext_lazy as _
 GENDER = [('M', _('Male')), ('F', _('Female'))]
 
 
-def image_path(instance, filename):
-    if isinstance(instance, Doctor):
+def image_update(instance, filename):
+    if isinstance(instance, Clinic):
+        directory = 'photos/clinics/'
+    elif isinstance(instance, Room):
+        directory = 'photos/rooms/'
+    elif isinstance(instance, Service):
+        directory = 'photos/services/'
+    elif isinstance(instance, Doctor):
         directory = 'photos/doctors/'
     elif isinstance(instance, Hospital):
         directory = 'photos/hospitals/'
@@ -14,11 +20,9 @@ def image_path(instance, filename):
         directory = 'photos/users/'
 
     if not instance.id:
-        return directory + filename
+        return directory + filename.split('.')[0] + '.png'
 
-    extension = filename.split('.')[-1]
-    filename = '{}.{}'.format(instance.id, extension)
-    path = directory + filename
+    path = directory + str(instance.id) + '.png'
     if os.path.exists('media/' + path):
         os.remove('media/' + path)
     return path
@@ -26,6 +30,7 @@ def image_path(instance, filename):
 
 class Clinic(models.Model):
     name = models.CharField(max_length=50, unique=True, verbose_name=_('name'))
+    photo = models.ImageField(upload_to=image_update, default='photos/default.png', verbose_name=_('photo'))
 
     class Meta:
         ordering = ['name']
@@ -38,6 +43,7 @@ class Clinic(models.Model):
 
 class Room(models.Model):
     name = models.CharField(max_length=50, unique=True, verbose_name=_('name'))
+    photo = models.ImageField(upload_to=image_update, default='photos/default.png', verbose_name=_('photo'))
 
     class Meta:
         ordering = ['name']
@@ -50,6 +56,7 @@ class Room(models.Model):
 
 class Service(models.Model):
     name = models.CharField(max_length=50, unique=True, verbose_name=_('name'))
+    photo = models.ImageField(upload_to=image_update, default='photos/default.png', verbose_name=_('photo'))
 
     class Meta:
         ordering = ['name']
@@ -68,7 +75,7 @@ class Doctor(models.Model):
         Clinic, on_delete=models.CASCADE, related_name='doctors', verbose_name=_('speciality')
     )
     phone = models.CharField(max_length=11, unique=True, blank=True, null=True, verbose_name=_('phone'))
-    photo = models.ImageField(upload_to=image_path, default='photos/default.png', verbose_name=_('photo'))
+    photo = models.ImageField(upload_to=image_update, default='photos/default.png', verbose_name=_('photo'))
 
     class Meta:
         ordering = ['name']
@@ -85,7 +92,7 @@ class Hospital(models.Model):
     address = models.CharField(max_length=100, verbose_name=_('address'))
     latitude = models.DecimalField(max_digits=9, decimal_places=6, blank=True, null=True, verbose_name=_('latitude'))
     longitude = models.DecimalField(max_digits=9, decimal_places=6, blank=True, null=True, verbose_name=_('longitude'))
-    photo = models.ImageField(upload_to=image_path, default='photos/default.png', verbose_name=_('photo'))
+    photo = models.ImageField(upload_to=image_update, default='photos/default.png', verbose_name=_('photo'))
     doctors = models.ManyToManyField(
         Doctor, through='entities_details.ClinicDetail', related_name='hospitals', verbose_name=_('doctors')
     )

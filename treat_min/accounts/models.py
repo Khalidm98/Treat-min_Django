@@ -8,7 +8,7 @@ from django.contrib.auth.models import Group, PermissionsMixin
 from django.utils.translation import gettext_lazy as _
 
 from .managers import UserManager
-from ..entities.models import GENDER, Hospital, image_path
+from ..entities.models import GENDER, Hospital, image_update
 
 
 class AbstractUser(AbstractBaseUser, PermissionsMixin):
@@ -101,7 +101,7 @@ class User(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name=_('user'))
     birth = models.DateField(verbose_name=_('date of birth'))
     gender = models.CharField(max_length=1, choices=GENDER, verbose_name=_('gender'))
-    photo = models.ImageField(upload_to=image_path, default='photos/default.png', verbose_name=_('photo'))
+    photo = models.ImageField(upload_to=image_update, default='photos/default.png', verbose_name=_('photo'))
 
     class Meta:
         verbose_name = _('user')
