@@ -216,26 +216,10 @@ class ChangePasswordAPI(APIView):
         return Response({"detail": "Password changed successfully!"}, status.HTTP_202_ACCEPTED)
 
 
-class GetUserData(APIView):
+class UserDataAPI(APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
         user = get_user(request)
-        email = user.user.email
-        name = user.user.name
-        phone = user.user.phone
-        date_of_birth = user.date_of_birth
-        gender = user.gender
-        photo = user.photo
-        return Response(
-            {
-                'email': email,
-                'name': name,
-                'phone': phone,
-                'date_of_birth': date_of_birth,
-                'gender': gender
-                # 'photo': photo
-            },
-            status.HTTP_200_OK
-        )
+        return Response(UserSerializer(user).data)
