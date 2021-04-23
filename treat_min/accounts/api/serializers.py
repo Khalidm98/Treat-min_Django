@@ -27,23 +27,24 @@ class PasswordSerializer(EmailSerializer):
         return password
 
 
-class LoginSerializer(EmailSerializer):
-    password = serializers.CharField(max_length=128)
+class ChangePasswordSerializer(PasswordSerializer):
+    old = serializers.CharField(max_length=128)
 
     def validate(self, attrs):
         email = attrs.get('email')
+        old = attrs.get('old')
         password = attrs.get('password')
 
-        if email and password:
+        if email and old and password:
             # The authenticate call simply returns None for is_active=False users
             user = authenticate(
-                request=self.context.get('request'), username=email, password=password
+                request=self.context.get('request'), username=email, password=old
             )
             if not user:
                 msg = 'Unable to log in with provided credentials.'
                 raise serializers.ValidationError(msg, code='authorization')
         else:
-            msg = 'Must include "username" and "password".'
+            msg = 'Must include "email", "old" and "password".'
             raise serializers.ValidationError(msg, code='authorization')
 
         attrs['user'] = user
@@ -69,9 +70,7 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ['id', 'name', 'email', 'phone', 'gender', 'birth']
 
 
-class RegisterSerializer(serializers.Serializer):
-    email = serializers.EmailField()
-    password = serializers.CharField(max_length=128)
+class RegisterSerializer(PasswordSerializer):
     name = serializers.CharField(max_length=50)
     phone = serializers.CharField(max_length=11)
     birth = serializers.DateField()
@@ -93,9 +92,25 @@ class RegisterSerializer(serializers.Serializer):
         )
         return user
 
-    def update(self, instance, validated_data):
-        super().update(instance, validated_data)
 
-    def validate_password(self, password):
-        validate_password(password)
-        return password
+class LoginSerializer(EmailSerializer):
+    password = serializers.CharField(max_length=128)
+
+    def validate(self, attrs):
+        email = attrs.get('email')
+        password = attrs.get('password')
+
+        if email and password:
+            # The authenticate call simply returns None for is_active=False users
+            user = authenticate(
+                request=self.context.get('request'), username=email, password=password
+            )
+            if not user:
+                msg = 'Unable to log in with provided credentials.'
+                raise serializers.ValidationError(msg, code='authorization')
+        else:
+            msg = 'Must include "email" and "password".'
+            raise serializers.ValidationError(msg, code='authorization')
+
+        attrs['user'] = user
+        return attrs

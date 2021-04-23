@@ -9,7 +9,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .serializers import EmailSerializer, CodeSerializer, PasswordSerializer, \
+from .serializers import EmailSerializer, CodeSerializer, ChangePasswordSerializer, PasswordSerializer, \
     UserSerializer, RegisterSerializer, LoginSerializer
 from ..models import AbstractUser, PendingUser, LostPassword
 
@@ -19,7 +19,7 @@ def get_user(request):
     return AuthToken.objects.get(token_key=key).user.user
 
 
-class SendEmailView(APIView):
+class RegisterEmailAPI(APIView):
     def post(self, request):
         serializer = EmailSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -52,7 +52,7 @@ class SendEmailView(APIView):
         return Response({"details": "Verification email was sent successfully"})
 
 
-class VerifyEmailView(APIView):
+class RegisterCodeAPI(APIView):
     def post(self, request):
         serializer = CodeSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -134,7 +134,7 @@ class LoginAPI(APIView):
         )
 
 
-class SendEmailLostPassword(APIView):
+class PasswordEmailAPI(APIView):
     def post(self, request):
         serializer = EmailSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -168,7 +168,7 @@ class SendEmailLostPassword(APIView):
         return Response({"details": "Password reset email was sent successfully"})
 
 
-class VerifyEmailLostPassword(APIView):
+class PasswordCodeAPI(APIView):
     def post(self, request):
         serializer = CodeSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -190,30 +190,60 @@ class VerifyEmailLostPassword(APIView):
 
         else:
             return Response(
-                {"details": "This email user didn't request to reset his password before!"},
+                {"details": "This user didn't request to reset his password!"},
                 status.HTTP_404_NOT_FOUND
             )
 
 
-class ChangePasswordAPI(APIView):
+class PasswordResetAPI(APIView):
     def post(self, request):
         serializer = PasswordSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         email = request.data.get('email')
         password = request.data.get('password')
 
-        user = AbstractUser.objects.get(email=email)
-        if not LostPassword.objects.get(email=email).is_verified:
+        user = AbstractUser.objects.filter(email__iexact=email)
+        if user.exists():
+            lost = LostPassword.objects.filter(email__iexact=email)
+            if lost.exists():
+                lost = lost.first()
+                if lost.is_verified:
+                    user = user.first()
+                    user.set_password(password)
+                    user.save()
+                    lost.delete()
+                    return Response({"detail": "Password changed successfully!"}, status.HTTP_202_ACCEPTED)
+
+                else:
+                    return Response(
+                        {"details": "Please verify your account with the code sent to your email!"},
+                        status.HTTP_400_BAD_REQUEST
+                    )
+
+            else:
+                return Response(
+                    {"details": "This user didn't request to reset his password!"},
+                    status.HTTP_404_NOT_FOUND
+                )
+
+        else:
             return Response(
-                {"details": "Please verify your account with the code sent to your email."},
-                status.HTTP_400_BAD_REQUEST
+                {"details": "There is no user with this email address!"},
+                status.HTTP_404_NOT_FOUND
             )
 
-        user.set_password(password)
+
+class ChangePasswordAPI(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        serializer = ChangePasswordSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data['user']
+        user.set_password(serializer.validated_data['password'])
         user.save()
-        user = LostPassword.objects.get(email=email)
-        user.delete()
-        return Response({"detail": "Password changed successfully!"}, status.HTTP_202_ACCEPTED)
+        return Response({"details": "Password changed successfully!"}, status.HTTP_202_ACCEPTED)
 
 
 class UserDataAPI(APIView):

@@ -19,7 +19,7 @@ from django.conf.urls.i18n import i18n_patterns
 from django.contrib import admin
 from django.contrib.staticfiles.urls import static
 from django.urls import include, path
-from .accounts.api.views import SendEmailLostPassword
+from .accounts.api.views import PasswordEmailAPI
 
 admin.site.site_header = 'Treat-min administration'
 admin.site.index_title = 'Treat-min'
@@ -33,7 +33,7 @@ urlpatterns = [
     path('api/', include('treat_min.user_reviews.api.urls')),
 ]+i18n_patterns(
     path('admin/', admin.site.urls),
-    path('admin/password-reset/', SendEmailLostPassword.as_view(), name='admin_password_reset'),
+    path('admin/password-reset/', PasswordEmailAPI.as_view(), name='admin_password_reset'),
     prefix_default_language=True
 )
 
