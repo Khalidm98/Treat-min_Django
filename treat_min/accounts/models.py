@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 from django.db import models
 from django.conf import settings
 from django.core.mail import send_mail
+from django.core.exceptions import ValidationError
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import Group, PermissionsMixin
 from django.utils.translation import gettext_lazy as _
@@ -66,6 +67,10 @@ class Admin(models.Model):
     def __str__(self):
         return self.user.email + ' - ' + self.user.name
 
+    def clean(self):
+        if hasattr(self.user, 'hospital_admin') or hasattr(self.user, 'user') or self.user.is_superuser:
+            raise ValidationError('This user is already in another group!')
+
     def save(self, *args, **kwargs):
         abstract_user = AbstractUser.objects.get(id=self.user.id)
         abstract_user.groups = Group.objects.get(name='Admin')
@@ -87,6 +92,10 @@ class HospitalAdmin(models.Model):
 
     def __str__(self):
         return self.user.email + ' - ' + self.user.name
+
+    def clean(self):
+        if hasattr(self.user, 'admin') or hasattr(self.user, 'user') or self.user.is_superuser:
+            raise ValidationError('This user is already in another group!')
 
     def save(self, *args, **kwargs):
         abstract_user = AbstractUser.objects.get(id=self.user.id)

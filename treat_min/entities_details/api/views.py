@@ -44,13 +44,13 @@ class DetailAPI(APIView):
             return result
 
         if entities == 'clinics':
-            qs = ClinicDetail.objects.filter(clinic=entity_id)
+            qs = ClinicDetail.objects.filter(clinic=entity_id, schedules__isnull=False)
             serializer = ClinicDetailSerializer(qs, many=True)
         elif entities == 'rooms':
-            qs = RoomDetail.objects.filter(room=entity_id)
+            qs = RoomDetail.objects.filter(room=entity_id, schedules__isnull=False)
             serializer = RoomDetailSerializer(qs, many=True)
         else:
-            qs = ServiceDetail.objects.filter(service=entity_id)
+            qs = ServiceDetail.objects.filter(service=entity_id, schedules__isnull=False)
             serializer = ServiceDetailSerializer(qs, many=True)
         return Response(
             {
