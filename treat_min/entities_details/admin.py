@@ -4,7 +4,7 @@ from .models import *
 
 class ScheduleInline(admin.TabularInline):
     fields = ['day', 'start', 'end']
-    min_num = 1
+    # min_num = 1
     extra = 0
 
 
