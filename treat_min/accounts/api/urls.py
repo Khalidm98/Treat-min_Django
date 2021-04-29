@@ -1,12 +1,13 @@
 from django.urls import path
 from knox import views as knox_views
-from .views import RegisterEmailAPI, RegisterCodeAPI, RegisterAPI, LoginAPI, PasswordEmailAPI, \
-    PasswordCodeAPI, PasswordResetAPI, ChangePasswordAPI, UserDataAPI
+from .views import RegisterEmailAPI, RegisterCodeAPI, RegisterAPI, ChangePhotoAPI, LoginAPI, \
+    PasswordEmailAPI, PasswordCodeAPI, PasswordResetAPI, ChangePasswordAPI, UserDataAPI
 
 urlpatterns = [
     path('register-email/', RegisterEmailAPI.as_view(), name='register_email'),
     path('register-code/', RegisterCodeAPI.as_view(), name='register_code'),
     path('register/', RegisterAPI.as_view(), name='register'),
+    path('change-photo/', ChangePhotoAPI.as_view(), name='change_photo'),
     path('login/', LoginAPI.as_view(), name='login'),
     path('logout/', knox_views.LogoutView.as_view(), name='logout'),
     path('logout-all/', knox_views.LogoutAllView.as_view(), name='logout_all'),

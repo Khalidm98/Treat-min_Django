@@ -68,8 +68,9 @@ class Admin(models.Model):
         return self.user.email + ' - ' + self.user.name
 
     def clean(self):
-        if hasattr(self.user, 'hospital_admin') or hasattr(self.user, 'user') or self.user.is_superuser:
-            raise ValidationError('This user is already in another group!')
+        if hasattr(self, 'user'):
+            if hasattr(self.user, 'hospital_admin') or hasattr(self.user, 'user') or self.user.is_superuser:
+                raise ValidationError(_('This user is already in another group!'))
 
     def save(self, *args, **kwargs):
         abstract_user = AbstractUser.objects.get(id=self.user.id)
@@ -94,8 +95,9 @@ class HospitalAdmin(models.Model):
         return self.user.email + ' - ' + self.user.name
 
     def clean(self):
-        if hasattr(self.user, 'admin') or hasattr(self.user, 'user') or self.user.is_superuser:
-            raise ValidationError('This user is already in another group!')
+        if hasattr(self, 'user'):
+            if hasattr(self.user, 'admin') or hasattr(self.user, 'user') or self.user.is_superuser:
+                raise ValidationError(_('This user is already in another group!'))
 
     def save(self, *args, **kwargs):
         abstract_user = AbstractUser.objects.get(id=self.user.id)

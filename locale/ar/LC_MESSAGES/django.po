@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-29 12:25+0200\n"
+"POT-Creation-Date: 2021-04-29 14:55+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -48,7 +48,7 @@ msgid "Log out"
 msgstr ""
 
 #: .\treat_min\accounts\admin.py:25 .\treat_min\accounts\models.py:16
-#: .\treat_min\accounts\models.py:124 .\treat_min\accounts\models.py:137
+#: .\treat_min\accounts\models.py:126 .\treat_min\accounts\models.py:139
 msgid "email address"
 msgstr "البريد الالكتروني"
 
@@ -96,8 +96,8 @@ msgstr "المستخدم المجرد"
 msgid "Abstract Users"
 msgstr "المستخدمين المجردين"
 
-#: .\treat_min\accounts\models.py:61 .\treat_min\accounts\models.py:85
-#: .\treat_min\accounts\models.py:110 .\treat_min\accounts\models.py:116
+#: .\treat_min\accounts\models.py:61 .\treat_min\accounts\models.py:86
+#: .\treat_min\accounts\models.py:112 .\treat_min\accounts\models.py:118
 #: .\treat_min\user_appointments\models.py:31
 #: .\treat_min\user_appointments\models.py:51
 #: .\treat_min\user_appointments\models.py:71
@@ -114,60 +114,64 @@ msgstr "مشرف"
 msgid "Admins"
 msgstr "المشرفين"
 
-#: .\treat_min\accounts\models.py:87 .\treat_min\entities\models.py:111
+#: .\treat_min\accounts\models.py:73 .\treat_min\accounts\models.py:100
+msgid "This user is already in another group!"
+msgstr "هذا المستخدم موجود بالفعل في مجموعة أخرى!"
+
+#: .\treat_min\accounts\models.py:88 .\treat_min\entities\models.py:111
 #: .\treat_min\entities_details\models\details.py:18
-#: .\treat_min\entities_details\models\details.py:44
-#: .\treat_min\entities_details\models\details.py:61
+#: .\treat_min\entities_details\models\details.py:43
+#: .\treat_min\entities_details\models\details.py:60
 msgid "hospital"
 msgstr "المستشفى"
 
-#: .\treat_min\accounts\models.py:90
+#: .\treat_min\accounts\models.py:91
 msgid "hospital admin"
 msgstr "مشرف مستشفى"
 
-#: .\treat_min\accounts\models.py:91
+#: .\treat_min\accounts\models.py:92
 msgid "Hospitals Admins"
 msgstr "مشرفين المستشفيات"
 
-#: .\treat_min\accounts\models.py:111
+#: .\treat_min\accounts\models.py:113
 msgid "date of birth"
 msgstr "تاريخ الميلاد"
 
-#: .\treat_min\accounts\models.py:112 .\treat_min\entities\models.py:73
+#: .\treat_min\accounts\models.py:114 .\treat_min\entities\models.py:73
 msgid "gender"
 msgstr "النوع"
 
-#: .\treat_min\accounts\models.py:113 .\treat_min\entities\models.py:33
+#: .\treat_min\accounts\models.py:115 .\treat_min\entities\models.py:33
 #: .\treat_min\entities\models.py:46 .\treat_min\entities\models.py:59
 #: .\treat_min\entities\models.py:78 .\treat_min\entities\models.py:95
 msgid "photo"
 msgstr "الصورة"
 
-#: .\treat_min\accounts\models.py:117
+#: .\treat_min\accounts\models.py:119
 msgid "Users"
 msgstr "المستخدمين"
 
-#: .\treat_min\accounts\models.py:125 .\treat_min\accounts\models.py:138
+#: .\treat_min\accounts\models.py:127 .\treat_min\accounts\models.py:140
 msgid "code"
 msgstr "الرمز"
 
-#: .\treat_min\accounts\models.py:126 .\treat_min\accounts\models.py:139
+#: .\treat_min\accounts\models.py:128 .\treat_min\accounts\models.py:141
 msgid "is verified"
 msgstr "مفعل؟"
 
-#: .\treat_min\accounts\models.py:129
+#: .\treat_min\accounts\models.py:131
 msgid "pending user"
 msgstr "مستخدم معلق"
 
-#: .\treat_min\accounts\models.py:130
+#: .\treat_min\accounts\models.py:132
 msgid "Pending Users"
 msgstr "المستخدمين المعلقين"
 
-#: .\treat_min\accounts\models.py:142
+#: .\treat_min\accounts\models.py:144
 msgid "lost password"
 msgstr "كلمة سر مفقودة"
 
-#: .\treat_min\accounts\models.py:143
+#: .\treat_min\accounts\models.py:145
 msgid "Lost Passwords"
 msgstr "كلمات السر المفقودة"
 
@@ -195,7 +199,7 @@ msgid "Clinics"
 msgstr "العيادات"
 
 #: .\treat_min\entities\models.py:50
-#: .\treat_min\entities_details\models\details.py:46
+#: .\treat_min\entities_details\models\details.py:45
 #: .\treat_min\entities_details\models\schedules.py:44
 #: .\treat_min\user_reviews\models.py:35
 msgid "room"
@@ -206,7 +210,7 @@ msgid "Rooms"
 msgstr "الغرف"
 
 #: .\treat_min\entities\models.py:63
-#: .\treat_min\entities_details\models\details.py:63
+#: .\treat_min\entities_details\models\details.py:62
 #: .\treat_min\entities_details\models\schedules.py:58
 #: .\treat_min\user_reviews\models.py:51
 msgid "service"
@@ -274,14 +278,10 @@ msgid "price"
 msgstr "السعر"
 
 #: .\treat_min\entities_details\models\details.py:9
-#, fuzzy
-#| msgid "rating_total"
 msgid "rating total"
 msgstr "التقييم الكلي"
 
 #: .\treat_min\entities_details\models\details.py:10
-#, fuzzy
-#| msgid "rating_user"
 msgid "rating users"
 msgstr "المستخديم المقيمين"
 
@@ -293,21 +293,23 @@ msgstr "تفاصيل العيادة"
 msgid "Clinics Details"
 msgstr "تفاصيل العيادات"
 
-#: .\treat_min\entities_details\models\details.py:49
-#, fuzzy
-#| msgid "room detail"
+#: .\treat_min\entities_details\models\details.py:38
+msgid "Doctor's speciality and clinic speciality must match!"
+msgstr "تخصص الطبيب يجب أن يطابق العيادة!"
+
+#: .\treat_min\entities_details\models\details.py:48
 msgid "room details"
 msgstr "تفاصيل الغرفة"
 
-#: .\treat_min\entities_details\models\details.py:50
+#: .\treat_min\entities_details\models\details.py:49
 msgid "Rooms Details"
 msgstr "تفاصيل الغرف"
 
-#: .\treat_min\entities_details\models\details.py:66
+#: .\treat_min\entities_details\models\details.py:65
 msgid "service details"
 msgstr "تفاصيل الخدمة"
 
-#: .\treat_min\entities_details\models\details.py:67
+#: .\treat_min\entities_details\models\details.py:66
 msgid "Services Details"
 msgstr "تفاصيل الخدمات"
 
@@ -416,16 +418,16 @@ msgid "status"
 msgstr "حالة الحجز"
 
 #: .\treat_min\user_appointments\models.py:17
-#, fuzzy
-#| msgid "booking_date"
 msgid "booking date"
 msgstr "تاريخ الحجز"
 
 #: .\treat_min\user_appointments\models.py:18
-#, fuzzy
-#| msgid "appointment_date"
 msgid "appointment date"
 msgstr "ميعاد الحجز"
+
+#: .\treat_min\user_appointments\models.py:25
+msgid "You cannot cancel an appointment! Either accept or reject it."
+msgstr "لا يمكنك إلغاء الميعاد! إما أن تقبله أو ترفضه."
 
 #: .\treat_min\user_appointments\models.py:34
 #: .\treat_min\user_appointments\models.py:53

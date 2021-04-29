@@ -51,31 +51,11 @@ class ChangePasswordSerializer(PasswordSerializer):
         return attrs
 
 
-class UserSerializer(serializers.ModelSerializer):
-    name = serializers.SerializerMethodField('get_name')
-    email = serializers.SerializerMethodField('get_email')
-    phone = serializers.SerializerMethodField('get_phone')
-
-    def get_name(self, obj):
-        return obj.user.name
-
-    def get_email(self, obj):
-        return obj.user.email
-
-    def get_phone(self, obj):
-        return obj.user.phone
-
-    class Meta:
-        model = User
-        fields = ['id', 'name', 'email', 'phone', 'gender', 'birth']
-
-
 class RegisterSerializer(PasswordSerializer):
     name = serializers.CharField(max_length=50)
     phone = serializers.CharField(max_length=11)
     birth = serializers.DateField()
     gender = serializers.ChoiceField(choices=GENDER)
-    photo = serializers.ImageField(default='photos/default.png')
 
     def create(self, validated_data):
         user = AbstractUser.objects.create_user(
@@ -88,7 +68,6 @@ class RegisterSerializer(PasswordSerializer):
             user=user,
             birth=validated_data['birth'],
             gender=validated_data['gender'],
-            photo=validated_data['photo'],
         )
         return user
 
@@ -114,3 +93,28 @@ class LoginSerializer(EmailSerializer):
 
         attrs['user'] = user
         return attrs
+
+
+class UserSerializer(serializers.ModelSerializer):
+    name = serializers.SerializerMethodField('get_name')
+    email = serializers.SerializerMethodField('get_email')
+    phone = serializers.SerializerMethodField('get_phone')
+
+    def get_name(self, obj):
+        return obj.user.name
+
+    def get_email(self, obj):
+        return obj.user.email
+
+    def get_phone(self, obj):
+        return obj.user.phone
+
+    class Meta:
+        model = User
+        fields = ['id', 'name', 'email', 'phone', 'gender', 'birth']
+
+
+class PhotoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['photo']
