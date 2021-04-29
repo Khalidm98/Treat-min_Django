@@ -6,8 +6,8 @@ from ...entities.models import Clinic, Room, Service, Doctor, Hospital
 
 class Detail(models.Model):
     price = models.PositiveSmallIntegerField(default=50, verbose_name=_("price"))
-    rating_total = models.PositiveIntegerField(default=0, verbose_name=_("rating_total"))
-    rating_users = models.PositiveSmallIntegerField(default=0, verbose_name=_("rating_user"))
+    rating_total = models.PositiveIntegerField(default=0, verbose_name=_("rating total"))
+    rating_users = models.PositiveSmallIntegerField(default=0, verbose_name=_("rating users"))
 
     class Meta:
         abstract = True

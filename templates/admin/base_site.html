@@ -8,10 +8,10 @@
 
 {% block userlinks %}
     <span> <a href="{{ site_url }}">{% translate 'View site' %}</a> /</span>
-    {% trans 'LANGUAGE'%} [
+    {% trans 'Language'%} [
     <a href="{{ request|switch_i18n:'en' }}">
         <span>{% trans 'English'%}</span>
-    </a> /
+    </a> -
     <a href="{{ request|switch_i18n:'ar' }}">
         <span>{% trans 'Arabic'%}</span>
     </a> ] /
