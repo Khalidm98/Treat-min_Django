@@ -125,7 +125,6 @@ class ReserveAPI(APIView):
             schedule = result.schedules.get(id=schedule_id)
         except (ClinicSchedule.DoesNotExist, RoomSchedule.DoesNotExist, ServiceSchedule.DoesNotExist):
             return Response({"details": "Wrong schedule id!"}, status.HTTP_404_NOT_FOUND)
-
         if date.fromisoformat(appointment_date) <= date.today():
             return Response(
                 {"details": "Appointment day must be after today!"},
