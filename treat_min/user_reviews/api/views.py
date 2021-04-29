@@ -49,7 +49,7 @@ class RateAPI(APIView):
             review.save()
             return Response({"details": "Your review was updated successfully!"})
 
-        except ClinicReview.DoesNotExist or RoomReview.DoesNotExist or ServiceReview.DoesNotExist:
+        except (ClinicReview.DoesNotExist, RoomReview.DoesNotExist, ServiceReview.DoesNotExist):
             result.rating_total = result.rating_total + int(rating)
             result.rating_users = result.rating_users + 1
             result.save()

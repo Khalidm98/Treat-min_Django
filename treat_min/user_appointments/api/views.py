@@ -73,7 +73,8 @@ class CancelAPI(APIView):
                 appointment = ServiceAppointment.objects.get(id=appointment_id)
             else:
                 return Response({"details": "Page not found!"}, status.HTTP_404_NOT_FOUND)
-        except ClinicAppointment.DoesNotExist or RoomAppointment.DoesNotExist or ServiceAppointment.DoesNotExist:
+
+        except (ClinicAppointment.DoesNotExist, RoomAppointment.DoesNotExist, ServiceAppointment.DoesNotExist):
             return Response(
                 {"details": "{0} appointment not found!".format(entities[0:len(entities) - 1])},
                 status.HTTP_404_NOT_FOUND
@@ -122,7 +123,7 @@ class ReserveAPI(APIView):
 
         try:
             schedule = result.schedules.get(id=schedule_id)
-        except ClinicSchedule.DoesNotExist or RoomSchedule.DoesNotExist or ServiceSchedule.DoesNotExist:
+        except (ClinicSchedule.DoesNotExist, RoomSchedule.DoesNotExist, ServiceSchedule.DoesNotExist):
             return Response({"details": "Wrong schedule id!"}, status.HTTP_404_NOT_FOUND)
 
         if date.fromisoformat(appointment_date) <= date.today():
@@ -144,7 +145,7 @@ class ReserveAPI(APIView):
                 status.HTTP_400_BAD_REQUEST
             )
 
-        except ClinicAppointment.DoesNotExist or RoomAppointment.DoesNotExist or ServiceAppointment.DoesNotExist:
+        except (ClinicAppointment.DoesNotExist, RoomAppointment.DoesNotExist, ServiceAppointment.DoesNotExist):
             params = {
                 'user': user,
                 'schedule_id': schedule_id,

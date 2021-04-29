@@ -30,7 +30,7 @@ def check_detail(entities, entity_id, detail_id):
 
         return detail
 
-    except ClinicDetail.DoesNotExist or RoomDetail.DoesNotExist or ServiceDetail.DoesNotExist:
+    except (ClinicDetail.DoesNotExist, RoomDetail.DoesNotExist, ServiceDetail.DoesNotExist):
         return Response(
             {"details": "{0} detail not found!".format(entities[0:len(entities) - 1])},
             status.HTTP_404_NOT_FOUND

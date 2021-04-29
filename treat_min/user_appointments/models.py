@@ -31,7 +31,7 @@ class ClinicAppointment(Appointment):
         User, on_delete=models.CASCADE, related_name='clinics_appointments', verbose_name=_('user')
     )
     schedule = models.ForeignKey(
-        ClinicSchedule, null=True, on_delete=models.SET_NULL, related_name='appointments', verbose_name=_('schedule')
+        ClinicSchedule, on_delete=models.CASCADE, related_name='appointments', verbose_name=_('schedule')
     )
 
     class Meta:
@@ -50,7 +50,7 @@ class ClinicAppointment(Appointment):
 class RoomAppointment(Appointment):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='rooms_appointments', verbose_name=_('user'))
     schedule = models.ForeignKey(
-        RoomSchedule, null=True, on_delete=models.SET_NULL, related_name='appointments', verbose_name=_('schedule')
+        RoomSchedule, on_delete=models.CASCADE, related_name='appointments', verbose_name=_('schedule')
     )
 
     class Meta:
@@ -71,7 +71,7 @@ class ServiceAppointment(Appointment):
         User, on_delete=models.CASCADE, related_name='services_appointments', verbose_name=_('user')
     )
     schedule = models.ForeignKey(
-        ServiceSchedule, null=True, on_delete=models.SET_NULL, related_name='appointments', verbose_name=_('schedule')
+        ServiceSchedule, on_delete=models.CASCADE, related_name='appointments', verbose_name=_('schedule')
     )
 
     class Meta:

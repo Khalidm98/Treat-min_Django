@@ -18,7 +18,7 @@ def check_entity(entities, entity_id):
             return Response({"details": "Page not found!"}, status.HTTP_404_NOT_FOUND)
         return entity
 
-    except Clinic.DoesNotExist or Room.DoesNotExist or Service.DoesNotExist:
+    except (Clinic.DoesNotExist, Room.DoesNotExist, Service.DoesNotExist):
         return Response(
             {"details": "{0} not found!".format(entities[0:len(entities) - 1])},
             status.HTTP_404_NOT_FOUND
