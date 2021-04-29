@@ -66,6 +66,7 @@ class RoomAppointmentSerializer(serializers.ModelSerializer):
     def get_price(self, obj):
         return obj.schedule.room.price
 
+
     class Meta:
         model = RoomAppointment
         fields = ['id', 'room_id', 'room', 'room_detail_id'] + APPOINTMENT_FIELDS
