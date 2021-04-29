@@ -83,19 +83,19 @@ class CancelAPI(APIView):
         user = get_user(request)
         if appointment.user != user:
             return Response(
-                {"details": "This appointment doesn't belong to this user"},
+                {"details": "This appointment doesn't belong to this user!"},
                 status.HTTP_400_BAD_REQUEST
             )
 
         if appointment.appointment_date < date.today():
             return Response(
-                {"details": "You cannot cancel a past appointment"},
+                {"details": "You cannot cancel a past appointment!"},
                 status.HTTP_400_BAD_REQUEST
             )
 
         appointment.status = 'C'
         appointment.save()
-        return Response({"details": "Your appointment was canceled successfully!"})
+        return Response({"details": "Your appointment was canceled successfully."})
 
 
 class ReserveAPI(APIView):
@@ -158,6 +158,6 @@ class ReserveAPI(APIView):
                 ServiceAppointment.objects.create(**params)
 
             return Response(
-                {"details": "Your appointment was reserved successfully!"},
+                {"details": "Your appointment was reserved successfully."},
                 status.HTTP_201_CREATED
             )

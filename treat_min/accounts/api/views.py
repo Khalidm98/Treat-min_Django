@@ -9,8 +9,8 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .serializers import EmailSerializer, CodeSerializer, ChangePasswordSerializer, PasswordSerializer, \
-    UserSerializer, RegisterSerializer, LoginSerializer
+from .serializers import EmailSerializer, CodeSerializer, PasswordSerializer, ChangePasswordSerializer, \
+    UserSerializer, RegisterSerializer, LoginSerializer, PhotoSerializer
 from ..models import AbstractUser, PendingUser, LostPassword
 
 
@@ -28,7 +28,7 @@ class RegisterEmailAPI(APIView):
         user = AbstractUser.objects.filter(email__iexact=email)
         if user.exists():
             return Response(
-                {"details": "This email address is already registered"},
+                {"details": "This email address is already registered!"},
                 status.HTTP_400_BAD_REQUEST
             )
 
@@ -49,7 +49,7 @@ class RegisterEmailAPI(APIView):
         else:
             PendingUser.objects.create(email=email, code=code)
 
-        return Response({"details": "Verification email was sent successfully"})
+        return Response({"details": "Verification email was sent successfully."})
 
 
 class RegisterCodeAPI(APIView):
@@ -65,16 +65,16 @@ class RegisterCodeAPI(APIView):
             if user.code == code:
                 user.is_verified = True
                 user.save()
-                return Response({"details": "Email was verified successfully"})
+                return Response({"details": "Email was verified successfully."})
             else:
                 return Response(
-                    {"details": "Wrong code"},
+                    {"details": "Wrong code!"},
                     status.HTTP_400_BAD_REQUEST
                 )
 
         else:
             return Response(
-                {"details": "This email address was not registered before"},
+                {"details": "This email address was not registered before!"},
                 status.HTTP_404_NOT_FOUND
             )
 
@@ -102,12 +102,12 @@ class RegisterAPI(APIView):
 
             else:
                 return Response(
-                    {"details": "This email address was not verified"},
+                    {"details": "This email address was not verified!"},
                     status.HTTP_400_BAD_REQUEST
                 )
         else:
             return Response(
-                {"details": "This email doesn't belong to an existing account"},
+                {"details": "This email doesn't belong to an existing account!"},
                 status.HTTP_400_BAD_REQUEST
             )
 
@@ -165,7 +165,7 @@ class PasswordEmailAPI(APIView):
         else:
             LostPassword.objects.create(email=email, code=code)
 
-        return Response({"details": "Password reset email was sent successfully"})
+        return Response({"details": "Password reset email was sent successfully."})
 
 
 class PasswordCodeAPI(APIView):
@@ -181,10 +181,10 @@ class PasswordCodeAPI(APIView):
             if user.code == code:
                 user.is_verified = True
                 user.save()
-                return Response({"details": "Email was verified successfully"})
+                return Response({"details": "Email was verified successfully."})
             else:
                 return Response(
-                    {"details": "Wrong code"},
+                    {"details": "Wrong code!"},
                     status.HTTP_400_BAD_REQUEST
                 )
 
@@ -243,7 +243,20 @@ class ChangePasswordAPI(APIView):
         user = serializer.validated_data['user']
         user.set_password(serializer.validated_data['password'])
         user.save()
-        return Response({"details": "Password changed successfully!"}, status.HTTP_202_ACCEPTED)
+        return Response({"details": "Password changed successfully."}, status.HTTP_202_ACCEPTED)
+
+
+class ChangePhotoAPI(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        serializer = PhotoSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = get_user(request)
+        user.photo = request.data.get('photo')
+        user.save()
+        return Response({"details": "Photo changed successfully."}, status.HTTP_202_ACCEPTED)
 
 
 class UserDataAPI(APIView):

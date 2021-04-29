@@ -47,7 +47,7 @@ class RateAPI(APIView):
             review.review = request.data.get('review')
             review.rating = rating
             review.save()
-            return Response({"details": "Your review was updated successfully!"})
+            return Response({"details": "Your review was updated successfully."})
 
         except (ClinicReview.DoesNotExist, RoomReview.DoesNotExist, ServiceReview.DoesNotExist):
             result.rating_total = result.rating_total + int(rating)
@@ -67,6 +67,6 @@ class RateAPI(APIView):
                 ServiceReview.objects.create(service_id=detail_id, **params)
 
             return Response(
-                {"details": "Your review was saved successfully!"},
+                {"details": "Your review was saved successfully."},
                 status.HTTP_201_CREATED
             )

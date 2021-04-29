@@ -14,9 +14,9 @@ WEEK_DAYS = [
 
 
 class Schedule(models.Model):
-    day = models.CharField(max_length=3, choices=WEEK_DAYS, verbose_name=_("day"))
-    start = models.TimeField(verbose_name=_("start"))
-    end = models.TimeField(verbose_name=_("end"))
+    day = models.CharField(max_length=3, choices=WEEK_DAYS, verbose_name=_('day'))
+    start = models.TimeField(verbose_name=_('start'))
+    end = models.TimeField(verbose_name=_('end'))
 
     class Meta:
         abstract = True
@@ -27,11 +27,11 @@ class Schedule(models.Model):
 
 class ClinicSchedule(Schedule):
     clinic = models.ForeignKey(
-        ClinicDetail, on_delete=models.CASCADE, related_name='schedules', verbose_name=_("clinic")
+        ClinicDetail, on_delete=models.CASCADE, related_name='schedules', verbose_name=_('clinic')
     )
 
     class Meta:
-        verbose_name = _("clinic schedule")
+        verbose_name = _('clinic schedule')
         constraints = [
             models.UniqueConstraint(fields=['clinic', 'day', 'start', 'end'], name='unique_clinic_schedule')
         ]
@@ -41,10 +41,10 @@ class ClinicSchedule(Schedule):
 
 
 class RoomSchedule(Schedule):
-    room = models.ForeignKey(RoomDetail, on_delete=models.CASCADE, related_name='schedules', verbose_name=_("room"))
+    room = models.ForeignKey(RoomDetail, on_delete=models.CASCADE, related_name='schedules', verbose_name=_('room'))
 
     class Meta:
-        verbose_name = _("room schedule")
+        verbose_name = _('room schedule')
         constraints = [
             models.UniqueConstraint(fields=['room', 'day', 'start', 'end'], name='unique_room_schedule')
         ]
@@ -55,11 +55,11 @@ class RoomSchedule(Schedule):
 
 class ServiceSchedule(Schedule):
     service = models.ForeignKey(
-        ServiceDetail, on_delete=models.CASCADE, related_name='schedules', verbose_name=_("service")
+        ServiceDetail, on_delete=models.CASCADE, related_name='schedules', verbose_name=_('service')
     )
 
     class Meta:
-        verbose_name = _("service schedule")
+        verbose_name = _('service schedule')
         constraints = [
             models.UniqueConstraint(fields=['service', 'day', 'start', 'end'], name='unique_service_schedule')
         ]
