@@ -9,8 +9,8 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .serializers import EmailSerializer, CodeSerializer, PasswordSerializer, ChangePasswordSerializer, \
-    UserSerializer, RegisterSerializer, LoginSerializer, PhotoSerializer
+from .serializers import EmailSerializer, CodeSerializer, EmailPasswordSerializer, ChangePasswordSerializer, \
+    RegisterSerializerEmail, LoginSerializer, PhotoSerializer, EditAccountSerializer, UserSerializer
 from ..models import AbstractUser, PendingUser, LostPassword
 
 
@@ -53,7 +53,7 @@ class RegisterEmailAPI(APIView):
 
 
 class RegisterCodeAPI(APIView):
-    def post(self, request):
+    def patch(self, request):
         serializer = CodeSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         email = request.data.get('email')
@@ -81,7 +81,7 @@ class RegisterCodeAPI(APIView):
 
 class RegisterAPI(APIView):
     def post(self, request):
-        serializer = RegisterSerializer(data=request.data)
+        serializer = RegisterSerializerEmail(data=request.data)
         serializer.is_valid(raise_exception=True)
         email = request.data.get('email')
 
@@ -169,7 +169,7 @@ class PasswordEmailAPI(APIView):
 
 
 class PasswordCodeAPI(APIView):
-    def post(self, request):
+    def patch(self, request):
         serializer = CodeSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         email = request.data.get('email')
@@ -196,8 +196,8 @@ class PasswordCodeAPI(APIView):
 
 
 class PasswordResetAPI(APIView):
-    def post(self, request):
-        serializer = PasswordSerializer(data=request.data)
+    def patch(self, request):
+        serializer = EmailPasswordSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         email = request.data.get('email')
         password = request.data.get('password')
@@ -237,11 +237,10 @@ class ChangePasswordAPI(APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
-    def post(self, request):
-        serializer = ChangePasswordSerializer(data=request.data)
+    def patch(self, request):
+        user = get_user(request)
+        serializer = ChangePasswordSerializer(user.user, data=request.data)
         serializer.is_valid(raise_exception=True)
-        user = serializer.validated_data['user']
-        user.set_password(serializer.validated_data['password'])
         user.save()
         return Response({"details": "Password changed successfully."}, status.HTTP_202_ACCEPTED)
 
@@ -250,13 +249,25 @@ class ChangePhotoAPI(APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
-    def post(self, request):
+    def patch(self, request):
         serializer = PhotoSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = get_user(request)
         user.photo = request.data.get('photo')
         user.save()
         return Response({"details": "Photo changed successfully."}, status.HTTP_202_ACCEPTED)
+
+
+class EditAccountAPI(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def patch(self, request):
+        user = get_user(request)
+        serializer = EditAccountSerializer(user.user, data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response({"details": "Account was updated successfully."}, status.HTTP_202_ACCEPTED)
 
 
 class UserDataAPI(APIView):
