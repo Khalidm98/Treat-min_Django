@@ -5,31 +5,31 @@ from ..entities_details.admin import ClinicDetailInline, RoomDetailInline, Servi
 
 class ClinicAdmin(admin.ModelAdmin):
     inlines = [ClinicDetailInline]
-    list_display = ['name']
+    list_display = ['name', 'id']
     search_fields = ['name']
 
 
 class RoomAdmin(admin.ModelAdmin):
     inlines = [RoomDetailInline]
-    list_display = ['name']
+    list_display = ['name', 'id']
     search_fields = ['name']
 
 
 class ServiceAdmin(admin.ModelAdmin):
     inlines = [ServiceDetailInline]
-    list_display = ['name']
+    list_display = ['name', 'id']
     search_fields = ['name']
 
 
 class DoctorAdmin(admin.ModelAdmin):
     inlines = [ClinicDetailInline]
-    list_display = ['name', 'speciality']
+    list_display = ['name', 'speciality', 'id']
     search_fields = ['name', 'title', 'phone']
 
 
 class HospitalAdmin(admin.ModelAdmin):
     inlines = [ClinicDetailInline, RoomDetailInline, ServiceDetailInline]
-    list_display = ['name']
+    list_display = ['name', 'id']
     search_fields = ['name', 'phone']
 
     def get_queryset(self, request):
