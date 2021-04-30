@@ -6,13 +6,7 @@ GENDER = [('M', _('Male')), ('F', _('Female'))]
 
 
 def image_update(instance, filename):
-    if isinstance(instance, Clinic):
-        directory = 'photos/clinics/'
-    elif isinstance(instance, Room):
-        directory = 'photos/rooms/'
-    elif isinstance(instance, Service):
-        directory = 'photos/services/'
-    elif isinstance(instance, Doctor):
+    if isinstance(instance, Doctor):
         directory = 'photos/doctors/'
     elif isinstance(instance, Hospital):
         directory = 'photos/hospitals/'
@@ -30,7 +24,6 @@ def image_update(instance, filename):
 
 class Clinic(models.Model):
     name = models.CharField(max_length=50, unique=True, verbose_name=_('name'))
-    photo = models.ImageField(upload_to=image_update, default='photos/default.png', verbose_name=_('photo'))
 
     class Meta:
         ordering = ['name']
@@ -43,7 +36,6 @@ class Clinic(models.Model):
 
 class Room(models.Model):
     name = models.CharField(max_length=50, unique=True, verbose_name=_('name'))
-    photo = models.ImageField(upload_to=image_update, default='photos/default.png', verbose_name=_('photo'))
 
     class Meta:
         ordering = ['name']
@@ -56,7 +48,6 @@ class Room(models.Model):
 
 class Service(models.Model):
     name = models.CharField(max_length=50, unique=True, verbose_name=_('name'))
-    photo = models.ImageField(upload_to=image_update, default='photos/default.png', verbose_name=_('photo'))
 
     class Meta:
         ordering = ['name']

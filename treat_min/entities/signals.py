@@ -2,13 +2,10 @@ import os
 from django.conf import settings
 from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
-from .models import Clinic, Room, Service, Doctor, Hospital
+from .models import Doctor, Hospital
 from ..accounts.models import User
 
 
-@receiver(post_save, sender=Clinic)
-@receiver(post_save, sender=Room)
-@receiver(post_save, sender=Service)
 @receiver(post_save, sender=Doctor)
 @receiver(post_save, sender=Hospital)
 @receiver(post_save, sender=User)
@@ -23,9 +20,6 @@ def image_create(instance, created, **kwargs):
             instance.save()
 
 
-@receiver(post_delete, sender=Clinic)
-@receiver(post_delete, sender=Room)
-@receiver(post_delete, sender=Service)
 @receiver(post_delete, sender=Doctor)
 @receiver(post_delete, sender=Hospital)
 @receiver(post_delete, sender=User)
