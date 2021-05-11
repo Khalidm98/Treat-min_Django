@@ -238,9 +238,10 @@ class ChangePasswordAPI(APIView):
     permission_classes = [IsAuthenticated]
 
     def patch(self, request):
-        user = get_user(request)
-        serializer = ChangePasswordSerializer(user.user, data=request.data)
+        user = get_user(request).user
+        serializer = ChangePasswordSerializer(user, data=request.data)
         serializer.is_valid(raise_exception=True)
+        user.set_password(request.data.get('password'))
         user.save()
         return Response({"details": "Password changed successfully."}, status.HTTP_202_ACCEPTED)
 

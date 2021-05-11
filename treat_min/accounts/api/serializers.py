@@ -84,11 +84,6 @@ class LoginSerializer(EmailSerializer):
 class ChangePasswordSerializer(PasswordSerializer):
     old = serializers.CharField(max_length=128)
 
-    def update(self, instance, validated_data):
-        instance.set_password(validated_data['password'])
-        instance.save()
-        return instance
-
     def validate(self, attrs):
         if not self.instance:
             msg = 'Cannot find user.'
