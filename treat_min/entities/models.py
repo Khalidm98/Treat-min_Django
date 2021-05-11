@@ -65,7 +65,7 @@ class Doctor(models.Model):
     speciality = models.ForeignKey(
         Clinic, on_delete=models.CASCADE, related_name='doctors', verbose_name=_('speciality')
     )
-    phone = models.CharField(max_length=11, unique=True, verbose_name=_('phone'))
+    phone = models.CharField(max_length=11, unique=True, blank=True, null=True, verbose_name=_('phone'))
     photo = models.ImageField(upload_to=image_update, default='photos/default.png', verbose_name=_('photo'))
 
     class Meta:
