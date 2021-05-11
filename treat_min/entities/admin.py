@@ -26,6 +26,11 @@ class DoctorAdmin(admin.ModelAdmin):
     list_display = ['name', 'speciality', 'id']
     search_fields = ['name', 'title', 'phone']
 
+    def get_exclude(self, request, obj=None):
+        if hasattr(request.user, 'hospital_admin') and not (obj is None):
+            return ['phone']
+        return []
+
 
 class HospitalAdmin(admin.ModelAdmin):
     inlines = [ClinicDetailInline, RoomDetailInline, ServiceDetailInline]
