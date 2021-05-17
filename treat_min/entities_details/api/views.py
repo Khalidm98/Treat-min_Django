@@ -4,7 +4,8 @@ from rest_framework.response import Response
 
 from ...entities.api.views import check_entity
 from ..models import ClinicDetail, RoomDetail, ServiceDetail, ClinicSchedule, RoomSchedule, ServiceSchedule
-from .serializers import ClinicDetailSerializer, RoomDetailSerializer, ServiceDetailSerializer, ScheduleSerializer
+from .serializers import ClinicDetailSerializer, RoomDetailSerializer, ServiceDetailSerializer, ScheduleSerializer, \
+    ClinicScheduleSerializer, RoomScheduleSerializer, ServiceScheduleSerializer
 
 
 def check_detail(entities, entity_id, detail_id):
@@ -88,3 +89,26 @@ class ScheduleAPI(APIView):
                 "address": result.hospital.address,
                 "schedules": serializer.data
             })
+
+
+class WebSchedulesAPI(APIView):
+    def get(self, request, entities, entity_id):
+        result = check_entity(entities, entity_id)
+        if isinstance(result, Response):
+            return result
+
+        if entities == 'clinics':
+            qs = ClinicDetail.objects.filter(clinic=entity_id, schedules__isnull=False).distinct()
+            serializer = ClinicScheduleSerializer(qs, many=True)
+        elif entities == 'rooms':
+            qs = RoomDetail.objects.filter(room=entity_id, schedules__isnull=False).distinct()
+            serializer = RoomScheduleSerializer(qs, many=True)
+        else:
+            qs = ServiceDetail.objects.filter(service=entity_id, schedules__isnull=False).distinct()
+            serializer = ServiceScheduleSerializer(qs, many=True)
+        return Response(
+            {
+                "entity": result.name,
+                "details": serializer.data
+            }
+        )

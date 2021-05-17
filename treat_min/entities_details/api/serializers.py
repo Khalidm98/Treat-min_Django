@@ -41,3 +41,27 @@ class ScheduleSerializer(serializers.ModelSerializer):
     class Meta:
         model = ClinicSchedule
         fields = ['id', 'day', 'start', 'end']
+
+
+class ClinicScheduleSerializer(ClinicDetailSerializer):
+    schedules = ScheduleSerializer(many=True)
+
+    class Meta:
+        model = ClinicDetail
+        fields = ClinicDetailSerializer.Meta.fields + ['schedules']
+
+
+class RoomScheduleSerializer(RoomDetailSerializer):
+    schedules = ScheduleSerializer(many=True)
+
+    class Meta:
+        model = RoomDetail
+        fields = RoomDetailSerializer.Meta.fields + ['schedules']
+
+
+class ServiceScheduleSerializer(ServiceDetailSerializer):
+    schedules = ScheduleSerializer(many=True)
+
+    class Meta:
+        model = ServiceDetail
+        fields = ServiceDetailSerializer.Meta.fields + ['schedules']
