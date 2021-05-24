@@ -108,7 +108,7 @@ class RegisterAPI(APIView):
         else:
             return Response(
                 {"details": "This email doesn't belong to an existing account!"},
-                status.HTTP_400_BAD_REQUEST
+                status.HTTP_404_NOT_FOUND
             )
 
 
