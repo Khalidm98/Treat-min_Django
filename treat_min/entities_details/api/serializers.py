@@ -9,7 +9,7 @@ class DoctorSerializer(serializers.ModelSerializer):
     # add photo
     class Meta:
         model = Doctor
-        fields = ['name', 'title']
+        fields = ['id', 'name', 'title']
 
 
 class ClinicDetailSerializer(serializers.ModelSerializer):
