@@ -36,18 +36,6 @@ class Clinic(models.Model):
         return self.name
 
 
-class Room(models.Model):
-    name = models.CharField(max_length=50, unique=True, verbose_name=_('name'))
-
-    class Meta:
-        ordering = ['name']
-        verbose_name = _('room')
-        verbose_name_plural = _('Rooms')
-
-    def __str__(self):
-        return self.name
-
-
 class Service(models.Model):
     name = models.CharField(max_length=50, unique=True, verbose_name=_('name'))
 
@@ -97,9 +85,6 @@ class Hospital(models.Model):
     )
     clinics = models.ManyToManyField(
         Clinic, through='entities_details.ClinicDetail', related_name='hospitals', verbose_name=_('clinics')
-    )
-    rooms = models.ManyToManyField(
-        Room, through='entities_details.RoomDetail', related_name='hospitals', verbose_name=_('rooms')
     )
     services = models.ManyToManyField(
         Service, through='entities_details.ServiceDetail', related_name='hospitals', verbose_name=_('services')

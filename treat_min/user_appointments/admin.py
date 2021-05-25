@@ -1,7 +1,7 @@
 from datetime import date
 from django.contrib import admin, messages
 from django.utils.translation import ngettext, gettext_lazy as _
-from .models import ClinicAppointment, RoomAppointment, ServiceAppointment
+from .models import ClinicAppointment, ServiceAppointment
 
 
 class AppointmentAdmin(admin.ModelAdmin):
@@ -53,14 +53,6 @@ class ClinicAppointmentAdmin(AppointmentAdmin):
         return qs
 
 
-class RoomAppointmentAdmin(AppointmentAdmin):
-    def get_queryset(self, request):
-        qs = super().get_queryset(request)
-        if hasattr(request.user, 'hospital_admin'):
-            return qs.filter(schedule__room__hospital=request.user.hospital_admin.hospital)
-        return qs
-
-
 class ServiceAppointmentAdmin(AppointmentAdmin):
     def get_queryset(self, request):
         qs = super().get_queryset(request)
@@ -70,5 +62,4 @@ class ServiceAppointmentAdmin(AppointmentAdmin):
 
 
 admin.site.register(ClinicAppointment, ClinicAppointmentAdmin)
-admin.site.register(RoomAppointment, RoomAppointmentAdmin)
 admin.site.register(ServiceAppointment, ServiceAppointmentAdmin)

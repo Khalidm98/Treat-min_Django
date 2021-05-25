@@ -1,8 +1,6 @@
 from rest_framework import serializers
 from ...entities.models import Doctor, Hospital
-from ...filtration.models import City, Area
-
-from ..models import ClinicSchedule, ClinicDetail, RoomDetail, ServiceDetail
+from ..models import ClinicSchedule, ClinicDetail, ServiceDetail
 
 DETAIL_FIELDS = ['id', 'hospital', 'price', 'rating_total', 'rating_users']
 
@@ -31,14 +29,6 @@ class ClinicDetailSerializer(serializers.ModelSerializer):
         fields = DETAIL_FIELDS + ['doctor']
 
 
-class RoomDetailSerializer(serializers.ModelSerializer):
-    hospital = HospitalSerializer()
-
-    class Meta:
-        model = RoomDetail
-        fields = DETAIL_FIELDS
-
-
 class ServiceDetailSerializer(serializers.ModelSerializer):
     hospital = HospitalSerializer()
 
@@ -59,14 +49,6 @@ class ClinicScheduleSerializer(ClinicDetailSerializer):
     class Meta:
         model = ClinicDetail
         fields = ClinicDetailSerializer.Meta.fields + ['schedules']
-
-
-class RoomScheduleSerializer(RoomDetailSerializer):
-    schedules = ScheduleSerializer(many=True)
-
-    class Meta:
-        model = RoomDetail
-        fields = RoomDetailSerializer.Meta.fields + ['schedules']
 
 
 class ServiceScheduleSerializer(ServiceDetailSerializer):

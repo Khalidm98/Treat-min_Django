@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import *
+from .models import ClinicDetail, ServiceDetail, ClinicSchedule, ServiceSchedule
 
 
 class ScheduleInline(admin.TabularInline):
@@ -10,10 +10,6 @@ class ScheduleInline(admin.TabularInline):
 
 class ClinicScheduleInline(ScheduleInline):
     model = ClinicSchedule
-
-
-class RoomScheduleInline(ScheduleInline):
-    model = RoomSchedule
 
 
 class ServiceScheduleInline(ScheduleInline):
@@ -34,11 +30,6 @@ class DetailInline(admin.TabularInline):
 class ClinicDetailInline(DetailInline):
     model = ClinicDetail
     autocomplete_fields = ['hospital', 'clinic', 'doctor']
-
-
-class RoomDetailInline(DetailInline):
-    model = RoomDetail
-    autocomplete_fields = ['hospital', 'room']
 
 
 class ServiceDetailInline(DetailInline):
@@ -68,13 +59,6 @@ class ClinicDetailAdmin(DetailAdmin):
     list_display = ['hospital', 'clinic', 'doctor', 'price']
 
 
-class RoomDetailAdmin(DetailAdmin):
-    fields = ['hospital', 'room', 'price']
-    autocomplete_fields = ['hospital', 'room']
-    inlines = [RoomScheduleInline]
-    list_display = ['hospital', 'room', 'price']
-
-
 class ServiceDetailAdmin(DetailAdmin):
     fields = ['hospital', 'service', 'price']
     autocomplete_fields = ['hospital', 'service']
@@ -83,5 +67,4 @@ class ServiceDetailAdmin(DetailAdmin):
 
 
 admin.site.register(ClinicDetail, ClinicDetailAdmin)
-admin.site.register(RoomDetail, RoomDetailAdmin)
 admin.site.register(ServiceDetail, ServiceDetailAdmin)

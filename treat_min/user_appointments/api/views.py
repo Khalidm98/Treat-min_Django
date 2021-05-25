@@ -7,8 +7,8 @@ from knox.auth import TokenAuthentication
 
 from ...accounts.api.views import get_user
 from ...entities_details.api.views import check_detail
-from ...entities_details.models import ClinicSchedule, RoomSchedule, ServiceSchedule
-from ..models import ClinicAppointment, RoomAppointment, ServiceAppointment
+from ...entities_details.models import ClinicSchedule, ServiceSchedule
+from ..models import ClinicAppointment, ServiceAppointment
 from . import serializers
 
 
@@ -24,10 +24,8 @@ class AppointmentAPI(APIView):
             'appointment_date__gte': date.today()
         }
         current_clinics = ClinicAppointment.objects.filter(**current_params)
-        current_rooms = RoomAppointment.objects.filter(**current_params)
         current_services = ServiceAppointment.objects.filter(**current_params)
         current_clinics = serializers.ClinicAppointmentSerializer(current_clinics, many=True)
-        current_rooms = serializers.RoomAppointmentSerializer(current_rooms, many=True)
         current_services = serializers.ServiceAppointmentSerializer(current_services, many=True)
 
         past_params = {
@@ -36,22 +34,18 @@ class AppointmentAPI(APIView):
             'appointment_date__lt': date.today()
         }
         past_clinics = ClinicAppointment.objects.filter(**past_params)
-        past_rooms = RoomAppointment.objects.filter(**past_params)
         past_services = ServiceAppointment.objects.filter(**past_params)
         past_clinics = serializers.ClinicAppointmentSerializer(past_clinics, many=True)
-        past_rooms = serializers.RoomAppointmentSerializer(past_rooms, many=True)
         past_services = serializers.ServiceAppointmentSerializer(past_services, many=True)
 
         return Response(
             {
                 "current": {
                     "clinics": current_clinics.data,
-                    "rooms": current_rooms.data,
                     "services": current_services.data
                 },
                 "past": {
                     "clinics": past_clinics.data,
-                    "rooms": past_rooms.data,
                     "services": past_services.data
                 }
             }
@@ -66,14 +60,12 @@ class CancelAPI(APIView):
         try:
             if entities == 'clinics':
                 appointment = ClinicAppointment.objects.get(id=appointment_id)
-            elif entities == 'rooms':
-                appointment = RoomAppointment.objects.get(id=appointment_id)
             elif entities == 'services':
                 appointment = ServiceAppointment.objects.get(id=appointment_id)
             else:
                 return Response({"details": "Page not found!"}, status.HTTP_404_NOT_FOUND)
 
-        except (ClinicAppointment.DoesNotExist, RoomAppointment.DoesNotExist, ServiceAppointment.DoesNotExist):
+        except (ClinicAppointment.DoesNotExist, ServiceAppointment.DoesNotExist):
             return Response(
                 {"details": "{0} appointment not found!".format(entities[0:len(entities) - 1])},
                 status.HTTP_404_NOT_FOUND
@@ -101,7 +93,7 @@ class ReserveAPI(APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
-    WEEK_DAYS = {"MON": 0, "TUE": 1, "WED": 2, "THU": 3, "FRI": 4, "SAT": 5, "SUN": 6}
+    WEEK_DAYS = {'MON': 0, 'TUE': 1, 'WED': 2, 'THU': 3, 'FRI': 4, 'SAT': 5, 'SUN': 6}
 
     def post(self, request, entities, entity_id, detail_id):
         result = check_detail(entities, entity_id, detail_id)
@@ -110,8 +102,6 @@ class ReserveAPI(APIView):
 
         if entities == 'clinics':
             serializer = serializers.ClinicReserveSerializer(data=request.data)
-        elif entities == 'rooms':
-            serializer = serializers.RoomReserveSerializer(data=request.data)
         else:
             serializer = serializers.ServiceReserveSerializer(data=request.data)
 
@@ -122,7 +112,7 @@ class ReserveAPI(APIView):
 
         try:
             schedule = result.schedules.get(id=schedule_id)
-        except (ClinicSchedule.DoesNotExist, RoomSchedule.DoesNotExist, ServiceSchedule.DoesNotExist):
+        except (ClinicSchedule.DoesNotExist, ServiceSchedule.DoesNotExist):
             return Response({"details": "Wrong schedule id!"}, status.HTTP_404_NOT_FOUND)
 
         if date.fromisoformat(appointment_date) < date.today():
@@ -153,7 +143,7 @@ class ReserveAPI(APIView):
                     status.HTTP_400_BAD_REQUEST
                 )
 
-        except (ClinicAppointment.DoesNotExist, RoomAppointment.DoesNotExist, ServiceAppointment.DoesNotExist):
+        except (ClinicAppointment.DoesNotExist, ServiceAppointment.DoesNotExist):
             params = {
                 'user': user,
                 'schedule_id': schedule_id,
@@ -161,8 +151,6 @@ class ReserveAPI(APIView):
             }
             if entities == 'clinics':
                 ClinicAppointment.objects.create(**params)
-            elif entities == 'rooms':
-                RoomAppointment.objects.create(**params)
             elif entities == 'services':
                 ServiceAppointment.objects.create(**params)
 

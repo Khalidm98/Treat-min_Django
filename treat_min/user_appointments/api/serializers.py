@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from ...entities_details.models import ClinicSchedule
-from ..models import ClinicAppointment, RoomAppointment, ServiceAppointment
+from ..models import ClinicAppointment, ServiceAppointment
 
 APPOINTMENT_FIELDS = ['hospital', 'price', 'schedule', 'status', 'appointment_date']
 
@@ -43,34 +43,6 @@ class ClinicAppointmentSerializer(serializers.ModelSerializer):
         fields = ['id', 'doctor', 'clinic_id', 'clinic', 'clinic_detail_id'] + APPOINTMENT_FIELDS
 
 
-class RoomAppointmentSerializer(serializers.ModelSerializer):
-    hospital = serializers.SerializerMethodField('get_hospital')
-    room = serializers.SerializerMethodField('get_room')
-    room_id = serializers.SerializerMethodField('get_room_id')
-    room_detail_id = serializers.SerializerMethodField('get_room_detail_id')
-    price = serializers.SerializerMethodField('get_price')
-    schedule = TimeSlotSerializer()
-
-    def get_hospital(self, obj):
-        return obj.schedule.room.hospital.name
-
-    def get_room(self, obj):
-        return obj.schedule.room.room.name
-
-    def get_room_detail_id(self, obj):
-        return obj.schedule.room.id
-
-    def get_room_id(self, obj):
-        return obj.schedule.room.room.id
-
-    def get_price(self, obj):
-        return obj.schedule.room.price
-
-    class Meta:
-        model = RoomAppointment
-        fields = ['id', 'room_id', 'room', 'room_detail_id'] + APPOINTMENT_FIELDS
-
-
 class ServiceAppointmentSerializer(serializers.ModelSerializer):
     hospital = serializers.SerializerMethodField('get_hospital')
     service = serializers.SerializerMethodField('get_service')
@@ -102,12 +74,6 @@ class ServiceAppointmentSerializer(serializers.ModelSerializer):
 class ClinicReserveSerializer(serializers.ModelSerializer):
     class Meta:
         model = ClinicAppointment
-        fields = ['appointment_date', 'schedule']
-
-
-class RoomReserveSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = RoomAppointment
         fields = ['appointment_date', 'schedule']
 
 

@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from .details import ClinicDetail, RoomDetail, ServiceDetail
+from .details import ClinicDetail,  ServiceDetail
 
 WEEK_DAYS = [
     ('SAT', _('Saturday')),
@@ -38,19 +38,6 @@ class ClinicSchedule(Schedule):
 
     def __str__(self):
         return str(self.clinic) + " - " + super().__str__()
-
-
-class RoomSchedule(Schedule):
-    room = models.ForeignKey(RoomDetail, on_delete=models.CASCADE, related_name='schedules', verbose_name=_('room'))
-
-    class Meta:
-        verbose_name = _('room schedule')
-        constraints = [
-            models.UniqueConstraint(fields=['room', 'day', 'start', 'end'], name='unique_room_schedule')
-        ]
-
-    def __str__(self):
-        return str(self.room) + " - " + super().__str__()
 
 
 class ServiceSchedule(Schedule):

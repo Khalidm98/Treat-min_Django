@@ -1,16 +1,10 @@
 from django.contrib import admin
-from .models import Clinic, Room, Service, Doctor, Hospital
-from ..entities_details.admin import ClinicDetailInline, RoomDetailInline, ServiceDetailInline
+from .models import Clinic, Service, Doctor, Hospital
+from ..entities_details.admin import ClinicDetailInline, ServiceDetailInline
 
 
 class ClinicAdmin(admin.ModelAdmin):
     inlines = [ClinicDetailInline]
-    list_display = ['name', 'id']
-    search_fields = ['name']
-
-
-class RoomAdmin(admin.ModelAdmin):
-    inlines = [RoomDetailInline]
     list_display = ['name', 'id']
     search_fields = ['name']
 
@@ -33,7 +27,7 @@ class DoctorAdmin(admin.ModelAdmin):
 
 
 class HospitalAdmin(admin.ModelAdmin):
-    inlines = [ClinicDetailInline, RoomDetailInline, ServiceDetailInline]
+    inlines = [ClinicDetailInline, ServiceDetailInline]
     list_display = ['name', 'city', 'area', 'id']
     search_fields = ['name', 'phone', 'city__name', 'area__name']
     autocomplete_fields = ['city', 'area']
@@ -52,7 +46,6 @@ class HospitalAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Clinic, ClinicAdmin)
-admin.site.register(Room, RoomAdmin)
 admin.site.register(Service, ServiceAdmin)
 admin.site.register(Doctor, DoctorAdmin)
 admin.site.register(Hospital, HospitalAdmin)

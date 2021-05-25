@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from ..accounts.models import User
-from ..entities_details.models import ClinicSchedule, RoomSchedule, ServiceSchedule
+from ..entities_details.models import ClinicSchedule, ServiceSchedule
 
 STATUS = [
     ('A', _('Accepted')),
@@ -34,25 +34,6 @@ class ClinicAppointment(Appointment):
         constraints = [
             models.UniqueConstraint(
                 fields=['user', 'schedule', 'appointment_date'], name='unique_clinic_appointment'
-            )
-        ]
-
-    def __str__(self):
-        return self.user.user.email + " - " + str(self.booking_date)[0:19]
-
-
-class RoomAppointment(Appointment):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='rooms_appointments', verbose_name=_('user'))
-    schedule = models.ForeignKey(
-        RoomSchedule, on_delete=models.CASCADE, related_name='appointments', verbose_name=_('schedule')
-    )
-
-    class Meta:
-        verbose_name = _('room appointment')
-        verbose_name_plural = _('Rooms Appointments')
-        constraints = [
-            models.UniqueConstraint(
-                fields=['user', 'schedule', 'appointment_date'], name='unique_room_appointment'
             )
         ]
 

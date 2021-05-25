@@ -1,7 +1,7 @@
 from django.db import models
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
-from ...entities.models import Clinic, Room, Service, Doctor, Hospital
+from ...entities.models import Clinic, Service, Doctor, Hospital
 
 
 class Detail(models.Model):
@@ -36,23 +36,6 @@ class ClinicDetail(Detail):
         if hasattr(self, 'doctor') and hasattr(self, 'clinic'):
             if self.doctor.speciality != self.clinic:
                 raise ValidationError(_('Doctor\'s speciality and clinic speciality must match!'))
-
-
-class RoomDetail(Detail):
-    hospital = models.ForeignKey(
-        Hospital, on_delete=models.RESTRICT, related_name='rooms_details', verbose_name=_('hospital')
-    )
-    room = models.ForeignKey(Room, on_delete=models.RESTRICT, related_name='details', verbose_name=_('room'))
-
-    class Meta:
-        verbose_name = _('room details')
-        verbose_name_plural = _('Rooms Details')
-        constraints = [
-            models.UniqueConstraint(fields=['hospital', 'room', 'price'], name='unique_room_detail')
-        ]
-
-    def __str__(self):
-        return self.hospital.name + " - " + self.room.name
 
 
 class ServiceDetail(Detail):

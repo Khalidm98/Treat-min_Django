@@ -6,7 +6,7 @@ from knox.auth import TokenAuthentication
 
 from ...accounts.api.views import get_user
 from ...entities_details.api.views import check_detail
-from ..models import ClinicReview, RoomReview, ServiceReview
+from ..models import ClinicReview, ServiceReview
 from .serializers import ReviewSerializer, RateSerializer
 
 
@@ -18,8 +18,6 @@ class ReviewAPI(APIView):
 
         if entities == 'clinics':
             qs = ClinicReview.objects.filter(clinic=detail_id)
-        elif entities == 'rooms':
-            qs = RoomReview.objects.filter(room=detail_id)
         else:
             qs = ServiceReview.objects.filter(service=detail_id)
         serializer = ReviewSerializer(qs, many=True)
@@ -49,7 +47,7 @@ class RateAPI(APIView):
             review.save()
             return Response({"details": "Your review was updated successfully."})
 
-        except (ClinicReview.DoesNotExist, RoomReview.DoesNotExist, ServiceReview.DoesNotExist):
+        except (ClinicReview.DoesNotExist, ServiceReview.DoesNotExist):
             result.rating_total = result.rating_total + int(rating)
             result.rating_users = result.rating_users + 1
             result.save()
@@ -61,8 +59,6 @@ class RateAPI(APIView):
             }
             if entities == 'clinics':
                 ClinicReview.objects.create(clinic_id=detail_id, **params)
-            elif entities == 'rooms':
-                RoomReview.objects.create(room_id=detail_id, **params)
             elif entities == 'services':
                 ServiceReview.objects.create(service_id=detail_id, **params)
 

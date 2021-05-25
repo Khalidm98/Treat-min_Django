@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from ..accounts.models import User
-from ..entities_details.models import ClinicDetail, RoomDetail, ServiceDetail
+from ..entities_details.models import ClinicDetail, ServiceDetail
 
 RATING = [('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5')]
 
@@ -28,21 +28,6 @@ class ClinicReview(Review):
 
     def __str__(self):
         return str(self.clinic) + " - " + self.user.user.email
-
-
-class RoomReview(Review):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='rooms_reviews', verbose_name=_('user'))
-    room = models.ForeignKey(RoomDetail, on_delete=models.CASCADE, related_name='reviews', verbose_name=_('room'))
-
-    class Meta:
-        verbose_name = _('room review')
-        verbose_name_plural = _('Rooms Reviews')
-        constraints = [
-            models.UniqueConstraint(fields=['user', 'room'], name='unique_room_review')
-        ]
-
-    def __str__(self):
-        return str(self.room) + " - " + self.user.user.email
 
 
 class ServiceReview(Review):
