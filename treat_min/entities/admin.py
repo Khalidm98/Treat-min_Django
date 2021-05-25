@@ -40,7 +40,7 @@ class HospitalAdmin(admin.ModelAdmin):
 
     def get_readonly_fields(self, request, obj=None):
         if hasattr(request.user, 'hospital_admin'):
-            return ['name', 'address', 'latitude', 'longitude', 'photo']
+            return ['name', 'address', 'latitude', 'longitude', 'photo', 'city', 'area']
         else:
             return super().get_readonly_fields(request, obj)
 
