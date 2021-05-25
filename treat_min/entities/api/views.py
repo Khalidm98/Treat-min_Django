@@ -3,7 +3,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 
 from ..models import Clinic, Room, Service, Hospital
-from .serializers import EntitySerializer, HospitalAPISerializer
+from .serializers import EntitySerializer, HospitalNameSerializer
 
 
 def check_entity(entities, entity_id):
@@ -41,12 +41,6 @@ class EntityAPI(APIView):
 
 class HospitalsAPI(APIView):
     def get(self, request):
-
         qs = Hospital.objects.all()
-        serializer = HospitalAPISerializer(qs, many=True)
-
-        return Response(
-            {
-                "hospitals": serializer.data
-            }
-        )
+        serializer = HospitalNameSerializer(qs, many=True)
+        return Response({"hospitals": serializer.data})

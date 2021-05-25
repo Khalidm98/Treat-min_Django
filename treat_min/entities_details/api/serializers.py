@@ -8,7 +8,6 @@ DETAIL_FIELDS = ['id', 'hospital', 'price', 'rating_total', 'rating_users']
 
 
 class DoctorSerializer(serializers.ModelSerializer):
-    # add photo
     class Meta:
         model = Doctor
         fields = ['id', 'name', 'title']
@@ -29,7 +28,7 @@ class ClinicDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ClinicDetail
-        fields = DETAIL_FIELDS + ['doctor', 'hospital']
+        fields = DETAIL_FIELDS + ['doctor']
 
 
 class RoomDetailSerializer(serializers.ModelSerializer):
@@ -37,7 +36,7 @@ class RoomDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = RoomDetail
-        fields = DETAIL_FIELDS + ['hospital']
+        fields = DETAIL_FIELDS
 
 
 class ServiceDetailSerializer(serializers.ModelSerializer):
@@ -45,7 +44,7 @@ class ServiceDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ServiceDetail
-        fields = DETAIL_FIELDS + ['hospital']
+        fields = DETAIL_FIELDS
 
 
 class ScheduleSerializer(serializers.ModelSerializer):

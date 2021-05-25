@@ -1,5 +1,6 @@
 import os
 from django.db import models
+from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 from ..filtration.models import City, Area
 
@@ -86,10 +87,10 @@ class Hospital(models.Model):
     longitude = models.DecimalField(max_digits=9, decimal_places=6, blank=True, null=True, verbose_name=_('longitude'))
     photo = models.ImageField(upload_to=image_update, default='photos/default.png', verbose_name=_('photo'))
     city = models.ForeignKey(
-        City, on_delete=models.SET_NULL, related_name='hospitals', verbose_name=_('city'), default="City", null=True
+        City, on_delete=models.SET_NULL, related_name='hospitals', verbose_name=_('city'), null=True
     )
     area = models.ForeignKey(
-        Area, on_delete=models.SET_NULL, related_name='hospitals', verbose_name=_('area'), default="Area", null=True
+        Area, on_delete=models.SET_NULL, related_name='hospitals', verbose_name=_('area'), null=True
     )
     doctors = models.ManyToManyField(
         Doctor, through='entities_details.ClinicDetail', related_name='hospitals', verbose_name=_('doctors')
@@ -111,3 +112,9 @@ class Hospital(models.Model):
 
     def __str__(self):
         return self.name
+
+    def clean(self):
+        if hasattr(self, 'city') and hasattr(self, 'area'):
+            if self.area:
+                if self.city != self.area.city:
+                    raise ValidationError(_('Area must be in the selected city!'))

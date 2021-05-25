@@ -8,7 +8,7 @@ class EntitySerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class HospitalAPISerializer(serializers.ModelSerializer):
+class HospitalNameSerializer(serializers.ModelSerializer):
     class Meta:
         model = Hospital
         fields = ['id', 'name']

@@ -23,7 +23,6 @@ class Appointment(models.Model):
     def clean(self):
         if self.status == 'C':
             raise ValidationError(_('You cannot cancel an appointment! Either accept or reject it.'))
-        super().clean()
 
 
 class ClinicAppointment(Appointment):

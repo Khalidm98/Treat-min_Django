@@ -32,7 +32,6 @@ urlpatterns = [
     path('api/', include('treat_min.entities_details.api.urls')),
     path('api/', include('treat_min.user_appointments.api.urls')),
     path('api/', include('treat_min.user_reviews.api.urls')),
-
 ]+i18n_patterns(
     path('admin/', admin.site.urls),
     path('admin/password-reset/', PasswordEmailAPI.as_view(), name='admin_password_reset'),

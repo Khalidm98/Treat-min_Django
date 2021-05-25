@@ -34,8 +34,9 @@ class DoctorAdmin(admin.ModelAdmin):
 
 class HospitalAdmin(admin.ModelAdmin):
     inlines = [ClinicDetailInline, RoomDetailInline, ServiceDetailInline]
-    list_display = ['name', 'id']
-    search_fields = ['name', 'phone']
+    list_display = ['name', 'city', 'area', 'id']
+    search_fields = ['name', 'phone', 'city__name', 'area__name']
+    autocomplete_fields = ['city', 'area']
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)

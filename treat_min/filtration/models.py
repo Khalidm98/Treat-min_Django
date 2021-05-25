@@ -6,7 +6,7 @@ class City(models.Model):
     name = models.CharField(max_length=30, unique=True, verbose_name=_('name'))
 
     class Meta:
-        ordering = ['id']
+        ordering = ['name']
         verbose_name = _('city')
         verbose_name_plural = _('Cities')
 
@@ -16,9 +16,10 @@ class City(models.Model):
 
 class Area(models.Model):
     name = models.CharField(max_length=30, unique=True, verbose_name=_('name'))
+    city = models.ForeignKey(City, on_delete=models.SET_NULL, related_name='areas', verbose_name=_('city'), null=True)
 
     class Meta:
-        ordering = ['id']
+        ordering = ['name']
         verbose_name = _('area')
         verbose_name_plural = _('Areas')
 
