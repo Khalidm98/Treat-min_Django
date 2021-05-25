@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'knox',
     'rest_framework',
     'treat_min.accounts.apps.AccountsConfig',
-    'treat_min.filtration_models.apps.FiltrationModelsConfig',
+    'treat_min.filtration.apps.FiltrationConfig',
     'treat_min.entities.apps.EntitiesConfig',
     'treat_min.entities_details.apps.EntitiesDetailsConfig',
     'treat_min.user_appointments.apps.UserAppointmentsConfig',

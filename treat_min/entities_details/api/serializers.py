@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from ...entities.models import Doctor, Hospital
-from ...filtration_models.models import City, Area
+from ...filtration.models import City, Area
 
 from ..models import ClinicSchedule, ClinicDetail, RoomDetail, ServiceDetail
 

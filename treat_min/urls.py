@@ -27,9 +27,9 @@ admin.site.site_title = 'admin'
 
 urlpatterns = [
     path('api/accounts/', include('treat_min.accounts.api.urls')),
+    path('api/', include('treat_min.filtration.api.urls')),
     path('api/', include('treat_min.entities.api.urls')),
     path('api/', include('treat_min.entities_details.api.urls')),
-    path('api/', include('treat_min.filtration_models.api.urls')),
     path('api/', include('treat_min.user_appointments.api.urls')),
     path('api/', include('treat_min.user_reviews.api.urls')),
 

@@ -1,7 +1,7 @@
 import os
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from ..filtration_models.models import City, Area
+from ..filtration.models import City, Area
 
 GENDER = [('M', _('Male')), ('F', _('Female'))]
 
