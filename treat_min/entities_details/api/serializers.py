@@ -1,5 +1,7 @@
 from rest_framework import serializers
-from ...entities.models import Doctor
+from ...entities.models import Doctor, Hospital
+from ...filtration_models.models import City, Area
+
 from ..models import ClinicSchedule, ClinicDetail, RoomDetail, ServiceDetail
 
 DETAIL_FIELDS = ['id', 'hospital', 'price', 'rating_total', 'rating_users']
@@ -12,29 +14,38 @@ class DoctorSerializer(serializers.ModelSerializer):
         fields = ['id', 'name', 'title']
 
 
+class HospitalSerializer(serializers.ModelSerializer):
+    area = serializers.SlugRelatedField(read_only=True, slug_field='name')
+    city = serializers.SlugRelatedField(read_only=True, slug_field='name')
+
+    class Meta:
+        model = Hospital
+        fields = ['id', 'name', 'phone', 'city', 'area']
+
+
 class ClinicDetailSerializer(serializers.ModelSerializer):
     doctor = DoctorSerializer()
-    hospital = serializers.SlugRelatedField(read_only=True, slug_field='name')
+    hospital = HospitalSerializer()
 
     class Meta:
         model = ClinicDetail
-        fields = DETAIL_FIELDS + ['doctor']
+        fields = DETAIL_FIELDS + ['doctor', 'hospital']
 
 
 class RoomDetailSerializer(serializers.ModelSerializer):
-    hospital = serializers.SlugRelatedField(read_only=True, slug_field='name')
+    hospital = HospitalSerializer()
 
     class Meta:
         model = RoomDetail
-        fields = DETAIL_FIELDS
+        fields = DETAIL_FIELDS + ['hospital']
 
 
 class ServiceDetailSerializer(serializers.ModelSerializer):
-    hospital = serializers.SlugRelatedField(read_only=True, slug_field='name')
+    hospital = HospitalSerializer()
 
     class Meta:
         model = ServiceDetail
-        fields = DETAIL_FIELDS
+        fields = DETAIL_FIELDS + ['hospital']
 
 
 class ScheduleSerializer(serializers.ModelSerializer):

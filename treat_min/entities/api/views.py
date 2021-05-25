@@ -2,8 +2,8 @@ from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
-from ..models import Clinic, Room, Service
-from .serializers import EntitySerializer
+from ..models import Clinic, Room, Service, Hospital
+from .serializers import EntitySerializer, HospitalAPISerializer
 
 
 def check_entity(entities, entity_id):
@@ -37,3 +37,16 @@ class EntityAPI(APIView):
             return Response({"details": "Page not found!"}, status.HTTP_404_NOT_FOUND)
         serializer = EntitySerializer(qs, many=True)
         return Response({entities: serializer.data})
+
+
+class HospitalsAPI(APIView):
+    def get(self, request):
+
+        qs = Hospital.objects.all()
+        serializer = HospitalAPISerializer(qs, many=True)
+
+        return Response(
+            {
+                "hospitals": serializer.data
+            }
+        )

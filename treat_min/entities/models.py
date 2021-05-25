@@ -1,6 +1,7 @@
 import os
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from ..filtration_models.models import City, Area
 
 GENDER = [('M', _('Male')), ('F', _('Female'))]
 
@@ -84,6 +85,12 @@ class Hospital(models.Model):
     latitude = models.DecimalField(max_digits=9, decimal_places=6, blank=True, null=True, verbose_name=_('latitude'))
     longitude = models.DecimalField(max_digits=9, decimal_places=6, blank=True, null=True, verbose_name=_('longitude'))
     photo = models.ImageField(upload_to=image_update, default='photos/default.png', verbose_name=_('photo'))
+    city = models.ForeignKey(
+        City, on_delete=models.SET_NULL, related_name='hospitals', verbose_name=_('city'), default="City", null=True
+    )
+    area = models.ForeignKey(
+        Area, on_delete=models.SET_NULL, related_name='hospitals', verbose_name=_('area'), default="Area", null=True
+    )
     doctors = models.ManyToManyField(
         Doctor, through='entities_details.ClinicDetail', related_name='hospitals', verbose_name=_('doctors')
     )
