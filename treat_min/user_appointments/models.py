@@ -1,5 +1,4 @@
 from django.db import models
-from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 from ..accounts.models import User
 from ..entities_details.models import ClinicSchedule, RoomSchedule, ServiceSchedule
@@ -19,10 +18,6 @@ class Appointment(models.Model):
 
     class Meta:
         abstract = True
-
-    def clean(self):
-        if self.status == 'C':
-            raise ValidationError(_('You cannot cancel an appointment! Either accept or reject it.'))
 
 
 class ClinicAppointment(Appointment):

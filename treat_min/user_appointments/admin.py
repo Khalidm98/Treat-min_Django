@@ -1,3 +1,4 @@
+from datetime import date
 from django.contrib import admin, messages
 from django.utils.translation import ngettext, gettext_lazy as _
 from .models import ClinicAppointment, RoomAppointment, ServiceAppointment
@@ -28,9 +29,20 @@ class AppointmentAdmin(admin.ModelAdmin):
 
     def get_readonly_fields(self, request, obj=None):
         if hasattr(request.user, 'hospital_admin'):
+            if obj.appointment_date < date.today() or obj.status == 'C':
+                return ['status', 'schedule', 'appointment_date', 'user', 'booking_date']
             return ['schedule', 'appointment_date', 'user', 'booking_date']
         else:
             return super().get_readonly_fields(request, obj=None)
+
+    def formfield_for_choice_field(self, db_field, request, **kwargs):
+        if hasattr(request.user, 'hospital_admin'):
+            if db_field.name == 'status':
+                kwargs['choices'] = [
+                    ('A', 'Accepted'),
+                    ('R', 'Rejected'),
+                ]
+        return super().formfield_for_choice_field(db_field, request, **kwargs)
 
 
 class ClinicAppointmentAdmin(AppointmentAdmin):

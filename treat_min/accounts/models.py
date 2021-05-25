@@ -85,14 +85,14 @@ class HospitalAdmin(models.Model):
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='hospital_admin', verbose_name=_('user')
     )
-    hospital = models.ForeignKey(Hospital, on_delete=models.RESTRICT, verbose_name=_('hospital'))
+    hospital = models.ForeignKey(Hospital, on_delete=models.RESTRICT, related_name='admins', verbose_name=_('hospital'))
 
     class Meta:
         verbose_name = _('hospital admin')
         verbose_name_plural = _('Hospitals Admins')
 
     def __str__(self):
-        return self.user.email + ' - ' + self.user.name
+        return self.user.email + ' - ' + self.user.name + ' - ' + self.hospital.name
 
     def clean(self):
         if hasattr(self, 'user'):

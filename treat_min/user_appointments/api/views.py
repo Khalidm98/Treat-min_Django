@@ -1,5 +1,4 @@
 from datetime import date
-
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -33,7 +32,7 @@ class AppointmentAPI(APIView):
 
         past_params = {
             'user': user,
-            'status__in': ["A", "R"],
+            'status__in': ['A', 'R'],
             'appointment_date__lt': date.today()
         }
         past_clinics = ClinicAppointment.objects.filter(**past_params)
@@ -139,11 +138,20 @@ class ReserveAPI(APIView):
             )
 
         try:
-            schedule.appointments.get(user=user, appointment_date=appointment_date)
-            return Response(
-                {"details": "User cannot reserve the same schedule twice in the same day!"},
-                status.HTTP_400_BAD_REQUEST
-            )
+            appointment = schedule.appointments.get(user=user, appointment_date=appointment_date)
+            if appointment.status == 'C':
+                appointment.status = 'W'
+                appointment.save()
+                return Response(
+                    {"details": "Your appointment was reserved successfully."},
+                    status.HTTP_201_CREATED
+                )
+
+            else:
+                return Response(
+                    {"details": "User cannot reserve the same schedule twice in the same day!"},
+                    status.HTTP_400_BAD_REQUEST
+                )
 
         except (ClinicAppointment.DoesNotExist, RoomAppointment.DoesNotExist, ServiceAppointment.DoesNotExist):
             params = {
