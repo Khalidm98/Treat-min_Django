@@ -35,23 +35,3 @@ class CitiesAreasAPI(APIView):
         return Response({"areas": serializer.data})
 
 
-class CityAreaHospitalsAPI(APIView):
-    def get(self, request, city_id, area_id):
-        try:
-            City.objects.get(id=city_id)
-        except City.DoesNotExist:
-            return Response(
-                {"details": "No city is found for the given id!"},
-                status.HTTP_404_NOT_FOUND
-            )
-        try:
-            Area.objects.get(id=area_id, city__id= city_id)
-        except Area.DoesNotExist:
-            return Response(
-                {"details": "No area is found for the given id!"},
-                status.HTTP_404_NOT_FOUND
-            )
-
-        qs = Hospital.objects.filter(city__id=city_id, area__id=area_id)
-        serializer = HospitalNameSerializer(qs, many=True)
-        return Response({"hospitals": serializer.data})

@@ -5,7 +5,7 @@ from ..models import City, Area
 class AreaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Area
-        fields = ['id', 'name']
+        fields = "__all__"
 
 
 class CitySerializer(serializers.ModelSerializer):

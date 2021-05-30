@@ -11,4 +11,4 @@ class EntitySerializer(serializers.ModelSerializer):
 class HospitalNameSerializer(serializers.ModelSerializer):
     class Meta:
         model = Hospital
-        fields = ['id', 'name']
+        fields = ['id', 'name', 'city', 'area']
