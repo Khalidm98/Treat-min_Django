@@ -3,8 +3,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from .serializers import AreaSerializer, CitySerializer
 from ..models import Area, City
-from ...entities.models import Hospital
-from ...entities.api.serializers import HospitalNameSerializer
+
 
 class AreasAPI(APIView):
     def get(self, request):
@@ -33,5 +32,3 @@ class CitiesAreasAPI(APIView):
         qs = Area.objects.filter(city_id=city_id)
         serializer = AreaSerializer(qs, many=True)
         return Response({"areas": serializer.data})
-
-

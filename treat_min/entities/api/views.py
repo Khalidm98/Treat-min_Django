@@ -40,6 +40,3 @@ class HospitalsAPI(APIView):
         qs = Hospital.objects.all()
         serializer = HospitalNameSerializer(qs, many=True)
         return Response({"hospitals": serializer.data})
-
-
-

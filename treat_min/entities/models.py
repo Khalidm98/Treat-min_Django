@@ -71,8 +71,8 @@ class Hospital(models.Model):
     name = models.CharField(max_length=50, unique=True, verbose_name=_('name'))
     phone = models.CharField(max_length=11, verbose_name=_('phone'))
     address = models.CharField(max_length=100, verbose_name=_('address'))
-    latitude = models.DecimalField(max_digits=9, decimal_places=6, blank=True, null=True, verbose_name=_('latitude'))
-    longitude = models.DecimalField(max_digits=9, decimal_places=6, blank=True, null=True, verbose_name=_('longitude'))
+    latitude = models.DecimalField(max_digits=9, decimal_places=6, verbose_name=_('latitude'))
+    longitude = models.DecimalField(max_digits=9, decimal_places=6, verbose_name=_('longitude'))
     photo = models.ImageField(upload_to=image_update, default='photos/default.png', verbose_name=_('photo'))
     city = models.ForeignKey(
         City, on_delete=models.SET_NULL, related_name='hospitals', verbose_name=_('city'), null=True
