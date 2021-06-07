@@ -53,7 +53,8 @@ class AbstractUser(AbstractBaseUser, PermissionsMixin):
             'We are happy to have you on board with us.\n'
             'Take a look at our website:\n'
             'https://www.treat-min.com/\n\n'
-            'Our mobile app will be available very soon.\nStay tuned.'
+            'Download our android app:\n'
+            'https://play.google.com/store/apps/details?id=com.treat_min.android'
         )
 
 
