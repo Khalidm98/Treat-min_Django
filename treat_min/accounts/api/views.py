@@ -92,10 +92,13 @@ class RegisterAPI(APIView):
                 user.delete()
                 user = serializer.save()
                 user.welcome_email()
+                expiry, token = AuthToken.objects.create(user)
+                expiry = expiry.expiry
                 return Response(
                     {
                         "user": UserSerializer(user.user, context=serializer.context).data,
-                        "token": AuthToken.objects.create(user)[1]
+                        "token": token,
+                        "expiry": expiry
                     },
                     status.HTTP_201_CREATED
                 )
@@ -117,19 +120,29 @@ class LoginAPI(APIView):
         serializer = LoginSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data['user']
+
+        if not hasattr(user, 'user'):
+            return Response(
+                {"details": "You must log in with a user account!"},
+                status.HTTP_404_NOT_FOUND
+            )
+
         login(request, user)
         user_logged_in.send(sender=request.user.__class__, request=request, user=request.user)
 
         try:
-            reset_pass_fail_trial = LostPassword.objects.get(email=user.email)
-            reset_pass_fail_trial.delete()
+            reset_pass = LostPassword.objects.get(email=user.email)
+            reset_pass.delete()
         except LostPassword.DoesNotExist:
             pass
 
+        expiry, token = AuthToken.objects.create(user)
+        expiry = expiry.expiry
         return Response(
             {
                 "user": UserSerializer(user.user, context=serializer.context).data,
-                "token": AuthToken.objects.create(request.user)[1]
+                "token": token,
+                "expiry": expiry
             },
         )
 
