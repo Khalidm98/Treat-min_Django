@@ -89,8 +89,8 @@ class HospitalAdmin(models.Model):
     hospital = models.ForeignKey(Hospital, on_delete=models.RESTRICT, related_name='admins', verbose_name=_('hospital'))
 
     class Meta:
-        verbose_name = _('hospital admin')
-        verbose_name_plural = _('Hospitals Admins')
+        verbose_name = _('hospital / laboratory admin')
+        verbose_name_plural = _('Hospitals / Laboratories Admins')
 
     def __str__(self):
         return self.user.email + ' - ' + self.user.name + ' - ' + self.hospital.name

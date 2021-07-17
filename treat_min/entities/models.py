@@ -92,8 +92,8 @@ class Hospital(models.Model):
 
     class Meta:
         ordering = ['name']
-        verbose_name = _('hospital')
-        verbose_name_plural = _('Hospitals')
+        verbose_name = _('hospital / laboratory')
+        verbose_name_plural = _('Hospitals / Laboratories')
 
     def __str__(self):
         return self.name

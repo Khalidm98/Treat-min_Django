@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-25 21:56+0200\n"
+"POT-Creation-Date: 2021-07-17 20:34+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -48,7 +48,7 @@ msgid "Log out"
 msgstr ""
 
 #: .\treat_min\accounts\admin.py:25 .\treat_min\accounts\models.py:16
-#: .\treat_min\accounts\models.py:126 .\treat_min\accounts\models.py:139
+#: .\treat_min\accounts\models.py:127 .\treat_min\accounts\models.py:140
 msgid "email address"
 msgstr "البريد الالكتروني"
 
@@ -96,78 +96,80 @@ msgstr "المستخدم المجرد"
 msgid "Abstract Users"
 msgstr "المستخدمين المجردين"
 
-#: .\treat_min\accounts\models.py:61 .\treat_min\accounts\models.py:86
-#: .\treat_min\accounts\models.py:112 .\treat_min\accounts\models.py:118
+#: .\treat_min\accounts\models.py:62 .\treat_min\accounts\models.py:87
+#: .\treat_min\accounts\models.py:113 .\treat_min\accounts\models.py:119
 #: .\treat_min\user_appointments\models.py:25
 #: .\treat_min\user_appointments\models.py:46
 #: .\treat_min\user_reviews\models.py:19 .\treat_min\user_reviews\models.py:34
 msgid "user"
 msgstr "المستخدم"
 
-#: .\treat_min\accounts\models.py:64
+#: .\treat_min\accounts\models.py:65
 msgid "admin"
 msgstr "مشرف"
 
-#: .\treat_min\accounts\models.py:65
+#: .\treat_min\accounts\models.py:66
 msgid "Admins"
 msgstr "المشرفين"
 
-#: .\treat_min\accounts\models.py:73 .\treat_min\accounts\models.py:100
+#: .\treat_min\accounts\models.py:74 .\treat_min\accounts\models.py:101
 msgid "This user is already in another group!"
 msgstr "هذا المستخدم موجود بالفعل في مجموعة أخرى!"
 
-#: .\treat_min\accounts\models.py:88 .\treat_min\entities\models.py:95
+#: .\treat_min\accounts\models.py:89
 #: .\treat_min\entities_details\models\details.py:18
 #: .\treat_min\entities_details\models\details.py:43
 msgid "hospital"
 msgstr "المستشفى"
 
-#: .\treat_min\accounts\models.py:91
-msgid "hospital admin"
-msgstr "مشرف مستشفى"
-
 #: .\treat_min\accounts\models.py:92
-msgid "Hospitals Admins"
-msgstr "مشرفين المستشفيات"
 
-#: .\treat_min\accounts\models.py:113
+
+msgid "hospital / laboratory admin"
+msgstr "مسؤول المستشفى / المعمل"
+
+#: .\treat_min\accounts\models.py:93
+msgid "Hospitals / Laboratories Admins"
+msgstr "مسؤولي المستشفيات / المعامل"
+
+#: .\treat_min\accounts\models.py:114
 msgid "date of birth"
 msgstr "تاريخ الميلاد"
 
-#: .\treat_min\accounts\models.py:114 .\treat_min\entities\models.py:54
+#: .\treat_min\accounts\models.py:115 .\treat_min\entities\models.py:54
 msgid "gender"
 msgstr "النوع"
 
-#: .\treat_min\accounts\models.py:115 .\treat_min\entities\models.py:59
+#: .\treat_min\accounts\models.py:116 .\treat_min\entities\models.py:59
 #: .\treat_min\entities\models.py:76
 msgid "photo"
 msgstr "الصورة"
 
-#: .\treat_min\accounts\models.py:119
+#: .\treat_min\accounts\models.py:120
 msgid "Users"
 msgstr "المستخدمين"
 
-#: .\treat_min\accounts\models.py:127 .\treat_min\accounts\models.py:140
+#: .\treat_min\accounts\models.py:128 .\treat_min\accounts\models.py:141
 msgid "code"
 msgstr "الرمز"
 
-#: .\treat_min\accounts\models.py:128 .\treat_min\accounts\models.py:141
+#: .\treat_min\accounts\models.py:129 .\treat_min\accounts\models.py:142
 msgid "is verified"
 msgstr "مفعل؟"
 
-#: .\treat_min\accounts\models.py:131
+#: .\treat_min\accounts\models.py:132
 msgid "pending user"
 msgstr "مستخدم معلق"
 
-#: .\treat_min\accounts\models.py:132
+#: .\treat_min\accounts\models.py:133
 msgid "Pending Users"
 msgstr "المستخدمين المعلقين"
 
-#: .\treat_min\accounts\models.py:144
+#: .\treat_min\accounts\models.py:145
 msgid "lost password"
 msgstr "كلمة سر مفقودة"
 
-#: .\treat_min\accounts\models.py:145
+#: .\treat_min\accounts\models.py:146
 msgid "Lost Passwords"
 msgstr "كلمات السر المفقودة"
 
@@ -255,9 +257,13 @@ msgstr "العيادات"
 msgid "services"
 msgstr "الخدمات"
 
+#: .\treat_min\entities\models.py:95
+msgid "hospital / laboratory"
+msgstr "المستشفى / المعمل"
+
 #: .\treat_min\entities\models.py:96
-msgid "Hospitals"
-msgstr "المستشفيات"
+msgid "Hospitals / Laboratories"
+msgstr "المستشفيات / المعامل"
 
 #: .\treat_min\entities\models.py:105
 msgid "Area must be in the selected city!"
@@ -471,6 +477,15 @@ msgstr "مراجعة خدمة"
 #: .\treat_min\user_reviews\models.py:41
 msgid "Services Reviews"
 msgstr "مراجعات الخدمات"
+
+#~ msgid "hospital admin"
+#~ msgstr "مشرف مستشفى"
+
+#~ msgid "Hospitals Admins"
+#~ msgstr "مشرفين المستشفيات"
+
+#~ msgid "Hospitals"
+#~ msgstr "المستشفيات"
 
 #~ msgid "room"
 #~ msgstr "غرفة"
