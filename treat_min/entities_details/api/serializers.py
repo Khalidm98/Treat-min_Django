@@ -12,9 +12,6 @@ class DoctorSerializer(serializers.ModelSerializer):
 
 
 class HospitalSerializer(serializers.ModelSerializer):
-    area = serializers.SlugRelatedField(read_only=True, slug_field='name')
-    city = serializers.SlugRelatedField(read_only=True, slug_field='name')
-
     class Meta:
         model = Hospital
         fields = ['id', 'name', 'phone', 'city', 'area', 'latitude', 'longitude']
