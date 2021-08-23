@@ -14,7 +14,7 @@ class DoctorSerializer(serializers.ModelSerializer):
 class HospitalSerializer(serializers.ModelSerializer):
     class Meta:
         model = Hospital
-        fields = ['id', 'name', 'phone', 'city', 'area', 'latitude', 'longitude']
+        fields = ['id', 'name', 'address', 'phone', 'city', 'area', 'latitude', 'longitude']
 
 
 class ClinicDetailSerializer(serializers.ModelSerializer):
